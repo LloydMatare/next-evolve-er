@@ -13,53 +13,53 @@ interface PricingCardProps {
 export function PricingCard({ title, price, period, features, highlighted }: PricingCardProps) {
   return (
     <div
-      className={`relative rounded-2xl p-8 transition-all duration-300 hover:scale-105 ${
+      className={`relative rounded-sm p-8 transition-all duration-200 ${
         highlighted
-          ? 'bg-gradient-to-br from-blue-900 to-purple-900 border-2 border-purple-400 shadow-xl shadow-purple-400/20'
-          : 'bg-white border border-gray-200 hover:border-blue-500 hover:shadow-lg'
+          ? 'bg-[#232f3e] border-2 border-[#ff9900] shadow-lg'
+          : 'bg-white border border-gray-200 hover:shadow-md'
       }`}
     >
       {highlighted && (
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-          <span className="bg-purple-500 text-white px-4 py-1 rounded-full text-sm font-bold uppercase">
-            Best Value
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+          <span className="bg-[#ff9900] text-white px-4 py-1 rounded-sm text-xs font-bold uppercase tracking-wide">
+            Popular
           </span>
         </div>
       )}
 
       <div className="text-center mb-6">
-        <h3
-          className={`text-2xl font-bold mb-2 ${highlighted ? 'text-white' : 'text-gray-900'}`}
-        >
+        <h3 className={`text-xl font-bold mb-2 ${highlighted ? 'text-white' : 'text-[#232f3e]'}`}>
           {title}
         </h3>
-        <p className={`text-sm ${highlighted ? 'text-blue-200' : 'text-gray-600'}`}>{period}</p>
+        <p className={`text-sm ${highlighted ? 'text-gray-400' : 'text-gray-600'}`}>{period}</p>
       </div>
 
       <div className="text-center mb-8">
-        <span
-          className={`text-5xl font-bold ${highlighted ? 'text-purple-300' : 'text-blue-900'}`}
-        >
+        <span className={`text-5xl font-bold ${highlighted ? 'text-[#ff9900]' : 'text-[#232f3e]'}`}>
           ${price}
         </span>
       </div>
 
-      <ul className="space-y-4 mb-8">
+      <ul className="space-y-3 mb-8">
         {features.map((feature, index) => (
           <li key={index} className="flex items-start">
             <Check
-              className={`w-5 h-5 mr-3 flex-shrink-0 mt-0.5 ${highlighted ? 'text-purple-300' : 'text-green-500'}`}
+              className={`w-5 h-5 mr-3 flex-shrink-0 mt-0.5 ${highlighted ? 'text-[#ff9900]' : 'text-green-600'}`}
             />
-            <span className={highlighted ? 'text-white' : 'text-gray-700'}>{feature}</span>
+            <span
+              className={`text-sm ${highlighted ? 'text-gray-300' : 'text-gray-600'} leading-relaxed`}
+            >
+              {feature}
+            </span>
           </li>
         ))}
       </ul>
 
       <Button
-        className={`w-full ${
+        className={`w-full rounded-sm font-semibold ${
           highlighted
-            ? 'bg-purple-500 hover:bg-purple-600 text-white'
-            : 'bg-blue-900 hover:bg-blue-800 text-white'
+            ? 'bg-[#ff9900] hover:bg-[#ec7211] text-white'
+            : 'bg-[#232f3e] hover:bg-[#161e2e] text-white'
         }`}
       >
         Buy Ticket

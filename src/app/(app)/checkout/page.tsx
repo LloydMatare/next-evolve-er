@@ -128,10 +128,10 @@ export default function CheckoutPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-blue-950 via-blue-900 to-purple-900">
+      <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-[#232f3e] via-[#161e2e] to-[#0f1419]">
         <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">Checkout</h1>
-          <p className="text-xl md:text-2xl text-blue-100">Complete your registration payment</p>
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">Checkout</h1>
+          <p className="text-lg md:text-xl text-gray-300">Complete your registration payment</p>
         </div>
       </section>
 
@@ -141,13 +141,13 @@ export default function CheckoutPage() {
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Order Summary */}
             <div className="lg:col-span-1">
-              <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-3xl p-8 sticky top-24">
-                <h2 className="text-2xl font-bold text-blue-900 mb-6">Order Summary</h2>
+              <div className="bg-[#f3f3f3] border border-gray-200 rounded-sm p-8 sticky top-24">
+                <h2 className="text-2xl font-bold text-[#232f3e] mb-6">Order Summary</h2>
 
                 <div className="space-y-4">
                   <div>
                     <p className="text-sm text-gray-600">Registration Type</p>
-                    <p className="text-lg font-bold text-blue-900 capitalize">
+                    <p className="text-lg font-bold text-[#232f3e] capitalize">
                       {registrationData.type}
                     </p>
                   </div>
@@ -189,10 +189,10 @@ export default function CheckoutPage() {
                     </div>
                   )}
 
-                  <div className="border-t border-purple-200 pt-4 mt-4">
+                  <div className="border-t border-gray-200 pt-4 mt-4">
                     <div className="flex justify-between items-center">
                       <p className="text-lg font-bold text-gray-900">Total Amount</p>
-                      <p className="text-3xl font-bold text-purple-600">${getAmount()}</p>
+                      <p className="text-3xl font-bold text-[#ff9900]">${getAmount()}</p>
                     </div>
                   </div>
                 </div>
@@ -201,8 +201,8 @@ export default function CheckoutPage() {
 
             {/* Payment Method Selection */}
             <div className="lg:col-span-2">
-              <div className="bg-white rounded-3xl border-2 border-gray-200 p-8">
-                <h2 className="text-3xl font-bold text-blue-900 mb-6">Select Payment Method</h2>
+              <div className="bg-white rounded-sm border-2 border-gray-200 p-8">
+                <h2 className="text-3xl font-bold text-[#232f3e] mb-6">Select Payment Method</h2>
 
                 <div className="space-y-4 mb-8">
                   {paymentMethods.map((method) => {
@@ -211,17 +211,17 @@ export default function CheckoutPage() {
                       <div
                         key={method.id}
                         onClick={() => setSelectedPaymentMethod(method.id)}
-                        className={`relative border-2 rounded-2xl p-6 cursor-pointer transition-all ${
+                        className={`relative border-2 rounded-sm p-6 cursor-pointer transition-all ${
                           selectedPaymentMethod === method.id
-                            ? 'border-purple-600 bg-purple-50'
-                            : 'border-gray-200 hover:border-purple-300'
+                            ? 'border-[#ff9900] bg-[#ff9900]/5'
+                            : 'border-gray-200 hover:border-[#ff9900]/50'
                         }`}
                       >
                         <div className="flex items-start">
                           <div
-                            className={`w-12 h-12 rounded-full flex items-center justify-center mr-4 ${
+                            className={`w-12 h-12 rounded-sm flex items-center justify-center mr-4 ${
                               selectedPaymentMethod === method.id
-                                ? 'bg-purple-600'
+                                ? 'bg-[#ff9900]'
                                 : 'bg-gray-200'
                             }`}
                           >
@@ -236,7 +236,7 @@ export default function CheckoutPage() {
                             <p className="text-sm text-gray-600">{method.description}</p>
                           </div>
                           {selectedPaymentMethod === method.id && (
-                            <CheckCircle className="w-6 h-6 text-purple-600" />
+                            <CheckCircle className="w-6 h-6 text-[#ff9900]" />
                           )}
                         </div>
                       </div>
@@ -245,27 +245,27 @@ export default function CheckoutPage() {
                 </div>
 
                 {selectedPaymentMethod && (
-                  <div className="bg-blue-50 rounded-2xl p-6 mb-6">
-                    <h3 className="font-bold text-blue-900 mb-3">Payment Instructions</h3>
+                  <div className="bg-[#f3f3f3] border border-gray-200 rounded-sm p-6 mb-6">
+                    <h3 className="font-bold text-[#232f3e] mb-3">Payment Instructions</h3>
                     {selectedPaymentMethod === 'card' && (
-                      <p className="text-sm text-gray-700">
+                      <p className="text-sm text-gray-600">
                         You will be redirected to our secure payment gateway to complete your card payment.
                       </p>
                     )}
                     {selectedPaymentMethod === 'mobile' && (
-                      <p className="text-sm text-gray-700">
+                      <p className="text-sm text-gray-600">
                         Payment instructions will be sent to your phone. Please complete the transaction within 24 hours.
                       </p>
                     )}
                     {selectedPaymentMethod === 'bank' && (
-                      <p className="text-sm text-gray-700">
+                      <p className="text-sm text-gray-600">
                         Bank details will be sent to your email. Please include your order ID as reference.
                       </p>
                     )}
                   </div>
                 )}
 
-                <div className="bg-yellow-50 border-2 border-yellow-200 rounded-2xl p-4 mb-6">
+                <div className="bg-yellow-50 border-2 border-yellow-200 rounded-sm p-4 mb-6">
                   <p className="text-sm text-yellow-900">
                     <strong>Note:</strong> Your registration will be pending approval after payment verification. You will receive a confirmation email within 24-48 hours.
                   </p>
@@ -274,7 +274,7 @@ export default function CheckoutPage() {
                 <Button
                   onClick={handlePayment}
                   disabled={!selectedPaymentMethod || isProcessing}
-                  className="w-full bg-purple-600 hover:bg-purple-700 text-white py-6 text-lg font-bold"
+                  className="w-full bg-[#ff9900] hover:bg-[#ec7211] text-white py-6 text-lg font-semibold rounded-sm"
                 >
                   {isProcessing ? 'Processing...' : `Pay $${getAmount()}`}
                 </Button>

@@ -5,13 +5,18 @@
 
 :root {
   --font-mono: 'Roboto Mono', monospace;
-  --radius: 0.625rem;
+  --radius: 0.375rem;
   
-  /* Brand Colors */
-  --brand-navy: #1e3a8a;
-  --brand-purple: #a855f7;
-  --brand-dark-navy: #0f172a;
-  --brand-light: #f8fafc;
+  /* Brand Colors - AWS re:Invent inspired */
+  --brand-navy: #232f3e;
+  --brand-dark: #161e2e;
+  --brand-orange: #ff9900;
+  --brand-blue: #146eb4;
+  --brand-light-blue: #00a8e1;
+  --brand-purple: #7b57d9;
+  --brand-light: #ffffff;
+  --brand-gray: #f3f3f3;
+  --brand-dark-gray: #687078;
   
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
@@ -285,5 +290,32 @@ svg {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* AWS re:Invent inspired utilities */
+@layer utilities {
+  .section-padding {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+  
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-orange-500 to-orange-400 bg-clip-text text-transparent;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+  }
+  
+  .btn-primary {
+    @apply bg-[#ff9900] hover:bg-[#ec7211] text-white font-semibold px-8 py-3 rounded-sm transition-all duration-200;
+  }
+  
+  .btn-secondary {
+    @apply bg-white hover:bg-gray-100 text-[#232f3e] font-semibold px-8 py-3 rounded-sm border border-gray-300 transition-all duration-200;
   }
 }

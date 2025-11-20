@@ -121,10 +121,10 @@ export default function GalleryPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-blue-950 via-blue-900 to-purple-900">
+      <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-[#232f3e] via-[#161e2e] to-[#0f1419]">
         <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">Gallery</h1>
-          <p className="text-xl md:text-2xl text-blue-100 max-w-4xl mx-auto">
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">Gallery</h1>
+          <p className="text-lg md:text-xl text-gray-300 max-w-4xl mx-auto">
             Moments from Evolve ICT Summit
           </p>
         </div>
@@ -134,8 +134,8 @@ export default function GalleryPage() {
       <section className="py-20 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center mb-12">
-            <ImageIcon className="w-10 h-10 text-purple-500 mr-4" />
-            <h2 className="text-4xl md:text-5xl font-bold text-blue-900">Photos</h2>
+            <ImageIcon className="w-10 h-10 text-[#ff9900] mr-4" />
+            <h2 className="text-4xl md:text-5xl font-bold text-[#232f3e]">Photos</h2>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {sampleImages.map((image) => (
@@ -144,7 +144,7 @@ export default function GalleryPage() {
                 onClick={() => openMedia(image)}
                 className="group relative aspect-square cursor-pointer overflow-hidden rounded-lg"
               >
-                <div className="w-full h-full bg-gradient-to-br from-blue-200 to-purple-200 transition-transform group-hover:scale-110" />
+                <div className="w-full h-full bg-[#f3f3f3] transition-transform group-hover:scale-110" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors flex items-center justify-center">
                   <div className="opacity-0 group-hover:opacity-100 transition-opacity text-white text-center p-4">
                     <p className="font-bold">{image.title}</p>
@@ -157,11 +157,11 @@ export default function GalleryPage() {
       </section>
 
       {/* Videos Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-blue-50 to-purple-50">
+      <section className="py-20 px-4 bg-white border border-gray-200">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center mb-12">
-            <Play className="w-10 h-10 text-purple-500 mr-4" />
-            <h2 className="text-4xl md:text-5xl font-bold text-blue-900">Videos</h2>
+            <Play className="w-10 h-10 text-[#ff9900] mr-4" />
+            <h2 className="text-4xl md:text-5xl font-bold text-[#232f3e]">Videos</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {sampleVideos.map((video) => (
@@ -171,14 +171,14 @@ export default function GalleryPage() {
                 className="group cursor-pointer"
               >
                 <div className="relative aspect-video overflow-hidden rounded-lg mb-3">
-                  <div className="w-full h-full bg-gradient-to-br from-blue-200 to-purple-200" />
+                  <div className="w-full h-full bg-[#f3f3f3]" />
                   <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-colors flex items-center justify-center">
-                    <div className="w-16 h-16 bg-purple-500 group-hover:bg-purple-600 rounded-full flex items-center justify-center transition-colors">
+                    <div className="w-16 h-16 bg-[#ff9900] group-hover:bg-purple-600 rounded-full flex items-center justify-center transition-colors">
                       <Play className="w-8 h-8 text-white ml-1" />
                     </div>
                   </div>
                 </div>
-                <h3 className="font-bold text-blue-900 mb-1">{video.title}</h3>
+                <h3 className="font-bold text-[#232f3e] mb-1">{video.title}</h3>
                 <p className="text-sm text-gray-600">{video.description}</p>
               </div>
             ))}
@@ -196,7 +196,7 @@ export default function GalleryPage() {
               </DialogHeader>
               <div className="mt-4">
                 {selectedMedia.type === 'image' ? (
-                  <div className="w-full aspect-video bg-gradient-to-br from-blue-200 to-purple-200 rounded-lg" />
+                  <div className="w-full aspect-video bg-[#f3f3f3] rounded-lg" />
                 ) : (
                   <div className="w-full aspect-video">
                     <iframe
@@ -208,7 +208,7 @@ export default function GalleryPage() {
                     />
                   </div>
                 )}
-                <p className="text-gray-700 mt-4">{selectedMedia.description}</p>
+                <p className="text-gray-600 mt-4">{selectedMedia.description}</p>
               </div>
             </>
           )}

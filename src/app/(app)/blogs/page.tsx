@@ -30,38 +30,42 @@ export default function BlogsPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-blue-950 via-blue-900 to-purple-900">
-        <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">Blogs</h1>
-          <p className="text-xl md:text-2xl text-blue-100 max-w-4xl mx-auto">
+      <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-[#232f3e] via-[#161e2e] to-[#0f1419]">
+        <div className="container-custom text-center">
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">Blogs & Insights</h1>
+          <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
             Insights, news, and updates from the world of ICT
           </p>
         </div>
       </section>
 
       {/* Blog Grid */}
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
+      <section className="section-padding bg-white">
+        <div className="container-custom">
           <div className="grid md:grid-cols-3 gap-8">
             {placeholderBlogs.map((blog, index) => (
               <article
                 key={index}
-                className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-6 hover:shadow-xl transition-all border border-purple-100"
+                className="bg-white border border-gray-200 rounded-sm overflow-hidden card-hover"
               >
-                <div className="w-full h-48 bg-gradient-to-br from-blue-200 to-purple-200 rounded-lg mb-4 flex items-center justify-center">
-                  <FileText className="w-16 h-16 text-purple-500" />
+                <div className="w-full h-48 bg-[#f3f3f3] flex items-center justify-center">
+                  <FileText className="w-16 h-16 text-[#ff9900]/30" />
                 </div>
-                <h3 className="text-xl font-bold text-blue-900 mb-3">{blog.title}</h3>
-                <p className="text-gray-700 mb-4">{blog.excerpt}</p>
-                <div className="flex items-center text-sm text-gray-600 space-x-4">
-                  <span className="flex items-center">
-                    <Calendar className="w-4 h-4 mr-1" />
-                    {blog.date}
-                  </span>
-                  <span className="flex items-center">
-                    <User className="w-4 h-4 mr-1" />
-                    {blog.author}
-                  </span>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-[#232f3e] mb-3 leading-tight">
+                    {blog.title}
+                  </h3>
+                  <p className="text-gray-600 mb-4 leading-relaxed">{blog.excerpt}</p>
+                  <div className="flex items-center text-sm text-gray-500 space-x-4">
+                    <span className="flex items-center">
+                      <Calendar className="w-4 h-4 mr-1" />
+                      {blog.date}
+                    </span>
+                    <span className="flex items-center">
+                      <User className="w-4 h-4 mr-1" />
+                      {blog.author}
+                    </span>
+                  </div>
                 </div>
               </article>
             ))}
@@ -69,9 +73,9 @@ export default function BlogsPage() {
 
           {/* Coming Soon Message */}
           <div className="mt-16 text-center">
-            <div className="max-w-2xl mx-auto bg-gradient-to-r from-blue-100 to-purple-100 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-blue-900 mb-4">More Articles Coming Soon</h3>
-              <p className="text-gray-700">
+            <div className="max-w-2xl mx-auto bg-[#f3f3f3] border border-gray-200 rounded-sm p-8">
+              <h3 className="text-2xl font-bold text-[#232f3e] mb-4">More Articles Coming Soon</h3>
+              <p className="text-gray-600 leading-relaxed">
                 We&apos;re working on bringing you more insightful content about digital
                 transformation, technology trends, and ICT developments in Africa. Stay tuned!
               </p>

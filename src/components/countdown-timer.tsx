@@ -41,11 +41,11 @@ export function CountdownTimer() {
   }, [])
 
   return (
-    <div className="w-full max-w-4xl mx-auto py-12">
-      <h3 className="text-2xl md:text-3xl font-bold text-center mb-8 text-white">
-        Countdown Until the Event
+    <div className="max-w-6xl mx-auto">
+      <h3 className="text-xl md:text-2xl font-bold text-center mb-6 text-[#232f3e]">
+        Countdown to Summit
       </h3>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <TimeBox value={timeLeft.days} label="Days" />
         <TimeBox value={timeLeft.hours} label="Hours" />
         <TimeBox value={timeLeft.minutes} label="Minutes" />
@@ -57,11 +57,13 @@ export function CountdownTimer() {
 
 function TimeBox({ value, label }: { value: number; label: string }) {
   return (
-    <div className="bg-white/10 backdrop-blur-lg rounded-lg p-6 text-center border border-white/20 hover:bg-white/20 transition-all duration-300">
-      <div className="text-4xl md:text-6xl font-bold text-purple-400 mb-2">
+    <div className="bg-white border border-gray-200 rounded-sm p-6 text-center hover:shadow-md transition-all duration-200">
+      <div className="text-4xl md:text-5xl font-bold text-[#ff9900] mb-2">
         {value.toString().padStart(2, '0')}
       </div>
-      <div className="text-sm md:text-base text-white uppercase tracking-wider">{label}</div>
+      <div className="text-xs md:text-sm text-gray-600 uppercase tracking-wide font-semibold">
+        {label}
+      </div>
     </div>
   )
 }

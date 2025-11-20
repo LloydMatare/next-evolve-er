@@ -8,7 +8,7 @@ import Link from 'next/link'
 
 const navLinks = [
   { name: 'Home', href: '/' },
-  { name: 'About Us', href: '/about' },
+  { name: 'About', href: '/about' },
   { name: 'Gallery', href: '/gallery' },
   { name: 'Blogs', href: '/blogs' },
   { name: 'Previous Summit', href: '/previous-summit' },
@@ -28,40 +28,38 @@ export function Navbar() {
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-blue-900/95 backdrop-blur-lg shadow-lg py-4' : 'bg-transparent py-6'
+        scrolled
+          ? 'bg-[#232f3e] backdrop-blur-sm shadow-md py-3'
+          : 'bg-[#232f3e]/95 backdrop-blur-sm py-4'
       }`}
     >
-      <div className="container mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="text-2xl font-bold">
-              <span className={scrolled ? 'text-purple-600' : 'text-purple-400'}>EVOLVE</span>
-              <span className={scrolled ? 'text-blue-300' : 'text-white'}> ICT</span>
+            <Link href="/" className="text-xl font-bold tracking-tight">
+              <span className="text-[#ff9900]">EVOLVE</span>
+              <span className="text-white"> ICT SUMMIT</span>
+              <span className="text-[#ff9900] ml-2">2026</span>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-1">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className={`font-medium text-base hover:text-purple-400 transition-colors duration-300 ${
-                  scrolled ? 'text-blue-900' : 'text-white'
-                }`}
+                className="text-white hover:text-[#ff9900] font-medium text-sm px-4 py-2 rounded-sm transition-colors duration-200"
               >
                 {link.name}
               </a>
             ))}
             <Button
-              className={`${
-                scrolled
-                  ? 'bg-purple-600 hover:bg-purple-700 text-white'
-                  : 'bg-purple-500 hover:bg-purple-600 text-white'
-              }`}
+              className="bg-[#ff9900] hover:bg-[#ec7211] text-white font-semibold px-6 py-2 rounded-sm ml-4 transition-all duration-200"
+              asChild
             >
-              Register Now
+              <Link href="/register">Register now</Link>
             </Button>
           </div>
 
@@ -69,29 +67,26 @@ export function Navbar() {
           <div className="lg:hidden">
             <Sheet>
               <SheetTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className={
-                    scrolled ? 'text-blue-900 hover:bg-blue-50' : 'text-white hover:bg-white/20'
-                  }
-                >
+                <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="bg-white">
-                <div className="flex flex-col space-y-6 mt-8">
+              <SheetContent side="right" className="bg-[#232f3e] text-white border-l border-gray-700">
+                <div className="flex flex-col space-y-4 mt-8">
                   {navLinks.map((link) => (
                     <a
                       key={link.name}
                       href={link.href}
-                      className="text-gray-900 font-medium text-lg hover:text-purple-600 transition-colors duration-300 text-left"
+                      className="text-white hover:text-[#ff9900] font-medium text-base py-2 transition-colors duration-200"
                     >
                       {link.name}
                     </a>
                   ))}
-                  <Button className="bg-purple-600 hover:bg-purple-700 text-white">
-                    Register Now
+                  <Button
+                    className="bg-[#ff9900] hover:bg-[#ec7211] text-white font-semibold mt-4"
+                    asChild
+                  >
+                    <Link href="/register">Register now</Link>
                   </Button>
                 </div>
               </SheetContent>

@@ -39,14 +39,14 @@ export default function DashboardPage() {
   const getStatusBadge = () => {
     if (orderData.status === 'approved') {
       return (
-        <span className="inline-flex items-center px-4 py-2 rounded-full bg-green-100 text-green-800 font-semibold">
+        <span className="inline-flex items-center px-4 py-2 rounded-sm bg-green-50 border border-green-200 text-green-700 font-semibold">
           <CheckCircle className="w-4 h-4 mr-2" />
           Approved
         </span>
       )
     }
     return (
-      <span className="inline-flex items-center px-4 py-2 rounded-full bg-yellow-100 text-yellow-800 font-semibold">
+      <span className="inline-flex items-center px-4 py-2 rounded-sm bg-yellow-50 border border-yellow-200 text-yellow-700 font-semibold">
         <Clock className="w-4 h-4 mr-2" />
         Pending Approval
       </span>
@@ -63,7 +63,7 @@ export default function DashboardPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-12 px-4 bg-gradient-to-br from-blue-950 via-blue-900 to-purple-900">
+      <section className="pt-32 pb-12 px-4 bg-gradient-to-br from-[#232f3e] via-[#161e2e] to-[#0f1419]">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">My Dashboard</h1>
           <p className="text-xl text-blue-100">View your registration details and event information</p>
@@ -74,7 +74,7 @@ export default function DashboardPage() {
       <section className="py-12 px-4">
         <div className="max-w-6xl mx-auto">
           {/* Status Banner */}
-          <div className="bg-white rounded-3xl shadow-lg p-8 mb-8">
+          <div className="bg-white rounded-sm shadow-lg p-8 mb-8">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between">
               <div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">Registration Status</h2>
@@ -84,7 +84,7 @@ export default function DashboardPage() {
             </div>
 
             {orderData.status === 'pending' && (
-              <div className="mt-6 p-4 bg-yellow-50 border-2 border-yellow-200 rounded-xl">
+              <div className="mt-6 p-4 bg-yellow-50 border-2 border-yellow-200 rounded-sm">
                 <p className="text-sm text-yellow-900">
                   <strong>Note:</strong> Your registration is currently under review. You will receive a confirmation email once your payment has been verified and your registration is approved (typically within 24-48 hours).
                 </p>
@@ -96,8 +96,8 @@ export default function DashboardPage() {
             {/* Registration Details */}
             <div className="lg:col-span-2 space-y-8">
               {/* Personal/Company Information */}
-              <div className="bg-white rounded-3xl shadow-lg p-8">
-                <h3 className="text-2xl font-bold text-blue-900 mb-6">
+              <div className="bg-white rounded-sm shadow-lg p-8">
+                <h3 className="text-2xl font-bold text-[#232f3e] mb-6">
                   {orderData.type === 'attendee' ? 'Personal Information' : 'Company Information'}
                 </h3>
 
@@ -105,28 +105,28 @@ export default function DashboardPage() {
                   {orderData.type === 'attendee' ? (
                     <>
                       <div className="flex items-start space-x-3">
-                        <User className="w-5 h-5 text-purple-600 mt-1" />
+                        <User className="w-5 h-5 text-[#ff9900] mt-1" />
                         <div>
                           <p className="text-sm text-gray-600">Full Name</p>
                           <p className="font-semibold text-gray-900">{orderData.fullName}</p>
                         </div>
                       </div>
                       <div className="flex items-start space-x-3">
-                        <Building2 className="w-5 h-5 text-purple-600 mt-1" />
+                        <Building2 className="w-5 h-5 text-[#ff9900] mt-1" />
                         <div>
                           <p className="text-sm text-gray-600">Organization</p>
                           <p className="font-semibold text-gray-900">{orderData.organization}</p>
                         </div>
                       </div>
                       <div className="flex items-start space-x-3">
-                        <User className="w-5 h-5 text-purple-600 mt-1" />
+                        <User className="w-5 h-5 text-[#ff9900] mt-1" />
                         <div>
                           <p className="text-sm text-gray-600">Position</p>
                           <p className="font-semibold text-gray-900">{orderData.position}</p>
                         </div>
                       </div>
                       <div className="flex items-start space-x-3">
-                        <MapPin className="w-5 h-5 text-purple-600 mt-1" />
+                        <MapPin className="w-5 h-5 text-[#ff9900] mt-1" />
                         <div>
                           <p className="text-sm text-gray-600">Country</p>
                           <p className="font-semibold text-gray-900">{orderData.country}</p>
@@ -136,14 +136,14 @@ export default function DashboardPage() {
                   ) : (
                     <>
                       <div className="flex items-start space-x-3">
-                        <Building2 className="w-5 h-5 text-purple-600 mt-1" />
+                        <Building2 className="w-5 h-5 text-[#ff9900] mt-1" />
                         <div>
                           <p className="text-sm text-gray-600">Company Name</p>
                           <p className="font-semibold text-gray-900">{orderData.companyName}</p>
                         </div>
                       </div>
                       <div className="flex items-start space-x-3">
-                        <User className="w-5 h-5 text-purple-600 mt-1" />
+                        <User className="w-5 h-5 text-[#ff9900] mt-1" />
                         <div>
                           <p className="text-sm text-gray-600">Contact Person</p>
                           <p className="font-semibold text-gray-900">{orderData.contactPerson}</p>
@@ -151,7 +151,7 @@ export default function DashboardPage() {
                       </div>
                       {orderData.numberOfTeamMembers && (
                         <div className="flex items-start space-x-3">
-                          <Users className="w-5 h-5 text-purple-600 mt-1" />
+                          <Users className="w-5 h-5 text-[#ff9900] mt-1" />
                           <div>
                             <p className="text-sm text-gray-600">Team Members</p>
                             <p className="font-semibold text-gray-900">{orderData.numberOfTeamMembers}</p>
@@ -162,14 +162,14 @@ export default function DashboardPage() {
                   )}
 
                   <div className="flex items-start space-x-3">
-                    <Mail className="w-5 h-5 text-purple-600 mt-1" />
+                    <Mail className="w-5 h-5 text-[#ff9900] mt-1" />
                     <div>
                       <p className="text-sm text-gray-600">Email</p>
                       <p className="font-semibold text-gray-900">{orderData.email}</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
-                    <Phone className="w-5 h-5 text-purple-600 mt-1" />
+                    <Phone className="w-5 h-5 text-[#ff9900] mt-1" />
                     <div>
                       <p className="text-sm text-gray-600">Phone</p>
                       <p className="font-semibold text-gray-900">{orderData.phone}</p>
@@ -186,8 +186,8 @@ export default function DashboardPage() {
               </div>
 
               {/* Registration Details */}
-              <div className="bg-white rounded-3xl shadow-lg p-8">
-                <h3 className="text-2xl font-bold text-blue-900 mb-6">Registration Details</h3>
+              <div className="bg-white rounded-sm shadow-lg p-8">
+                <h3 className="text-2xl font-bold text-[#232f3e] mb-6">Registration Details</h3>
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
@@ -239,7 +239,7 @@ export default function DashboardPage() {
 
                   <div>
                     <p className="text-sm text-gray-600">Amount Paid</p>
-                    <p className="font-semibold text-purple-600 text-xl">${orderData.amount}</p>
+                    <p className="font-semibold text-[#ff9900] text-xl">${orderData.amount}</p>
                   </div>
                 </div>
               </div>
@@ -248,7 +248,7 @@ export default function DashboardPage() {
             {/* Event Info & QR Code */}
             <div className="lg:col-span-1 space-y-8">
               {/* QR Code */}
-              <div className="bg-gradient-to-br from-purple-600 to-blue-600 rounded-3xl shadow-lg p-8 text-white">
+              <div className="bg-gradient-to-br from-purple-600 to-blue-600 rounded-sm shadow-lg p-8 text-white">
                 <h3 className="text-2xl font-bold mb-4">Event Pass</h3>
                 
                 {orderData.status === 'approved' ? (
@@ -272,12 +272,12 @@ export default function DashboardPage() {
               </div>
 
               {/* Event Information */}
-              <div className="bg-white rounded-3xl shadow-lg p-8">
-                <h3 className="text-xl font-bold text-blue-900 mb-6">Event Information</h3>
+              <div className="bg-white rounded-sm shadow-lg p-8">
+                <h3 className="text-xl font-bold text-[#232f3e] mb-6">Event Information</h3>
 
                 <div className="space-y-4">
                   <div className="flex items-start space-x-3">
-                    <Calendar className="w-5 h-5 text-purple-600 mt-1" />
+                    <Calendar className="w-5 h-5 text-[#ff9900] mt-1" />
                     <div>
                       <p className="text-sm text-gray-600">Date</p>
                       <p className="font-semibold text-gray-900">June 11-12, 2026</p>
@@ -285,7 +285,7 @@ export default function DashboardPage() {
                   </div>
 
                   <div className="flex items-start space-x-3">
-                    <MapPin className="w-5 h-5 text-purple-600 mt-1" />
+                    <MapPin className="w-5 h-5 text-[#ff9900] mt-1" />
                     <div>
                       <p className="text-sm text-gray-600">Venue</p>
                       <p className="font-semibold text-gray-900">
