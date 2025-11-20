@@ -31,6 +31,8 @@ const sponsorSchema = z.object({
   website: z.string().url('Invalid website URL').optional().or(z.literal('')),
   sponsorshipTier: z.enum(['platinum', 'gold', 'silver', 'bronze']),
   companyDescription: z.string().min(20, 'Please provide a brief description (min 20 characters)'),
+  numberOfTeamMembers: z.string().min(1, 'Number of team members is required'),
+  teamMembers: z.string().min(10, 'Please provide team member names and roles (comma-separated)'),
   interestedInBooth: z.boolean(),
 })
 
@@ -43,6 +45,9 @@ const exhibitorSchema = z.object({
   industry: z.string().min(2, 'Industry is required'),
   productsServices: z.string().min(20, 'Please describe your products/services (min 20 characters)'),
   boothSize: z.enum(['small', 'medium', 'large']),
+  boothNumber: z.string().optional(),
+  numberOfTeamMembers: z.string().min(1, 'Number of team members is required'),
+  teamMembers: z.string().min(10, 'Please provide team member names (comma-separated)'),
   specialRequirements: z.string().optional(),
 })
 
@@ -135,8 +140,11 @@ function AttendeeForm() {
   const onSubmit = async (data: AttendeeFormData) => {
     await new Promise((resolve) => setTimeout(resolve, 1000))
     console.log('Attendee Registration:', data)
-    toast.success('Registration successful! Check your email for confirmation.')
-    reset()
+    // Store data in sessionStorage for checkout
+    sessionStorage.setItem('registrationData', JSON.stringify({ type: 'attendee', ...data }))
+    toast.success('Proceeding to checkout...')
+    // Redirect to checkout
+    window.location.href = '/checkout'
   }
 
   return (
@@ -280,8 +288,11 @@ function SponsorForm() {
   const onSubmit = async (data: SponsorFormData) => {
     await new Promise((resolve) => setTimeout(resolve, 1000))
     console.log('Sponsor Registration:', data)
-    toast.success('Thank you for your interest! Our team will contact you shortly.')
-    reset()
+    // Store data in sessionStorage for checkout
+    sessionStorage.setItem('registrationData', JSON.stringify({ type: 'sponsor', ...data }))
+    toast.success('Proceeding to checkout...')
+    // Redirect to checkout
+    window.location.href = '/checkout'
   }
 
   return (
@@ -406,6 +417,39 @@ function SponsorForm() {
           )}
         </div>
 
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Number of Team Members *
+            </label>
+            <input
+              {...register('numberOfTeamMembers')}
+              type="number"
+              min="1"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition"
+              placeholder="e.g., 5"
+            />
+            {errors.numberOfTeamMembers && (
+              <p className="mt-1 text-sm text-red-600">{errors.numberOfTeamMembers.message}</p>
+            )}
+          </div>
+
+          <div className="md:col-span-2">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Team Member Details *
+            </label>
+            <textarea
+              {...register('teamMembers')}
+              rows={4}
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition resize-none"
+              placeholder="List team member names and roles (e.g., John Doe - Marketing Director, Jane Smith - Brand Manager)"
+            />
+            {errors.teamMembers && (
+              <p className="mt-1 text-sm text-red-600">{errors.teamMembers.message}</p>
+            )}
+          </div>
+        </div>
+
         <div className="flex items-center space-x-3">
           <input
             {...register('interestedInBooth')}
@@ -444,8 +488,11 @@ function ExhibitorForm() {
   const onSubmit = async (data: ExhibitorFormData) => {
     await new Promise((resolve) => setTimeout(resolve, 1000))
     console.log('Exhibitor Registration:', data)
-    toast.success('Application submitted! We will contact you with booth details.')
-    reset()
+    // Store data in sessionStorage for checkout
+    sessionStorage.setItem('registrationData', JSON.stringify({ type: 'exhibitor', ...data }))
+    toast.success('Proceeding to checkout...')
+    // Redirect to checkout
+    window.location.href = '/checkout'
   }
 
   return (
@@ -548,20 +595,68 @@ function ExhibitorForm() {
           </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Booth Size *</label>
-          <select
-            {...register('boothSize')}
-            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition"
-          >
-            <option value="">Select booth size</option>
-            <option value="small">Small (3x2m) - $2,000</option>
-            <option value="medium">Medium (4x3m) - $4,000</option>
-            <option value="large">Large (6x4m) - $7,000</option>
-          </select>
-          {errors.boothSize && (
-            <p className="mt-1 text-sm text-red-600">{errors.boothSize.message}</p>
-          )}
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Booth Size *</label>
+            <select
+              {...register('boothSize')}
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition"
+            >
+              <option value="">Select booth size</option>
+              <option value="small">Small (3x2m) - $2,000</option>
+              <option value="medium">Medium (4x3m) - $4,000</option>
+              <option value="large">Large (6x4m) - $7,000</option>
+            </select>
+            {errors.boothSize && (
+              <p className="mt-1 text-sm text-red-600">{errors.boothSize.message}</p>
+            )}
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Preferred Booth Number (Optional)
+            </label>
+            <input
+              {...register('boothNumber')}
+              type="text"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition"
+              placeholder="e.g., B-12 (if you have a preference)"
+            />
+            <p className="mt-1 text-xs text-gray-500">Booth numbers assigned upon approval</p>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Number of Team Members *
+            </label>
+            <input
+              {...register('numberOfTeamMembers')}
+              type="number"
+              min="1"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition"
+              placeholder="e.g., 3"
+            />
+            {errors.numberOfTeamMembers && (
+              <p className="mt-1 text-sm text-red-600">{errors.numberOfTeamMembers.message}</p>
+            )}
+          </div>
+
+          <div className="md:col-span-2">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Team Member Names *
+            </label>
+            <textarea
+              {...register('teamMembers')}
+              rows={3}
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition resize-none"
+              placeholder="List all team member names (e.g., John Doe, Jane Smith, Mike Johnson)"
+            />
+            {errors.teamMembers && (
+              <p className="mt-1 text-sm text-red-600">{errors.teamMembers.message}</p>
+            )}
+          </div>
         </div>
 
         <div>
