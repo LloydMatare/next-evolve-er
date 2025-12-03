@@ -72,6 +72,8 @@ export interface Config {
     registrations: Registration;
     tickets: Ticket;
     payments: Payment;
+    speakers: Speaker;
+    programs: Program;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -83,6 +85,8 @@ export interface Config {
     registrations: RegistrationsSelect<false> | RegistrationsSelect<true>;
     tickets: TicketsSelect<false> | TicketsSelect<true>;
     payments: PaymentsSelect<false> | PaymentsSelect<true>;
+    speakers: SpeakersSelect<false> | SpeakersSelect<true>;
+    programs: ProgramsSelect<false> | ProgramsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -278,6 +282,115 @@ export interface Payment {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "speakers".
+ */
+export interface Speaker {
+  id: string;
+  name: string;
+  photo?: (string | null) | Media;
+  organization: string;
+  designation: string;
+  bio: string;
+  expertise?:
+    | {
+        topic?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  linkedin?: string | null;
+  twitter?: string | null;
+  website?: string | null;
+  email?: string | null;
+  featured?: boolean | null;
+  sessions?: (string | Program)[] | null;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "programs".
+ */
+export interface Program {
+  id: string;
+  title: string;
+  description: string;
+  day: 'day-1' | 'day-2';
+  /**
+   * Specific date of the session
+   */
+  date?: string | null;
+  startTime: string;
+  endTime: string;
+  /**
+   * e.g., 1h, 30m, 1.5h
+   */
+  duration: string;
+  type:
+    | 'keynote'
+    | 'panel'
+    | 'workshop'
+    | 'talk'
+    | 'networking'
+    | 'registration'
+    | 'opening'
+    | 'closing'
+    | 'lunch'
+    | 'break';
+  track?: ('main' | 'ai' | 'security' | 'cloud' | 'fintech' | 'entrepreneurship' | 'social') | null;
+  speaker?: (string | null) | Speaker;
+  speakerName?: string | null;
+  speakerTitle?: string | null;
+  venue:
+    | 'main-auditorium'
+    | 'room-a'
+    | 'room-b'
+    | 'room-c'
+    | 'exhibition-hall'
+    | 'dining-hall'
+    | 'networking-lounge'
+    | 'grand-ballroom'
+    | 'main-lobby';
+  /**
+   * e.g., All attendees, 500 attendees, Invitation only
+   */
+  capacity?: string | null;
+  featured?: boolean | null;
+  color?:
+    | (
+        | 'bg-blue-50 border-blue-200'
+        | 'bg-purple-50 border-purple-200'
+        | 'bg-amber-50 border-amber-200'
+        | 'bg-green-50 border-green-200'
+        | 'bg-red-50 border-red-200'
+        | 'bg-indigo-50 border-indigo-200'
+        | 'bg-yellow-50 border-yellow-200'
+        | 'bg-gray-50 border-gray-200'
+        | 'bg-cyan-50 border-cyan-200'
+      )
+    | null;
+  /**
+   * Link for session registration (optional)
+   */
+  registrationLink?: string | null;
+  materials?:
+    | {
+        title?: string | null;
+        file?: (string | null) | Media;
+        url?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  notes?: string | null;
+  /**
+   * Lower numbers appear first
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -302,6 +415,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'payments';
         value: string | Payment;
+      } | null)
+    | ({
+        relationTo: 'speakers';
+        value: string | Speaker;
+      } | null)
+    | ({
+        relationTo: 'programs';
+        value: string | Program;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -490,6 +611,67 @@ export interface PaymentsSelect<T extends boolean = true> {
         reference?: T;
       };
   notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "speakers_select".
+ */
+export interface SpeakersSelect<T extends boolean = true> {
+  name?: T;
+  photo?: T;
+  organization?: T;
+  designation?: T;
+  bio?: T;
+  expertise?:
+    | T
+    | {
+        topic?: T;
+        id?: T;
+      };
+  linkedin?: T;
+  twitter?: T;
+  website?: T;
+  email?: T;
+  featured?: T;
+  sessions?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "programs_select".
+ */
+export interface ProgramsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  day?: T;
+  date?: T;
+  startTime?: T;
+  endTime?: T;
+  duration?: T;
+  type?: T;
+  track?: T;
+  speaker?: T;
+  speakerName?: T;
+  speakerTitle?: T;
+  venue?: T;
+  capacity?: T;
+  featured?: T;
+  color?: T;
+  registrationLink?: T;
+  materials?:
+    | T
+    | {
+        title?: T;
+        file?: T;
+        url?: T;
+        id?: T;
+      };
+  notes?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }
