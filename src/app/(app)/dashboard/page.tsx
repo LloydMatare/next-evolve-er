@@ -1,7 +1,6 @@
 'use client'
 
 import { Navbar } from '@/components/navbar'
-import { Footer } from '@/components/footer'
 import { Button } from '@/components/ui/button'
 import {
   CheckCircle,
@@ -16,6 +15,7 @@ import {
   Users,
   QrCode,
 } from 'lucide-react'
+import Link from 'next/link'
 import React, { useState, useEffect } from 'react'
 
 export default function DashboardPage() {
@@ -66,7 +66,9 @@ export default function DashboardPage() {
       <section className="pt-32 pb-12 px-4 bg-gradient-to-br from-[#232f3e] via-[#161e2e] to-[#0f1419]">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">My Dashboard</h1>
-          <p className="text-xl text-blue-100">View your registration details and event information</p>
+          <p className="text-xl text-blue-100">
+            View your registration details and event information
+          </p>
         </div>
       </section>
 
@@ -86,7 +88,9 @@ export default function DashboardPage() {
             {orderData.status === 'pending' && (
               <div className="mt-6 p-4 bg-yellow-50 border-2 border-yellow-200 rounded-sm">
                 <p className="text-sm text-yellow-900">
-                  <strong>Note:</strong> Your registration is currently under review. You will receive a confirmation email once your payment has been verified and your registration is approved (typically within 24-48 hours).
+                  <strong>Note:</strong> Your registration is currently under review. You will
+                  receive a confirmation email once your payment has been verified and your
+                  registration is approved (typically within 24-48 hours).
                 </p>
               </div>
             )}
@@ -154,7 +158,9 @@ export default function DashboardPage() {
                           <Users className="w-5 h-5 text-[#ff9900] mt-1" />
                           <div>
                             <p className="text-sm text-gray-600">Team Members</p>
-                            <p className="font-semibold text-gray-900">{orderData.numberOfTeamMembers}</p>
+                            <p className="font-semibold text-gray-900">
+                              {orderData.numberOfTeamMembers}
+                            </p>
                           </div>
                         </div>
                       )}
@@ -180,7 +186,9 @@ export default function DashboardPage() {
                 {orderData.teamMembers && (
                   <div className="mt-6 pt-6 border-t border-gray-200">
                     <p className="text-sm text-gray-600 mb-2">Team Member Details</p>
-                    <p className="text-sm text-gray-900 whitespace-pre-wrap">{orderData.teamMembers}</p>
+                    <p className="text-sm text-gray-900 whitespace-pre-wrap">
+                      {orderData.teamMembers}
+                    </p>
                   </div>
                 )}
               </div>
@@ -250,11 +258,13 @@ export default function DashboardPage() {
               {/* QR Code */}
               <div className="bg-gradient-to-br from-purple-600 to-blue-600 rounded-sm shadow-lg p-8 text-white">
                 <h3 className="text-2xl font-bold mb-4">Event Pass</h3>
-                
+
                 {orderData.status === 'approved' ? (
                   <div className="bg-white rounded-2xl p-6 text-center">
                     <QrCode className="w-full h-48 text-gray-900 mb-4" />
-                    <p className="text-sm text-gray-600 mb-4">Scan this QR code at the event entrance</p>
+                    <p className="text-sm text-gray-600 mb-4">
+                      Scan this QR code at the event entrance
+                    </p>
                     <Button
                       onClick={downloadQRCode}
                       className="w-full bg-purple-600 hover:bg-purple-700 text-white"
@@ -266,7 +276,9 @@ export default function DashboardPage() {
                 ) : (
                   <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center">
                     <QrCode className="w-32 h-32 mx-auto mb-4 opacity-50" />
-                    <p className="text-sm">Your QR code will be generated after registration approval</p>
+                    <p className="text-sm">
+                      Your QR code will be generated after registration approval
+                    </p>
                   </div>
                 )}
               </div>
@@ -298,8 +310,8 @@ export default function DashboardPage() {
                 </div>
 
                 <div className="mt-6 pt-6 border-t border-gray-200">
-                  <Button className="w-full bg-blue-900 hover:bg-blue-800 text-white">
-                    View Full Program
+                  <Button className="w-full bg-amber-500 hover:bg-amber-600 text-white" asChild>
+                    <Link href="/program">View Full Program</Link>
                   </Button>
                 </div>
               </div>
@@ -307,8 +319,6 @@ export default function DashboardPage() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   )
 }

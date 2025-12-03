@@ -5,6 +5,8 @@ import { Footer } from '@/components/footer'
 import { Calendar, Users, Award, TrendingUp } from 'lucide-react'
 import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import Link from 'next/link'
+import SubHero from '@/components/sub-hero'
 
 export default function PreviousSummitPage() {
   const summit2025Highlights = [
@@ -29,9 +31,10 @@ export default function PreviousSummitPage() {
       <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-[#232f3e] via-[#161e2e] to-[#0f1419]">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">Previous Summits</h1>
-          <p className="text-lg md:text-xl text-gray-300 max-w-4xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-300 ">
             Highlights from past Evolve ICT Summits
           </p>
+          <SubHero />
         </div>
       </section>
 
@@ -41,10 +44,16 @@ export default function PreviousSummitPage() {
           <Tabs defaultValue="2025" className="w-full">
             <div className="flex justify-center mb-12">
               <TabsList className="bg-[#f3f3f3] border border-gray-200 p-1">
-                <TabsTrigger value="2025" className="data-[state=active]:bg-[#ff9900] data-[state=active]:text-white px-8 py-3">
+                <TabsTrigger
+                  value="2025"
+                  className="data-[state=active]:bg-[#ff9900] data-[state=active]:text-white px-8 py-3"
+                >
                   Summit 2025
                 </TabsTrigger>
-                <TabsTrigger value="2024" className="data-[state=active]:bg-[#ff9900] data-[state=active]:text-white px-8 py-3">
+                <TabsTrigger
+                  value="2024"
+                  className="data-[state=active]:bg-[#ff9900] data-[state=active]:text-white px-8 py-3"
+                >
                   Summit 2024
                 </TabsTrigger>
               </TabsList>
@@ -143,10 +152,7 @@ export default function PreviousSummitPage() {
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                    <div
-                      key={i}
-                      className="aspect-square bg-[#f3f3f3] rounded-lg"
-                    />
+                    <div key={i} className="aspect-square bg-[#f3f3f3] rounded-lg" />
                   ))}
                 </div>
               </div>
@@ -245,10 +251,7 @@ export default function PreviousSummitPage() {
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                    <div
-                      key={i}
-                      className="aspect-square bg-[#f3f3f3] rounded-lg"
-                    />
+                    <div key={i} className="aspect-square bg-[#f3f3f3] rounded-lg" />
                   ))}
                 </div>
               </div>
@@ -258,24 +261,20 @@ export default function PreviousSummitPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 px-4 bg-gradient-to-br from-blue-900 to-purple-900">
+      <section className="py-20 px-4 bg-gradient-to-br from-slate-900 to-zinc-400">
         <div className="max-w-4xl mx-auto text-center text-white">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Don&apos;t Miss Summit 2026!
-          </h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">Don&apos;t Miss Summit 2026!</h2>
           <p className="text-xl text-blue-100 mb-8">
             Join us for an even bigger and better event on June 11-12, 2026
           </p>
-          <a
+          <Link
             href="/"
             className="inline-block bg-[#ff9900] hover:bg-purple-600 text-white font-bold text-lg px-12 py-4 rounded-lg transition-colors"
           >
             Register for 2026
-          </a>
+          </Link>
         </div>
       </section>
-
-      <Footer />
     </div>
   )
 }

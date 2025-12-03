@@ -61,12 +61,12 @@ function Home() {
           </h1>
 
           {/* Subtitle */}
-          <h2 className="text-xl md:text-2xl lg:text-3xl font-normal tracking-wide mb-8 text-gray-300 max-w-4xl mx-auto">
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-normal tracking-wide mb-8 text-gray-300  mx-auto">
             Empowering Africa&apos;s Digital Leap
           </h2>
 
           {/* Description */}
-          <p className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-12 leading-relaxed">
+          <p className="text-base md:text-lg text-gray-400  mx-auto mb-12 leading-relaxed">
             Join us at Zimbabwe&apos;s premier digital transformation forum uniting leaders across
             policy, business, academia, and technology to shape Africa&apos;s digital future.
           </p>
@@ -93,7 +93,7 @@ function Home() {
           </div>
 
           {/* Event Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20  mx-auto">
             <div className="text-center">
               <div className="text-4xl md:text-5xl font-bold text-[#ff9900] mb-2">2,000+</div>
               <div className="text-sm md:text-base text-gray-400 uppercase tracking-wide">
@@ -183,7 +183,7 @@ function Home() {
               Why Attend
             </h2>
             <div className="w-20 h-1 bg-[#ff9900] mx-auto mb-6" />
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            <p className="text-lg text-gray-600  mx-auto">
               Join Africa&apos;s premier digital transformation forum and be part of shaping the
               continent&apos;s technological future.
             </p>
@@ -194,9 +194,7 @@ function Home() {
               <div className="w-14 h-14 bg-[#ff9900]/10 rounded-sm flex items-center justify-center mb-6">
                 <Lightbulb className="w-8 h-8 text-[#ff9900]" />
               </div>
-              <h3 className="text-xl font-bold text-[#232f3e] mb-4">
-                Premier Digital Forum
-              </h3>
+              <h3 className="text-xl font-bold text-[#232f3e] mb-4">Premier Digital Forum</h3>
               <p className="text-gray-600 leading-relaxed">
                 Zimbabwe&apos;s flagship platform uniting leaders across policy, business, academia,
                 and technology to shape Africa&apos;s digital future.
@@ -209,8 +207,8 @@ function Home() {
               </div>
               <h3 className="text-xl font-bold text-[#232f3e] mb-4">Bold Collaboration</h3>
               <p className="text-gray-600 leading-relaxed">
-                Driving inclusive technological advancement, innovation, and resilience across borders
-                and sectors in the Fourth Industrial Revolution.
+                Driving inclusive technological advancement, innovation, and resilience across
+                borders and sectors in the Fourth Industrial Revolution.
               </p>
             </div>
 
@@ -220,8 +218,8 @@ function Home() {
               </div>
               <h3 className="text-xl font-bold text-[#232f3e] mb-4">Africa&apos;s Digital Hub</h3>
               <p className="text-gray-600 leading-relaxed">
-                Zimbabwe positioned as the epicenter of Africa&apos;s digital dialogue, bridging local
-                creativity with continental opportunity.
+                Zimbabwe positioned as the epicenter of Africa&apos;s digital dialogue, bridging
+                local creativity with continental opportunity.
               </p>
             </div>
           </div>
@@ -234,9 +232,9 @@ function Home() {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Purpose</h2>
             <div className="w-20 h-1 bg-[#ff9900] mx-auto mb-8" />
-            <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-              To accelerate Africa&apos;s digital transformation by fostering collaboration, knowledge
-              sharing, and investment in ICT innovation and emerging technologies.
+            <p className="text-xl text-gray-300  mx-auto leading-relaxed">
+              To accelerate Africa&apos;s digital transformation by fostering collaboration,
+              knowledge sharing, and investment in ICT innovation and emerging technologies.
             </p>
           </div>
 
@@ -387,7 +385,7 @@ function Home() {
               Passes & Registration
             </h2>
             <div className="w-20 h-1 bg-[#ff9900] mx-auto mb-6" />
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            <p className="text-lg text-gray-600  mx-auto">
               Early bird tickets available now. Registration closes June 30, 2026.
             </p>
           </div>
@@ -433,7 +431,7 @@ function Home() {
           </div>
 
           <div className="mt-12 text-center">
-            <div className="bg-[#f3f3f3] border border-gray-200 rounded-sm p-6 max-w-3xl mx-auto mb-8">
+            <div className="bg-[#f3f3f3] border border-gray-200 rounded-sm p-6  mx-auto mb-8">
               <p className="text-base text-gray-700">
                 <span className="font-bold text-[#232f3e]">Important:</span> The cut-off date for
                 registration and payment is June 30, 2026.
@@ -529,70 +527,6 @@ function Home() {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-[#232f3e] text-white py-12 px-4 border-t border-gray-700">
-        <div className="container-custom">
-          <div className="grid md:grid-cols-3 gap-8 mb-8">
-            <div>
-              <div className="text-2xl font-bold mb-4">
-                <span className="text-[#ff9900]">EVOLVE</span>
-                <span className="text-white"> ICT SUMMIT 2026</span>
-              </div>
-              <p className="text-gray-400 text-sm leading-relaxed">
-                Empowering Africa&apos;s Digital Leap
-              </p>
-            </div>
-            <div>
-              <h4 className="font-bold mb-4 text-sm uppercase tracking-wide">Quick Links</h4>
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <a href="#about" className="text-gray-400 hover:text-[#ff9900] transition-colors">
-                    About
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#objectives"
-                    className="text-gray-400 hover:text-[#ff9900] transition-colors"
-                  >
-                    Program
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#speakers"
-                    className="text-gray-400 hover:text-[#ff9900] transition-colors"
-                  >
-                    Speakers
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#tickets"
-                    className="text-gray-400 hover:text-[#ff9900] transition-colors"
-                  >
-                    Tickets
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold mb-4 text-sm uppercase tracking-wide">Contact</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li>June 11-12, 2026</li>
-                <li>Harare, Zimbabwe</li>
-                <li>info@evolveictsummit.com</li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-gray-700 pt-8 text-center">
-            <p className="text-sm text-gray-400">
-              © 2026 Evolve Africa. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }

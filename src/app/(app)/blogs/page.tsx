@@ -1,19 +1,22 @@
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
-import { FileText, Calendar, User } from 'lucide-react'
+import { FileText, Calendar, User, ArrowRight } from 'lucide-react'
 import React from 'react'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+import SubHero from '@/components/sub-hero'
 
 export default function BlogsPage() {
   const placeholderBlogs = [
     {
       title: 'Digital Transformation in Africa: The Road Ahead',
-      excerpt: 'Exploring the key trends and opportunities in Africa\'s digital revolution...',
+      excerpt: "Exploring the key trends and opportunities in Africa's digital revolution...",
       date: 'March 15, 2026',
       author: 'Evolve Team',
     },
     {
       title: 'Why the 4th Industrial Revolution Matters for Zimbabwe',
-      excerpt: 'Understanding the impact of Industry 4.0 on Zimbabwe\'s economy and future...',
+      excerpt: "Understanding the impact of Industry 4.0 on Zimbabwe's economy and future...",
       date: 'February 28, 2026',
       author: 'Tech Insights',
     },
@@ -33,9 +36,10 @@ export default function BlogsPage() {
       <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-[#232f3e] via-[#161e2e] to-[#0f1419]">
         <div className="container-custom text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">Blogs & Insights</h1>
-          <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-300 ">
             Insights, news, and updates from the world of ICT
           </p>
+          <SubHero />
         </div>
       </section>
 
@@ -83,8 +87,6 @@ export default function BlogsPage() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   )
 }

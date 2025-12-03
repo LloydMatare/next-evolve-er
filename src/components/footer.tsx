@@ -4,8 +4,8 @@ import React from 'react'
 export function Footer() {
   return (
     <footer className="bg-[#232f3e] text-white py-12 px-4 border-t border-gray-700">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-4 gap-8 mb-8">
+      <div className="container-custom">
+        <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
             <div className="text-2xl font-bold mb-4">
               <span className="text-[#ff9900]">EVOLVE</span>
@@ -15,76 +15,46 @@ export function Footer() {
               Empowering Africa&apos;s Digital Leap
             </p>
           </div>
-
           <div>
-            <h3 className="font-bold mb-4 text-sm uppercase tracking-wide">Quick Links</h3>
+            <h4 className="font-bold mb-4 text-sm uppercase tracking-wide">Quick Links</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/" className="text-gray-400 hover:text-[#ff9900] transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/about"
-                  className="text-gray-400 hover:text-[#ff9900] transition-colors"
-                >
+                <a href="#about" className="text-gray-400 hover:text-[#ff9900] transition-colors">
                   About
-                </Link>
+                </a>
               </li>
               <li>
-                <Link
-                  href="/gallery"
+                <a
+                  href="#objectives"
                   className="text-gray-400 hover:text-[#ff9900] transition-colors"
                 >
-                  Gallery
-                </Link>
+                  Program
+                </a>
               </li>
               <li>
-                <Link
-                  href="/blogs"
+                <a
+                  href="#speakers"
                   className="text-gray-400 hover:text-[#ff9900] transition-colors"
                 >
-                  Blogs
-                </Link>
+                  Speakers
+                </a>
+              </li>
+              <li>
+                <a href="#tickets" className="text-gray-400 hover:text-[#ff9900] transition-colors">
+                  Tickets
+                </a>
               </li>
             </ul>
           </div>
-
           <div>
-            <h3 className="font-bold mb-4 text-sm uppercase tracking-wide">Event Info</h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link
-                  href="/previous-summit"
-                  className="text-gray-400 hover:text-[#ff9900] transition-colors"
-                >
-                  Previous Summit
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/register"
-                  className="text-gray-400 hover:text-[#ff9900] transition-colors"
-                >
-                  Register
-                </Link>
-              </li>
-              <li className="text-gray-400">June 11-12, 2026</li>
-              <li className="text-gray-400">Harare, Zimbabwe</li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-bold mb-4 text-sm uppercase tracking-wide">Contact</h3>
+            <h4 className="font-bold mb-4 text-sm uppercase tracking-wide">Contact</h4>
             <ul className="space-y-2 text-sm text-gray-400">
+              <li>June 11-12, 2026</li>
+              <li>Harare, Zimbabwe</li>
               <li>info@evolveictsummit.com</li>
-              <li>+263 XXX XXX XXX</li>
-              <li>HICC, Harare, Zimbabwe</li>
             </ul>
           </div>
         </div>
-
         <div className="border-t border-gray-700 pt-8 text-center">
           <p className="text-sm text-gray-400">© 2026 Evolve Africa. All rights reserved.</p>
         </div>

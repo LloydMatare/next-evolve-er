@@ -2,14 +2,12 @@
 
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
-import { Image as ImageIcon, Play } from 'lucide-react'
+import { ArrowRight, Image as ImageIcon, Play } from 'lucide-react'
 import React, { useState } from 'react'
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+import SubHero from '@/components/sub-hero'
 
 interface MediaItem {
   id: number
@@ -124,9 +122,8 @@ export default function GalleryPage() {
       <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-[#232f3e] via-[#161e2e] to-[#0f1419]">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">Gallery</h1>
-          <p className="text-lg md:text-xl text-gray-300 max-w-4xl mx-auto">
-            Moments from Evolve ICT Summit
-          </p>
+          <p className="text-lg md:text-xl text-gray-300 ">Moments from Evolve ICT Summit</p>
+          <SubHero />
         </div>
       </section>
 
@@ -165,11 +162,7 @@ export default function GalleryPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {sampleVideos.map((video) => (
-              <div
-                key={video.id}
-                onClick={() => openMedia(video)}
-                className="group cursor-pointer"
-              >
+              <div key={video.id} onClick={() => openMedia(video)} className="group cursor-pointer">
                 <div className="relative aspect-video overflow-hidden rounded-lg mb-3">
                   <div className="w-full h-full bg-[#f3f3f3]" />
                   <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-colors flex items-center justify-center">
@@ -214,8 +207,6 @@ export default function GalleryPage() {
           )}
         </DialogContent>
       </Dialog>
-
-      <Footer />
     </div>
   )
 }

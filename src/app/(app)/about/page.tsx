@@ -1,9 +1,10 @@
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { Button } from '@/components/ui/button'
-import { Users, Lightbulb, Target, TrendingUp, Calendar, MapPin } from 'lucide-react'
+import { Users, Lightbulb, Target, TrendingUp, Calendar, MapPin, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
+import SubHero from '@/components/sub-hero'
 
 export default function AboutPage() {
   return (
@@ -14,9 +15,10 @@ export default function AboutPage() {
       <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-[#232f3e] via-[#161e2e] to-[#0f1419]">
         <div className="container-custom text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">About the Summit</h1>
-          <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-300 ">
             Discover the vision behind Africa&apos;s premier ICT Summit
           </p>
+          <SubHero />
         </div>
       </section>
 
@@ -55,7 +57,9 @@ export default function AboutPage() {
       <section className="section-padding bg-[#f3f3f3]">
         <div className="container-custom">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#232f3e] mb-4">Overview</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#232f3e] mb-4">
+              Overview
+            </h2>
             <div className="w-20 h-1 bg-[#ff9900] mx-auto mb-6" />
             <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
               The Evolve ICT Summit stands as Zimbabwe&apos;s premier digital transformation forum,
@@ -69,9 +73,7 @@ export default function AboutPage() {
               <div className="w-14 h-14 bg-[#ff9900]/10 rounded-sm flex items-center justify-center mb-6">
                 <Lightbulb className="w-8 h-8 text-[#ff9900]" />
               </div>
-              <h3 className="text-xl font-bold text-[#232f3e] mb-4">
-                Premier Digital Forum
-              </h3>
+              <h3 className="text-xl font-bold text-[#232f3e] mb-4">Premier Digital Forum</h3>
               <p className="text-gray-600 leading-relaxed">
                 Zimbabwe&apos;s flagship platform bringing together policy makers, business leaders,
                 academics, and technology innovators.
@@ -107,7 +109,9 @@ export default function AboutPage() {
       <section className="section-padding bg-white">
         <div className="container-custom">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#232f3e] mb-4">Our Purpose</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#232f3e] mb-4">
+              Our Purpose
+            </h2>
             <div className="w-20 h-1 bg-[#ff9900] mx-auto mb-6" />
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               To accelerate Africa&apos;s digital transformation by fostering collaboration,
@@ -153,7 +157,9 @@ export default function AboutPage() {
       <section className="section-padding bg-[#f3f3f3]">
         <div className="container-custom">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#232f3e] mb-4">Our Objectives</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#232f3e] mb-4">
+              Our Objectives
+            </h2>
             <div className="w-20 h-1 bg-[#ff9900] mx-auto" />
           </div>
 
@@ -209,10 +215,8 @@ export default function AboutPage() {
       {/* CTA Section */}
       <section className="section-padding bg-[#232f3e] text-white">
         <div className="container-custom max-w-4xl text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Join Us at the Summit
-          </h2>
-          <p className="text-lg text-gray-300 mb-8">
+          <h2 className="text-2xl md:text-4xl font-bold mb-6">Join Us at the Summit</h2>
+          <p className="text-s, md:text-lg text-gray-300 mb-8">
             <Calendar className="inline w-5 h-5 mr-2" />
             11-12 June 2026
             <span className="mx-4">•</span>
@@ -222,15 +226,13 @@ export default function AboutPage() {
           <Link href="/register">
             <Button
               size="lg"
-              className="bg-[#ff9900] hover:bg-[#ec7211] text-white font-semibold text-base px-10 py-6 rounded-sm"
+              className="bg-[#ff9900] hover:bg-[#ec7211] text-white font-semibold mt-4 md:mt-0 text-base px-10 py-6 rounded-sm"
             >
               Register Now
             </Button>
           </Link>
         </div>
       </section>
-
-      <Footer />
     </div>
   )
 }

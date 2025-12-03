@@ -1,14 +1,13 @@
 'use client'
 
 import { Navbar } from '@/components/navbar'
-import { Footer } from '@/components/footer'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { toast } from 'sonner'
-import { Users, Building2, Store, CheckCircle } from 'lucide-react'
+import { Users, Building2, Store } from 'lucide-react'
 import React, { useState } from 'react'
 
 // Validation Schemas
@@ -43,7 +42,9 @@ const exhibitorSchema = z.object({
   phone: z.string().min(10, 'Phone number must be at least 10 digits'),
   website: z.string().url('Invalid website URL').optional().or(z.literal('')),
   industry: z.string().min(2, 'Industry is required'),
-  productsServices: z.string().min(20, 'Please describe your products/services (min 20 characters)'),
+  productsServices: z
+    .string()
+    .min(20, 'Please describe your products/services (min 20 characters)'),
   boothSize: z.enum(['small', 'medium', 'large']),
   boothNumber: z.string().optional(),
   numberOfTeamMembers: z.string().min(1, 'Number of team members is required'),
@@ -66,7 +67,7 @@ export default function RegisterPage() {
       <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-[#232f3e] via-[#161e2e] to-[#0f1419]">
         <div className="container-custom text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">Register</h1>
-          <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-300  mx-auto">
             Join us at Evolve ICT Summit 2026
           </p>
           <p className="text-base text-gray-400 mt-4">June 11-12, 2026 • HICC, Harare, Zimbabwe</p>
@@ -74,14 +75,14 @@ export default function RegisterPage() {
       </section>
 
       {/* Registration Form Section */}
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-[#f3f3f3]  md:bg-white">
         <div className="max-w-4xl mx-auto">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <div className="flex justify-center mb-12">
-              <TabsList className="bg-[#f3f3f3] p-1 grid grid-cols-3 w-full max-w-2xl border border-gray-200">
+              <TabsList className="bg-[#f3f3f3] p-1 grid md:grid-cols-3 gap-6 md:gap-0 w-full h-full max-w-2xl border border-gray-200">
                 <TabsTrigger
                   value="attendee"
-                  className="data-[state=active]:bg-[#ff9900] data-[state=active]:text-white flex items-center gap-2"
+                  className="data-[state=active]:bg-[#ff9900] data-[state=active]:text-white flex  items-center gap-2"
                 >
                   <Users className="w-4 h-4" />
                   <span className="hidden sm:inline">Attendee</span>
@@ -120,8 +121,6 @@ export default function RegisterPage() {
           </Tabs>
         </div>
       </section>
-
-      <Footer />
     </div>
   )
 }
@@ -159,13 +158,11 @@ function AttendeeForm() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-2">
-              Full Name *
-            </label>
+            <label className="block text-sm font-medium text-gray-600 mb-2">Full Name *</label>
             <input
               {...register('fullName')}
               type="text"
-              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 rounded-sm border text-slate-600 border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="John Doe"
             />
             {errors.fullName && (
@@ -178,7 +175,7 @@ function AttendeeForm() {
             <input
               {...register('email')}
               type="email"
-              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 rounded-sm border text-slate-600 border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="john@example.com"
             />
             {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>}
@@ -189,7 +186,7 @@ function AttendeeForm() {
             <input
               {...register('phone')}
               type="tel"
-              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 rounded-sm border text-slate-600 border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="+263 XXX XXX XXX"
             />
             {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>}
@@ -200,7 +197,7 @@ function AttendeeForm() {
             <input
               {...register('organization')}
               type="text"
-              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 rounded-sm border text-slate-600 border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="Company Name"
             />
             {errors.organization && (
@@ -213,7 +210,7 @@ function AttendeeForm() {
             <input
               {...register('position')}
               type="text"
-              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 rounded-sm border text-slate-600 border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="Job Title"
             />
             {errors.position && (
@@ -226,7 +223,7 @@ function AttendeeForm() {
             <input
               {...register('country')}
               type="text"
-              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 rounded-sm border text-slate-600 border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="Zimbabwe"
             />
             {errors.country && (
@@ -239,7 +236,7 @@ function AttendeeForm() {
           <label className="block text-sm font-medium text-gray-600 mb-2">Ticket Type *</label>
           <select
             {...register('ticketType')}
-            className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+            className="w-full px-4 py-3 rounded-sm border text-slate-600 border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
           >
             <option value="early-bird-1">Early Bird - $150 (Before April 30, 2026)</option>
             <option value="early-bird-2">Early Bird - $175 (Before May 30, 2026)</option>
@@ -257,7 +254,7 @@ function AttendeeForm() {
           <textarea
             {...register('dietaryRestrictions')}
             rows={3}
-            className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition resize-none"
+            className="w-full px-4 py-3 rounded-sm border text-slate-600 border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition resize-none"
             placeholder="Any dietary requirements or allergies..."
           />
         </div>
@@ -316,13 +313,11 @@ function SponsorForm() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-2">
-              Company Name *
-            </label>
+            <label className="block text-sm font-medium text-gray-600 mb-2">Company Name *</label>
             <input
               {...register('companyName')}
               type="text"
-              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="Your Company"
             />
             {errors.companyName && (
@@ -331,13 +326,11 @@ function SponsorForm() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-2">
-              Contact Person *
-            </label>
+            <label className="block text-sm font-medium text-gray-600 mb-2">Contact Person *</label>
             <input
               {...register('contactPerson')}
               type="text"
-              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="Full Name"
             />
             {errors.contactPerson && (
@@ -350,7 +343,7 @@ function SponsorForm() {
             <input
               {...register('email')}
               type="email"
-              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="contact@company.com"
             />
             {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>}
@@ -361,7 +354,7 @@ function SponsorForm() {
             <input
               {...register('phone')}
               type="tel"
-              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="+263 XXX XXX XXX"
             />
             {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>}
@@ -374,7 +367,7 @@ function SponsorForm() {
             <input
               {...register('website')}
               type="url"
-              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="https://www.company.com"
             />
             {errors.website && (
@@ -384,12 +377,10 @@ function SponsorForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-600 mb-2">
-            Sponsorship Tier *
-          </label>
+          <label className="block text-sm font-medium text-gray-600 mb-2">Sponsorship Tier *</label>
           <select
             {...register('sponsorshipTier')}
-            className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+            className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
           >
             <option value="">Select a tier</option>
             <option value="platinum">Platinum - $50,000+</option>
@@ -409,7 +400,7 @@ function SponsorForm() {
           <textarea
             {...register('companyDescription')}
             rows={4}
-            className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition resize-none"
+            className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition resize-none"
             placeholder="Tell us about your company and why you want to sponsor..."
           />
           {errors.companyDescription && (
@@ -426,7 +417,7 @@ function SponsorForm() {
               {...register('numberOfTeamMembers')}
               type="number"
               min="1"
-              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="e.g., 5"
             />
             {errors.numberOfTeamMembers && (
@@ -441,7 +432,7 @@ function SponsorForm() {
             <textarea
               {...register('teamMembers')}
               rows={4}
-              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition resize-none"
+              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition resize-none"
               placeholder="List team member names and roles (e.g., John Doe - Marketing Director, Jane Smith - Brand Manager)"
             />
             {errors.teamMembers && (
@@ -515,13 +506,11 @@ function ExhibitorForm() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-2">
-              Company Name *
-            </label>
+            <label className="block text-sm font-medium text-gray-600 mb-2">Company Name *</label>
             <input
               {...register('companyName')}
               type="text"
-              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="Your Company"
             />
             {errors.companyName && (
@@ -530,13 +519,11 @@ function ExhibitorForm() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-2">
-              Contact Person *
-            </label>
+            <label className="block text-sm font-medium text-gray-600 mb-2">Contact Person *</label>
             <input
               {...register('contactPerson')}
               type="text"
-              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="Full Name"
             />
             {errors.contactPerson && (
@@ -549,7 +536,7 @@ function ExhibitorForm() {
             <input
               {...register('email')}
               type="email"
-              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="contact@company.com"
             />
             {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>}
@@ -560,7 +547,7 @@ function ExhibitorForm() {
             <input
               {...register('phone')}
               type="tel"
-              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="+263 XXX XXX XXX"
             />
             {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>}
@@ -573,7 +560,7 @@ function ExhibitorForm() {
             <input
               {...register('website')}
               type="url"
-              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="https://www.company.com"
             />
             {errors.website && (
@@ -586,7 +573,7 @@ function ExhibitorForm() {
             <input
               {...register('industry')}
               type="text"
-              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="e.g., Software, Hardware, Fintech"
             />
             {errors.industry && (
@@ -600,7 +587,7 @@ function ExhibitorForm() {
             <label className="block text-sm font-medium text-gray-600 mb-2">Booth Size *</label>
             <select
               {...register('boothSize')}
-              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
             >
               <option value="">Select booth size</option>
               <option value="small">Small (3x2m) - $2,000</option>
@@ -619,7 +606,7 @@ function ExhibitorForm() {
             <input
               {...register('boothNumber')}
               type="text"
-              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="e.g., B-12 (if you have a preference)"
             />
             <p className="mt-1 text-xs text-gray-500">Booth numbers assigned upon approval</p>
@@ -635,7 +622,7 @@ function ExhibitorForm() {
               {...register('numberOfTeamMembers')}
               type="number"
               min="1"
-              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="e.g., 3"
             />
             {errors.numberOfTeamMembers && (
@@ -650,7 +637,7 @@ function ExhibitorForm() {
             <textarea
               {...register('teamMembers')}
               rows={3}
-              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition resize-none"
+              className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition resize-none"
               placeholder="List all team member names (e.g., John Doe, Jane Smith, Mike Johnson)"
             />
             {errors.teamMembers && (
@@ -666,7 +653,7 @@ function ExhibitorForm() {
           <textarea
             {...register('productsServices')}
             rows={4}
-            className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition resize-none"
+            className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition resize-none"
             placeholder="Describe what you will showcase at the exhibition..."
           />
           {errors.productsServices && (
@@ -681,7 +668,7 @@ function ExhibitorForm() {
           <textarea
             {...register('specialRequirements')}
             rows={3}
-            className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition resize-none"
+            className="w-full px-4 py-3 rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition resize-none"
             placeholder="Any special setup requirements, power needs, etc..."
           />
         </div>

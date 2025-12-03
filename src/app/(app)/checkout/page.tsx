@@ -1,7 +1,6 @@
 'use client'
 
 import { Navbar } from '@/components/navbar'
-import { Footer } from '@/components/footer'
 import { Button } from '@/components/ui/button'
 import { CreditCard, Smartphone, Building2, CheckCircle } from 'lucide-react'
 import React, { useState, useEffect } from 'react'
@@ -159,7 +158,8 @@ export default function CheckoutPage() {
                     </div>
                   )}
 
-                  {(registrationData.type === 'sponsor' || registrationData.type === 'exhibitor') && (
+                  {(registrationData.type === 'sponsor' ||
+                    registrationData.type === 'exhibitor') && (
                     <div>
                       <p className="text-sm text-gray-600">Company</p>
                       <p className="font-semibold text-gray-900">{registrationData.companyName}</p>
@@ -220,9 +220,7 @@ export default function CheckoutPage() {
                         <div className="flex items-start">
                           <div
                             className={`w-12 h-12 rounded-sm flex items-center justify-center mr-4 ${
-                              selectedPaymentMethod === method.id
-                                ? 'bg-[#ff9900]'
-                                : 'bg-gray-200'
+                              selectedPaymentMethod === method.id ? 'bg-[#ff9900]' : 'bg-gray-200'
                             }`}
                           >
                             <Icon
@@ -249,17 +247,20 @@ export default function CheckoutPage() {
                     <h3 className="font-bold text-[#232f3e] mb-3">Payment Instructions</h3>
                     {selectedPaymentMethod === 'card' && (
                       <p className="text-sm text-gray-600">
-                        You will be redirected to our secure payment gateway to complete your card payment.
+                        You will be redirected to our secure payment gateway to complete your card
+                        payment.
                       </p>
                     )}
                     {selectedPaymentMethod === 'mobile' && (
                       <p className="text-sm text-gray-600">
-                        Payment instructions will be sent to your phone. Please complete the transaction within 24 hours.
+                        Payment instructions will be sent to your phone. Please complete the
+                        transaction within 24 hours.
                       </p>
                     )}
                     {selectedPaymentMethod === 'bank' && (
                       <p className="text-sm text-gray-600">
-                        Bank details will be sent to your email. Please include your order ID as reference.
+                        Bank details will be sent to your email. Please include your order ID as
+                        reference.
                       </p>
                     )}
                   </div>
@@ -267,7 +268,8 @@ export default function CheckoutPage() {
 
                 <div className="bg-yellow-50 border-2 border-yellow-200 rounded-sm p-4 mb-6">
                   <p className="text-sm text-yellow-900">
-                    <strong>Note:</strong> Your registration will be pending approval after payment verification. You will receive a confirmation email within 24-48 hours.
+                    <strong>Note:</strong> Your registration will be pending approval after payment
+                    verification. You will receive a confirmation email within 24-48 hours.
                   </p>
                 </div>
 
@@ -283,8 +285,6 @@ export default function CheckoutPage() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   )
 }
