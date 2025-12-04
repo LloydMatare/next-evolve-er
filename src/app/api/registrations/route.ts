@@ -1,17 +1,20 @@
-// app/api/registrations/route.ts
 import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
 
+// Helper function to add CORS headers
+function withCors(response: NextResponse) {
+  response.headers.set('Access-Control-Allow-Origin', 'https://next-evolve-er.vercel.app')
+  // OR for multiple origins:
+  // response.headers.set('Access-Control-Allow-Origin', 'https://next-evolve-er.vercel.app,http://localhost:3000')
+  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS')
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  response.headers.set('Access-Control-Allow-Credentials', 'true')
+  return response
+}
+
 export function OPTIONS() {
-  return new Response(null, {
-    status: 204,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    },
-  })
+  return withCors(NextResponse.json({}, { status: 200 }))
 }
 
 export async function POST(request: NextRequest) {
@@ -27,7 +30,7 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    return NextResponse.json(
+    const response = NextResponse.json(
       {
         success: true,
         message: 'Registration created successfully',
@@ -35,12 +38,15 @@ export async function POST(request: NextRequest) {
       },
       { status: 201 },
     )
+
+    return withCors(response)
   } catch (error: any) {
     console.error('Error creating registration:', error)
-    return NextResponse.json(
+    const response = NextResponse.json(
       { success: false, error: error.message || 'Failed to create registration' },
       { status: 500 },
     )
+    return withCors(response)
   }
 }
 
