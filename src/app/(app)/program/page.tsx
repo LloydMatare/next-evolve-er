@@ -262,8 +262,8 @@ export default function ProgramPage() {
       <div className="min-h-screen bg-slate-900">
         <Navbar />
         <div className="pt-32 flex items-center justify-center">
-          <Loader2 className="h-8 w-8 animate-spin text-[#ff9900]" />
-          <span className="ml-2 text-[#ff9900]">Loading program schedule...</span>
+          <Loader2 className="h-8 w-8 animate-spin text-[#ffcc00]" />
+          <span className="ml-2 text-[#ffcc00]">Loading program schedule...</span>
         </div>
       </div>
     )
@@ -275,7 +275,7 @@ export default function ProgramPage() {
         <Navbar />
         <div className="pt-32 flex flex-col items-center justify-center">
           <div className="text-red-500 mb-4">Error: {error}</div>
-          <Button onClick={fetchPrograms} className="bg-[#ff9900] hover:bg-[#ec7211]">
+          <Button onClick={fetchPrograms} className="bg-[#ffcc00] hover:bg-[#ec7211]">
             Retry
           </Button>
         </div>
@@ -288,10 +288,10 @@ export default function ProgramPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-[#232f3e] via-[#161e2e] to-[#0f1419]">
+      <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-[#170d43] via-[#161e2e] to-[#0f1419]">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-            Event <span className="text-[#ff9900]">Program</span>
+            Event <span className="text-[#ffcc00]">Program</span>
           </h1>
           <p className="text-xl text-blue-100 mx-auto mb-8">
             Explore the complete schedule for EVOLVE ICT SUMMIT 2026. Plan your two days of
@@ -300,15 +300,15 @@ export default function ProgramPage() {
 
           <div className="flex flex-wrap justify-center gap-4 mb-8">
             <div className="flex items-center text-white">
-              <Calendar className="h-5 w-5 mr-2 text-[#ff9900]" />
+              <Calendar className="h-5 w-5 mr-2 text-[#ffcc00]" />
               <span>June 11-12, 2026</span>
             </div>
             <div className="flex items-center text-white">
-              <Clock className="h-5 w-5 mr-2 text-[#ff9900]" />
+              <Clock className="h-5 w-5 mr-2 text-[#ffcc00]" />
               <span>8:00 AM - 9:00 PM Daily</span>
             </div>
             <div className="flex items-center text-white">
-              <MapPin className="h-5 w-5 mr-2 text-[#ff9900]" />
+              <MapPin className="h-5 w-5 mr-2 text-[#ffcc00]" />
               <span>Harare International Conference Centre</span>
             </div>
           </div>
@@ -316,7 +316,7 @@ export default function ProgramPage() {
           <div className="flex flex-wrap gap-4 justify-center">
             <Button
               onClick={downloadSchedule}
-              className="bg-[#ff9900] hover:bg-[#ec7211] text-white px-8 py-3"
+              className="bg-[#ffcc00] hover:bg-[#ec7211] text-white px-8 py-3"
             >
               <Download className="h-5 w-5 mr-2" />
               Download Schedule
@@ -358,7 +358,7 @@ export default function ProgramPage() {
                 placeholder="Search sessions, speakers, topics..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ff9900] focus:border-transparent"
+                className="w-full pl-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ffcc00] focus:border-transparent"
               />
             </div>
           </div>
@@ -397,8 +397,8 @@ export default function ProgramPage() {
                   onClick={() => setSelectedType(type.id)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg border text-sm font-medium transition-all ${
                     selectedType === type.id
-                      ? 'bg-[#ff9900] text-white border-[#ff9900]'
-                      : 'bg-white text-gray-700 border-gray-300 hover:border-[#ff9900] hover:text-[#ff9900]'
+                      ? 'bg-[#ffcc00] text-white border-[#ffcc00]'
+                      : 'bg-white text-gray-700 border-gray-300 hover:border-[#ffcc00] hover:text-[#ffcc00]'
                   }`}
                 >
                   {type.icon}
@@ -420,7 +420,7 @@ export default function ProgramPage() {
               .map((day) => (
                 <div key={day.id} className="text-center">
                   <div className="inline-flex items-center gap-2 mb-2">
-                    <Calendar className="h-5 w-5 text-[#ff9900]" />
+                    <Calendar className="h-5 w-5 text-[#ffcc00]" />
                     <span className="text-lg font-semibold text-gray-700">{day.date}</span>
                   </div>
                   <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -444,7 +444,7 @@ export default function ProgramPage() {
                   setSelectedType('all')
                   setSearchQuery('')
                 }}
-                className="mt-4 bg-[#ff9900] hover:bg-[#ec7211]"
+                className="mt-4 bg-[#ffcc00] hover:bg-[#ec7211]"
               >
                 Clear Filters
               </Button>
@@ -455,7 +455,7 @@ export default function ProgramPage() {
                 <Card
                   key={session.id}
                   className={`overflow-hidden border-2 transition-all duration-300 hover:shadow-xl ${
-                    session.featured ? 'border-[#ff9900]' : session.color
+                    session.featured ? 'border-[#ffcc00]' : session.color
                   } hover:-translate-y-1`}
                 >
                   <CardContent className="p-0">
@@ -486,7 +486,7 @@ export default function ProgramPage() {
                             <div className="flex items-center gap-3 mb-3">
                               <h3 className="text-xl font-bold text-gray-900">{session.title}</h3>
                               {session.featured && (
-                                <span className="px-2 py-1 bg-[#ff9900] text-white text-xs font-bold rounded">
+                                <span className="px-2 py-1 bg-[#ffcc00] text-white text-xs font-bold rounded">
                                   FEATURED
                                 </span>
                               )}
@@ -533,7 +533,7 @@ export default function ProgramPage() {
                               Add to Schedule
                             </Button>
                             {session.featured && (
-                              <Button className="w-full bg-[#ff9900] hover:bg-[#ec7211] text-white">
+                              <Button className="w-full bg-[#ffcc00] hover:bg-[#ec7211] text-white">
                                 Learn More <ChevronRight className="h-4 w-4 ml-2" />
                               </Button>
                             )}
@@ -575,7 +575,7 @@ export default function ProgramPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 px-4 bg-gradient-to-r from-[#232f3e] to-[#0f1419]">
+      <section className="py-16 px-4 bg-gradient-to-r from-[#170d43] to-[#0f1419]">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
             Ready to Experience EVOLVE ICT SUMMIT 2026?
@@ -585,7 +585,7 @@ export default function ProgramPage() {
             discussions and networking.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <Button className="bg-[#ff9900] hover:bg-[#ec7211] text-white px-8 py-3 text-sm">
+            <Button className="bg-[#ffcc00] hover:bg-[#ec7211] text-white px-8 py-3 text-sm">
               Register Now
             </Button>
             <Button

@@ -21,7 +21,7 @@ function SubHero() {
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12">
         <Button
           size="lg"
-          className="bg-[#ff9900] hover:bg-[#ec7211] text-white font-semibold text-sm px-10 py-6 rounded-sm transition-all duration-200"
+          className="bg-[#ffcc00] hover:bg-[#ec7211] text-white font-semibold text-sm px-10 py-6 rounded-sm transition-all duration-200"
           asChild
         >
           <Link href="/register">

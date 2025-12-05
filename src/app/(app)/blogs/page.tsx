@@ -189,8 +189,8 @@ export default function BlogsPage() {
       <div className="min-h-screen bg-slate-900">
         <Navbar />
         <div className="pt-32 flex flex-col items-center justify-center">
-          <Loader2 className="h-12 w-12 animate-spin text-[#ff9900] mb-4" />
-          <span className="text-[#ff9900]">Loading blog posts...</span>
+          <Loader2 className="h-12 w-12 animate-spin text-[#ffcc00] mb-4" />
+          <span className="text-[#ffcc00]">Loading blog posts...</span>
         </div>
       </div>
     )
@@ -201,7 +201,7 @@ export default function BlogsPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-[#232f3e] via-[#161e2e] to-[#0f1419]">
+      <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-[#170d43] via-[#161e2e] to-[#0f1419]">
         <div className="container-custom text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">Blogs & Insights</h1>
           <p className="text-lg md:text-xl text-gray-300 ">
@@ -243,7 +243,7 @@ export default function BlogsPage() {
                     onChange={(e) => setShowFeaturedOnly(e.target.checked)}
                   />
                   <div
-                    className={`block w-14 h-8 rounded-full ${showFeaturedOnly ? 'bg-[#ff9900]' : 'bg-gray-300'}`}
+                    className={`block w-14 h-8 rounded-full ${showFeaturedOnly ? 'bg-[#ffcc00]' : 'bg-gray-300'}`}
                   ></div>
                   <div
                     className={`dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition ${showFeaturedOnly ? 'transform translate-x-6' : ''}`}
@@ -290,7 +290,7 @@ export default function BlogsPage() {
                     setSelectedCategory('all')
                     setShowFeaturedOnly(false)
                   }}
-                  className="bg-[#ff9900] hover:bg-[#ec7211]"
+                  className="bg-[#ffcc00] hover:bg-[#ec7211]"
                 >
                   Clear Filters
                 </Button>
@@ -319,7 +319,7 @@ export default function BlogsPage() {
                       />
                       {blog.featured && (
                         <div className="absolute top-4 left-4">
-                          <span className="px-3 py-1 bg-[#ff9900] text-white text-xs font-bold rounded-full">
+                          <span className="px-3 py-1 bg-[#ffcc00] text-white text-xs font-bold rounded-full">
                             Featured
                           </span>
                         </div>
@@ -336,7 +336,7 @@ export default function BlogsPage() {
                       </div>
 
                       {/* Title */}
-                      <h3 className="text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-[#ff9900] transition-colors">
+                      <h3 className="text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-[#ffcc00] transition-colors">
                         <Link href={`/blogs/${blog.slug}`}>{blog.title}</Link>
                       </h3>
 
@@ -389,7 +389,7 @@ export default function BlogsPage() {
                       <div className="mt-6 pt-4 border-t border-gray-100">
                         <Link
                           href={`/blogs/${blog.slug}`}
-                          className="inline-flex items-center text-[#ff9900] font-medium hover:text-[#ec7211] transition-colors"
+                          className="inline-flex items-center text-[#ffcc00] font-medium hover:text-[#ec7211] transition-colors"
                         >
                           Read Full Article
                           <ArrowRight className="w-4 h-4 ml-2" />
@@ -417,7 +417,7 @@ export default function BlogsPage() {
       </section>
 
       {/* CTA Section for Newsletter */}
-      <section className="py-16 px-4 bg-gradient-to-r from-[#232f3e] to-[#0f1419]">
+      <section className="py-16 px-4 bg-gradient-to-r from-[#170d43] to-[#0f1419]">
         <div className="container-custom text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
             Stay Updated with Our Latest Insights
@@ -431,9 +431,9 @@ export default function BlogsPage() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#ff9900] focus:border-transparent"
+                className="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#ffcc00] focus:border-transparent"
               />
-              <Button className="bg-[#ff9900] hover:bg-[#ec7211] text-white px-8">Subscribe</Button>
+              <Button className="bg-[#ffcc00] hover:bg-[#ec7211] text-white px-8">Subscribe</Button>
             </div>
             <p className="text-sm text-gray-300 mt-3">
               We respect your privacy. Unsubscribe at any time.

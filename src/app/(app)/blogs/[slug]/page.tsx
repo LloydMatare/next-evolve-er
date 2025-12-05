@@ -120,7 +120,7 @@ const renderRichText = (node: RichTextNode): React.ReactNode => {
           href={node.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[#ff9900] hover:text-[#ec7211] underline"
+          className="text-[#ffcc00] hover:text-[#ec7211] underline"
         >
           {node.children?.map(renderRichText)}
         </a>
@@ -233,7 +233,7 @@ export default function BlogPostPage() {
       <div className="min-h-screen">
         <Navbar />
         <div className="pt-32 flex flex-col items-center justify-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#ff9900]"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#ffcc00]"></div>
           <span className="mt-4 text-gray-600">Loading blog post...</span>
         </div>
       </div>
@@ -251,7 +251,7 @@ export default function BlogPostPage() {
               {error || 'The requested blog post could not be found.'}
             </p>
             <Link href="/blogs">
-              <Button className="bg-[#ff9900] hover:bg-[#ec7211]">
+              <Button className="bg-[#ffcc00] hover:bg-[#ec7211]">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Blogs
               </Button>
@@ -270,7 +270,7 @@ export default function BlogPostPage() {
       <div className="pt-24 pb-6 px-4 bg-gray-50">
         <div className="container-custom">
           <Link href="/blogs">
-            <Button variant="ghost" className="text-gray-600 hover:text-[#ff9900]">
+            <Button variant="ghost" className="text-gray-600 hover:text-[#ffcc00]">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to All Blogs
             </Button>
@@ -284,7 +284,7 @@ export default function BlogPostPage() {
           <div className="max-w-4xl mx-auto">
             {/* Category Badge */}
             <div className="mb-6">
-              <span className="inline-flex items-center px-4 py-2 bg-[#ff9900] text-white text-sm font-medium rounded-full">
+              <span className="inline-flex items-center px-4 py-2 bg-[#ffcc00] text-white text-sm font-medium rounded-full">
                 <Tag className="w-4 h-4 mr-2" />
                 {blog.category.replace(/-/g, ' ')}
               </span>
@@ -329,12 +329,12 @@ export default function BlogPostPage() {
                 <Button
                   onClick={shareBlog}
                   variant="outline"
-                  className="border-gray-300 hover:border-[#ff9900]"
+                  className="border-gray-300 hover:border-[#ffcc00]"
                 >
                   <Share2 className="w-4 h-4 mr-2" />
                   Share
                 </Button>
-                <Button variant="outline" className="border-gray-300 hover:border-[#ff9900]">
+                <Button variant="outline" className="border-gray-300 hover:border-[#ffcc00]">
                   <Bookmark className="w-4 h-4 mr-2" />
                   Save
                 </Button>
@@ -401,7 +401,7 @@ export default function BlogPostPage() {
                   <article className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
                     <div className="h-48 bg-gray-200" />
                     <div className="p-6">
-                      <h3 className="font-bold text-gray-900 mb-2 group-hover:text-[#ff9900] transition-colors">
+                      <h3 className="font-bold text-gray-900 mb-2 group-hover:text-[#ffcc00] transition-colors">
                         {relatedBlog.title}
                       </h3>
                       <p className="text-sm text-gray-500 mb-4">
@@ -420,7 +420,7 @@ export default function BlogPostPage() {
       )}
 
       {/* CTA */}
-      <div className="py-16 px-4 bg-gradient-to-r from-[#232f3e] to-[#0f1419]">
+      <div className="py-16 px-4 bg-gradient-to-r from-[#170d43] to-[#0f1419]">
         <div className="container-custom text-center">
           <h2 className="text-3xl font-bold text-white mb-6">Enjoyed This Article?</h2>
           <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
@@ -432,9 +432,9 @@ export default function BlogPostPage() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#ff9900] focus:border-transparent"
+                className="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#ffcc00] focus:border-transparent"
               />
-              <Button className="bg-[#ff9900] hover:bg-[#ec7211] text-white px-8">Subscribe</Button>
+              <Button className="bg-[#ffcc00] hover:bg-[#ec7211] text-white px-8">Subscribe</Button>
             </div>
           </div>
         </div>

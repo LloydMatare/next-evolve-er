@@ -251,7 +251,7 @@ export default function PreviousSummitPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-[#232f3e] via-[#161e2e] to-[#0f1419]">
+      <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-[#170d43] via-[#161e2e] to-[#0f1419]">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">Previous Summits</h1>
           <p className="text-lg md:text-xl text-gray-300 ">
@@ -269,13 +269,13 @@ export default function PreviousSummitPage() {
               <TabsList className="bg-[#f3f3f3] border border-gray-200 p-1">
                 <TabsTrigger
                   value="2025"
-                  className="data-[state=active]:bg-[#ff9900] data-[state=active]:text-white px-8 py-3"
+                  className="data-[state=active]:bg-[#ffcc00] data-[state=active]:text-white px-8 py-3"
                 >
                   Summit 2025
                 </TabsTrigger>
                 <TabsTrigger
                   value="2024"
-                  className="data-[state=active]:bg-[#ff9900] data-[state=active]:text-white px-8 py-3"
+                  className="data-[state=active]:bg-[#ffcc00] data-[state=active]:text-white px-8 py-3"
                 >
                   Summit 2024
                 </TabsTrigger>
@@ -285,10 +285,10 @@ export default function PreviousSummitPage() {
             {/* 2025 Content */}
             <TabsContent value="2025">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold text-[#232f3e] mb-6">
+                <h2 className="text-4xl md:text-5xl font-bold text-[#170d43] mb-6">
                   Summit 2025 at a Glance
                 </h2>
-                <div className="w-24 h-1 bg-[#ff9900] mx-auto mb-8" />
+                <div className="w-24 h-1 bg-[#ffcc00] mx-auto mb-8" />
                 <p className="text-xl text-gray-600 max-w-4xl mx-auto">
                   The inaugural Evolve ICT Summit 2025 brought together technology leaders,
                   innovators, and changemakers from across Africa and beyond.
@@ -304,8 +304,8 @@ export default function PreviousSummitPage() {
                       key={index}
                       className="bg-white border border-gray-200 rounded-sm p-8 text-center hover:shadow-xl transition-all"
                     >
-                      <Icon className="w-12 h-12 text-[#ff9900] mx-auto mb-4" />
-                      <div className="text-4xl font-bold text-[#232f3e] mb-2">{item.value}</div>
+                      <Icon className="w-12 h-12 text-[#ffcc00] mx-auto mb-4" />
+                      <div className="text-4xl font-bold text-[#170d43] mb-2">{item.value}</div>
                       <div className="text-gray-600 font-medium">{item.label}</div>
                     </div>
                   )
@@ -315,52 +315,52 @@ export default function PreviousSummitPage() {
               {/* Key Moments - 2025 */}
               <div className="grid md:grid-cols-2 gap-8 mb-16">
                 <div className="bg-[#f3f3f3] border border-gray-200 rounded-sm p-8">
-                  <h3 className="text-2xl font-bold text-[#232f3e] mb-4">Key Themes</h3>
+                  <h3 className="text-2xl font-bold text-[#170d43] mb-4">Key Themes</h3>
                   <ul className="space-y-3 text-gray-600">
                     <li className="flex items-start">
-                      <span className="w-2 h-2 bg-[#ff9900] rounded-full mt-2 mr-3" />
+                      <span className="w-2 h-2 bg-[#ffcc00] rounded-full mt-2 mr-3" />
                       <span>Digital Transformation in African Enterprises</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="w-2 h-2 bg-[#ff9900] rounded-full mt-2 mr-3" />
+                      <span className="w-2 h-2 bg-[#ffcc00] rounded-full mt-2 mr-3" />
                       <span>AI and Machine Learning for Social Impact</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="w-2 h-2 bg-[#ff9900] rounded-full mt-2 mr-3" />
+                      <span className="w-2 h-2 bg-[#ffcc00] rounded-full mt-2 mr-3" />
                       <span>Cybersecurity in the Digital Age</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="w-2 h-2 bg-[#ff9900] rounded-full mt-2 mr-3" />
+                      <span className="w-2 h-2 bg-[#ffcc00] rounded-full mt-2 mr-3" />
                       <span>Fintech and Financial Inclusion</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="w-2 h-2 bg-[#ff9900] rounded-full mt-2 mr-3" />
+                      <span className="w-2 h-2 bg-[#ffcc00] rounded-full mt-2 mr-3" />
                       <span>Youth Empowerment through Technology</span>
                     </li>
                   </ul>
                 </div>
 
                 <div className="bg-[#f3f3f3] border border-gray-200 rounded-sm p-8">
-                  <h3 className="text-2xl font-bold text-[#232f3e] mb-4">Highlights</h3>
+                  <h3 className="text-2xl font-bold text-[#170d43] mb-4">Highlights</h3>
                   <ul className="space-y-3 text-gray-600">
                     <li className="flex items-start">
-                      <span className="w-2 h-2 bg-[#ff9900] rounded-full mt-2 mr-3" />
+                      <span className="w-2 h-2 bg-[#ffcc00] rounded-full mt-2 mr-3" />
                       <span>Minister of ICT Keynote Address</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="w-2 h-2 bg-[#ff9900] rounded-full mt-2 mr-3" />
+                      <span className="w-2 h-2 bg-[#ffcc00] rounded-full mt-2 mr-3" />
                       <span>Innovation Showcase with 30+ Startups</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="w-2 h-2 bg-[#ff9900] rounded-full mt-2 mr-3" />
+                      <span className="w-2 h-2 bg-[#ffcc00] rounded-full mt-2 mr-3" />
                       <span>Panel: Women in Tech Leadership</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="w-2 h-2 bg-[#ff9900] rounded-full mt-2 mr-3" />
+                      <span className="w-2 h-2 bg-[#ffcc00] rounded-full mt-2 mr-3" />
                       <span>Networking Gala with 1000+ Attendees</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="w-2 h-2 bg-[#ff9900] rounded-full mt-2 mr-3" />
+                      <span className="w-2 h-2 bg-[#ffcc00] rounded-full mt-2 mr-3" />
                       <span>Technology Exhibition Featuring Global Brands</span>
                     </li>
                   </ul>
@@ -370,8 +370,8 @@ export default function PreviousSummitPage() {
               {/* Gallery Section - 2025 */}
               <div className="mb-16">
                 <div className="flex items-center mb-8">
-                  <ImageIcon className="w-10 h-10 text-[#ff9900] mr-4" />
-                  <h3 className="text-3xl font-bold text-[#232f3e]">Photos - Summit 2025</h3>
+                  <ImageIcon className="w-10 h-10 text-[#ffcc00] mr-4" />
+                  <h3 className="text-3xl font-bold text-[#170d43]">Photos - Summit 2025</h3>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-12">
                   {summit2025Images.map((image) => (
@@ -392,8 +392,8 @@ export default function PreviousSummitPage() {
 
                 {/* Videos Section - 2025 */}
                 <div className="flex items-center mb-8">
-                  <Play className="w-10 h-10 text-[#ff9900] mr-4" />
-                  <h3 className="text-3xl font-bold text-[#232f3e]">Videos - Summit 2025</h3>
+                  <Play className="w-10 h-10 text-[#ffcc00] mr-4" />
+                  <h3 className="text-3xl font-bold text-[#170d43]">Videos - Summit 2025</h3>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {summit2025Videos.map((video) => (
@@ -405,12 +405,12 @@ export default function PreviousSummitPage() {
                       <div className="relative aspect-video overflow-hidden rounded-lg mb-3">
                         <div className="w-full h-full bg-[#f3f3f3]" />
                         <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-colors flex items-center justify-center">
-                          <div className="w-16 h-16 bg-[#ff9900] group-hover:bg-amber-600 rounded-full flex items-center justify-center transition-colors">
+                          <div className="w-16 h-16 bg-[#ffcc00] group-hover:bg-amber-600 rounded-full flex items-center justify-center transition-colors">
                             <Play className="w-8 h-8 text-white ml-1" />
                           </div>
                         </div>
                       </div>
-                      <h3 className="font-bold text-[#232f3e] mb-1">{video.title}</h3>
+                      <h3 className="font-bold text-[#170d43] mb-1">{video.title}</h3>
                       <p className="text-sm text-gray-600">{video.description}</p>
                     </div>
                   ))}
@@ -421,10 +421,10 @@ export default function PreviousSummitPage() {
             {/* 2024 Content */}
             <TabsContent value="2024">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold text-[#232f3e] mb-6">
+                <h2 className="text-4xl md:text-5xl font-bold text-[#170d43] mb-6">
                   Summit 2024 at a Glance
                 </h2>
-                <div className="w-24 h-1 bg-[#ff9900] mx-auto mb-8" />
+                <div className="w-24 h-1 bg-[#ffcc00] mx-auto mb-8" />
                 <p className="text-xl text-gray-600 max-w-4xl mx-auto">
                   The 2024 summit marked a milestone in Zimbabwe&apos;s digital transformation
                   journey, bringing together pioneers and visionaries from across the continent.
@@ -440,8 +440,8 @@ export default function PreviousSummitPage() {
                       key={index}
                       className="bg-white border border-gray-200 rounded-sm p-8 text-center hover:shadow-xl transition-all"
                     >
-                      <Icon className="w-12 h-12 text-[#ff9900] mx-auto mb-4" />
-                      <div className="text-4xl font-bold text-[#232f3e] mb-2">{item.value}</div>
+                      <Icon className="w-12 h-12 text-[#ffcc00] mx-auto mb-4" />
+                      <div className="text-4xl font-bold text-[#170d43] mb-2">{item.value}</div>
                       <div className="text-gray-600 font-medium">{item.label}</div>
                     </div>
                   )
@@ -451,52 +451,52 @@ export default function PreviousSummitPage() {
               {/* Key Moments - 2024 */}
               <div className="grid md:grid-cols-2 gap-8 mb-16">
                 <div className="bg-[#f3f3f3] border border-gray-200 rounded-sm p-8">
-                  <h3 className="text-2xl font-bold text-[#232f3e] mb-4">Key Themes</h3>
+                  <h3 className="text-2xl font-bold text-[#170d43] mb-4">Key Themes</h3>
                   <ul className="space-y-3 text-gray-600">
                     <li className="flex items-start">
-                      <span className="w-2 h-2 bg-[#ff9900] rounded-full mt-2 mr-3" />
+                      <span className="w-2 h-2 bg-[#ffcc00] rounded-full mt-2 mr-3" />
                       <span>Cloud Computing for African Businesses</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="w-2 h-2 bg-[#ff9900] rounded-full mt-2 mr-3" />
+                      <span className="w-2 h-2 bg-[#ffcc00] rounded-full mt-2 mr-3" />
                       <span>Mobile Technology and Connectivity</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="w-2 h-2 bg-[#ff9900] rounded-full mt-2 mr-3" />
+                      <span className="w-2 h-2 bg-[#ffcc00] rounded-full mt-2 mr-3" />
                       <span>E-Government Solutions</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="w-2 h-2 bg-[#ff9900] rounded-full mt-2 mr-3" />
+                      <span className="w-2 h-2 bg-[#ffcc00] rounded-full mt-2 mr-3" />
                       <span>Smart Cities and IoT</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="w-2 h-2 bg-[#ff9900] rounded-full mt-2 mr-3" />
+                      <span className="w-2 h-2 bg-[#ffcc00] rounded-full mt-2 mr-3" />
                       <span>Digital Skills Development</span>
                     </li>
                   </ul>
                 </div>
 
                 <div className="bg-[#f3f3f3] border border-gray-200 rounded-sm p-8">
-                  <h3 className="text-2xl font-bold text-[#232f3e] mb-4">Highlights</h3>
+                  <h3 className="text-2xl font-bold text-[#170d43] mb-4">Highlights</h3>
                   <ul className="space-y-3 text-gray-600">
                     <li className="flex items-start">
-                      <span className="w-2 h-2 bg-[#ff9900] rounded-full mt-2 mr-3" />
+                      <span className="w-2 h-2 bg-[#ffcc00] rounded-full mt-2 mr-3" />
                       <span>Presidential Address on Digital Economy</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="w-2 h-2 bg-[#ff9900] rounded-full mt-2 mr-3" />
+                      <span className="w-2 h-2 bg-[#ffcc00] rounded-full mt-2 mr-3" />
                       <span>Startup Pitch Competition Finals</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="w-2 h-2 bg-[#ff9900] rounded-full mt-2 mr-3" />
+                      <span className="w-2 h-2 bg-[#ffcc00] rounded-full mt-2 mr-3" />
                       <span>Regional ICT Ministers Roundtable</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="w-2 h-2 bg-[#ff9900] rounded-full mt-2 mr-3" />
+                      <span className="w-2 h-2 bg-[#ffcc00] rounded-full mt-2 mr-3" />
                       <span>Technology Demo Zone with 50+ Exhibitors</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="w-2 h-2 bg-[#ff9900] rounded-full mt-2 mr-3" />
+                      <span className="w-2 h-2 bg-[#ffcc00] rounded-full mt-2 mr-3" />
                       <span>Youth Hackathon Finals</span>
                     </li>
                   </ul>
@@ -506,8 +506,8 @@ export default function PreviousSummitPage() {
               {/* Gallery Section - 2024 */}
               <div className="mb-16">
                 <div className="flex items-center mb-8">
-                  <ImageIcon className="w-10 h-10 text-[#ff9900] mr-4" />
-                  <h3 className="text-3xl font-bold text-[#232f3e]">Photos - Summit 2024</h3>
+                  <ImageIcon className="w-10 h-10 text-[#ffcc00] mr-4" />
+                  <h3 className="text-3xl font-bold text-[#170d43]">Photos - Summit 2024</h3>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-12">
                   {summit2024Images.map((image) => (
@@ -528,8 +528,8 @@ export default function PreviousSummitPage() {
 
                 {/* Videos Section - 2024 */}
                 <div className="flex items-center mb-8">
-                  <Play className="w-10 h-10 text-[#ff9900] mr-4" />
-                  <h3 className="text-3xl font-bold text-[#232f3e]">Videos - Summit 2024</h3>
+                  <Play className="w-10 h-10 text-[#ffcc00] mr-4" />
+                  <h3 className="text-3xl font-bold text-[#170d43]">Videos - Summit 2024</h3>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {summit2024Videos.map((video) => (
@@ -541,12 +541,12 @@ export default function PreviousSummitPage() {
                       <div className="relative aspect-video overflow-hidden rounded-lg mb-3">
                         <div className="w-full h-full bg-[#f3f3f3]" />
                         <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-colors flex items-center justify-center">
-                          <div className="w-16 h-16 bg-[#ff9900] group-hover:bg-amber-600 rounded-full flex items-center justify-center transition-colors">
+                          <div className="w-16 h-16 bg-[#ffcc00] group-hover:bg-amber-600 rounded-full flex items-center justify-center transition-colors">
                             <Play className="w-8 h-8 text-white ml-1" />
                           </div>
                         </div>
                       </div>
-                      <h3 className="font-bold text-[#232f3e] mb-1">{video.title}</h3>
+                      <h3 className="font-bold text-[#170d43] mb-1">{video.title}</h3>
                       <p className="text-sm text-gray-600">{video.description}</p>
                     </div>
                   ))}
@@ -566,7 +566,7 @@ export default function PreviousSummitPage() {
           </p>
           <Link
             href="/register"
-            className="inline-block bg-[#ff9900] hover:bg-amber-600 text-white text-sm font-bold px-12 py-4 rounded-lg transition-colors"
+            className="inline-block bg-[#ffcc00] hover:bg-amber-600 text-white text-sm font-bold px-12 py-4 rounded-lg transition-colors"
           >
             Register for 2026
           </Link>

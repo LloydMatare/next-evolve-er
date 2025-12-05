@@ -63,7 +63,7 @@ export default function DashboardPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-12 px-4 bg-gradient-to-br from-[#232f3e] via-[#161e2e] to-[#0f1419]">
+      <section className="pt-32 pb-12 px-4 bg-gradient-to-br from-[#170d43] via-[#161e2e] to-[#0f1419]">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">My Dashboard</h1>
           <p className="text-xl text-blue-100">
@@ -101,7 +101,7 @@ export default function DashboardPage() {
             <div className="lg:col-span-2 space-y-8">
               {/* Personal/Company Information */}
               <div className="bg-white rounded-sm shadow-lg p-8">
-                <h3 className="text-2xl font-bold text-[#232f3e] mb-6">
+                <h3 className="text-2xl font-bold text-[#170d43] mb-6">
                   {orderData.type === 'attendee' ? 'Personal Information' : 'Company Information'}
                 </h3>
 
@@ -109,28 +109,28 @@ export default function DashboardPage() {
                   {orderData.type === 'attendee' ? (
                     <>
                       <div className="flex items-start space-x-3">
-                        <User className="w-5 h-5 text-[#ff9900] mt-1" />
+                        <User className="w-5 h-5 text-[#ffcc00] mt-1" />
                         <div>
                           <p className="text-sm text-gray-600">Full Name</p>
                           <p className="font-semibold text-gray-900">{orderData.fullName}</p>
                         </div>
                       </div>
                       <div className="flex items-start space-x-3">
-                        <Building2 className="w-5 h-5 text-[#ff9900] mt-1" />
+                        <Building2 className="w-5 h-5 text-[#ffcc00] mt-1" />
                         <div>
                           <p className="text-sm text-gray-600">Organization</p>
                           <p className="font-semibold text-gray-900">{orderData.organization}</p>
                         </div>
                       </div>
                       <div className="flex items-start space-x-3">
-                        <User className="w-5 h-5 text-[#ff9900] mt-1" />
+                        <User className="w-5 h-5 text-[#ffcc00] mt-1" />
                         <div>
                           <p className="text-sm text-gray-600">Position</p>
                           <p className="font-semibold text-gray-900">{orderData.position}</p>
                         </div>
                       </div>
                       <div className="flex items-start space-x-3">
-                        <MapPin className="w-5 h-5 text-[#ff9900] mt-1" />
+                        <MapPin className="w-5 h-5 text-[#ffcc00] mt-1" />
                         <div>
                           <p className="text-sm text-gray-600">Country</p>
                           <p className="font-semibold text-gray-900">{orderData.country}</p>
@@ -140,14 +140,14 @@ export default function DashboardPage() {
                   ) : (
                     <>
                       <div className="flex items-start space-x-3">
-                        <Building2 className="w-5 h-5 text-[#ff9900] mt-1" />
+                        <Building2 className="w-5 h-5 text-[#ffcc00] mt-1" />
                         <div>
                           <p className="text-sm text-gray-600">Company Name</p>
                           <p className="font-semibold text-gray-900">{orderData.companyName}</p>
                         </div>
                       </div>
                       <div className="flex items-start space-x-3">
-                        <User className="w-5 h-5 text-[#ff9900] mt-1" />
+                        <User className="w-5 h-5 text-[#ffcc00] mt-1" />
                         <div>
                           <p className="text-sm text-gray-600">Contact Person</p>
                           <p className="font-semibold text-gray-900">{orderData.contactPerson}</p>
@@ -155,7 +155,7 @@ export default function DashboardPage() {
                       </div>
                       {orderData.numberOfTeamMembers && (
                         <div className="flex items-start space-x-3">
-                          <Users className="w-5 h-5 text-[#ff9900] mt-1" />
+                          <Users className="w-5 h-5 text-[#ffcc00] mt-1" />
                           <div>
                             <p className="text-sm text-gray-600">Team Members</p>
                             <p className="font-semibold text-gray-900">
@@ -168,14 +168,14 @@ export default function DashboardPage() {
                   )}
 
                   <div className="flex items-start space-x-3">
-                    <Mail className="w-5 h-5 text-[#ff9900] mt-1" />
+                    <Mail className="w-5 h-5 text-[#ffcc00] mt-1" />
                     <div>
                       <p className="text-sm text-gray-600">Email</p>
                       <p className="font-semibold text-gray-900">{orderData.email}</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
-                    <Phone className="w-5 h-5 text-[#ff9900] mt-1" />
+                    <Phone className="w-5 h-5 text-[#ffcc00] mt-1" />
                     <div>
                       <p className="text-sm text-gray-600">Phone</p>
                       <p className="font-semibold text-gray-900">{orderData.phone}</p>
@@ -195,7 +195,7 @@ export default function DashboardPage() {
 
               {/* Registration Details */}
               <div className="bg-white rounded-sm shadow-lg p-8">
-                <h3 className="text-2xl font-bold text-[#232f3e] mb-6">Registration Details</h3>
+                <h3 className="text-2xl font-bold text-[#170d43] mb-6">Registration Details</h3>
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
@@ -247,7 +247,7 @@ export default function DashboardPage() {
 
                   <div>
                     <p className="text-sm text-gray-600">Amount Paid</p>
-                    <p className="font-semibold text-[#ff9900] text-xl">${orderData.amount}</p>
+                    <p className="font-semibold text-[#ffcc00] text-xl">${orderData.amount}</p>
                   </div>
                 </div>
               </div>
@@ -285,11 +285,11 @@ export default function DashboardPage() {
 
               {/* Event Information */}
               <div className="bg-white rounded-sm shadow-lg p-8">
-                <h3 className="text-xl font-bold text-[#232f3e] mb-6">Event Information</h3>
+                <h3 className="text-xl font-bold text-[#170d43] mb-6">Event Information</h3>
 
                 <div className="space-y-4">
                   <div className="flex items-start space-x-3">
-                    <Calendar className="w-5 h-5 text-[#ff9900] mt-1" />
+                    <Calendar className="w-5 h-5 text-[#ffcc00] mt-1" />
                     <div>
                       <p className="text-sm text-gray-600">Date</p>
                       <p className="font-semibold text-gray-900">June 11-12, 2026</p>
@@ -297,7 +297,7 @@ export default function DashboardPage() {
                   </div>
 
                   <div className="flex items-start space-x-3">
-                    <MapPin className="w-5 h-5 text-[#ff9900] mt-1" />
+                    <MapPin className="w-5 h-5 text-[#ffcc00] mt-1" />
                     <div>
                       <p className="text-sm text-gray-600">Venue</p>
                       <p className="font-semibold text-gray-900">
@@ -311,7 +311,7 @@ export default function DashboardPage() {
 
                 <div className="mt-6 pt-6 border-t border-gray-200">
                   <Button
-                    className="w-full bg-amber-500 hover:bg-amber-600 text-white text-xs"
+                    className="w-full bg-[#ffcc00] hover:bg-amber-600 text-white text-xs"
                     asChild
                   >
                     <Link href="/program">View Full Program</Link>

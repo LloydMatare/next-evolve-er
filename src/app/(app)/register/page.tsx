@@ -121,7 +121,7 @@ export default function RegisterPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-[#232f3e] via-[#161e2e] to-[#0f1419]">
+      <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-[#170d43] via-[#161e2e] to-[#0f1419]">
         <div className="container-custom text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">Register</h1>
           <p className="text-lg md:text-xl text-gray-300  mx-auto">
@@ -139,21 +139,21 @@ export default function RegisterPage() {
               <TabsList className="bg-[#f3f3f3] p-1 grid md:grid-cols-3 gap-6 md:gap-0 w-full h-full max-w-2xl border border-gray-200">
                 <TabsTrigger
                   value="attendee"
-                  className="data-[state=active]:bg-[#ff9900] data-[state=active]:text-white flex  items-center gap-2"
+                  className="data-[state=active]:bg-[#ffcc00] data-[state=active]:text-white flex  items-center gap-2"
                 >
                   <Users className="w-4 h-4" />
                   <span className="hidden sm:inline">Attendee</span>
                 </TabsTrigger>
                 <TabsTrigger
                   value="sponsor"
-                  className="data-[state=active]:bg-[#ff9900] data-[state=active]:text-white flex items-center gap-2"
+                  className="data-[state=active]:bg-[#ffcc00] data-[state=active]:text-white flex items-center gap-2"
                 >
                   <Building2 className="w-4 h-4" />
                   <span className="hidden sm:inline">Sponsor</span>
                 </TabsTrigger>
                 <TabsTrigger
                   value="exhibitor"
-                  className="data-[state=active]:bg-[#ff9900] data-[state=active]:text-white flex items-center gap-2"
+                  className="data-[state=active]:bg-[#ffcc00] data-[state=active]:text-white flex items-center gap-2"
                 >
                   <Store className="w-4 h-4" />
                   <span className="hidden sm:inline">Exhibitor</span>
@@ -248,7 +248,7 @@ function AttendeeForm() {
   return (
     <div className="bg-[#f3f3f3] border border-gray-200 rounded-sm p-8">
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-[#232f3e] mb-4">Attendee Registration</h2>
+        <h2 className="text-2xl font-bold text-[#170d43] mb-4">Attendee Registration</h2>
         <p className="text-gray-600">
           Register as an attendee to access all summit sessions, exhibitions, and networking events.
         </p>
@@ -261,7 +261,7 @@ function AttendeeForm() {
             <Input
               {...register('fullName')}
               type="text"
-              className="w-full rounded-sm border text-slate-600 border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full rounded-sm border text-slate-600 border-gray-300 focus:ring-2 focus:ring-[#ffcc00] focus:border-transparent outline-none transition"
               placeholder="John Doe"
             />
             {errors.fullName && (
@@ -274,7 +274,7 @@ function AttendeeForm() {
             <Input
               {...register('email')}
               type="email"
-              className="w-full rounded-sm border text-slate-600 border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full rounded-sm border text-slate-600 border-gray-300 focus:ring-2 focus:ring-[#ffcc00] focus:border-transparent outline-none transition"
               placeholder="john@example.com"
             />
             {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>}
@@ -285,7 +285,7 @@ function AttendeeForm() {
             <Input
               {...register('phone')}
               type="tel"
-              className="w-full rounded-sm border text-slate-600 border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full rounded-sm border text-slate-600 border-gray-300 focus:ring-2 focus:ring-[#ffcc00] focus:border-transparent outline-none transition"
               placeholder="+263 XXX XXX XXX"
             />
             {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>}
@@ -296,7 +296,7 @@ function AttendeeForm() {
             <Input
               {...register('organization')}
               type="text"
-              className="w-full rounded-sm border text-slate-600 border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full rounded-sm border text-slate-600 border-gray-300 focus:ring-2 focus:ring-[#ffcc00] focus:border-transparent outline-none transition"
               placeholder="Company Name"
             />
             {errors.organization && (
@@ -309,7 +309,7 @@ function AttendeeForm() {
             <Input
               {...register('position')}
               type="text"
-              className="w-full rounded-sm border text-slate-600 border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full rounded-sm border text-slate-600 border-gray-300 focus:ring-2 focus:ring-[#ffcc00] focus:border-transparent outline-none transition"
               placeholder="Job Title"
             />
             {errors.position && (
@@ -322,7 +322,7 @@ function AttendeeForm() {
             <Input
               {...register('country')}
               type="text"
-              className="w-full rounded-sm border text-slate-600 border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition"
+              className="w-full rounded-sm border text-slate-600 border-gray-300 focus:ring-2 focus:ring-[#ffcc00] focus:border-transparent outline-none transition"
               placeholder="Zimbabwe"
             />
             {errors.country && (
@@ -368,7 +368,7 @@ function AttendeeForm() {
           <Textarea
             {...register('dietaryRestrictions')}
             rows={3}
-            className="w-full rounded-sm border text-slate-600 border-gray-300 focus:ring-2 focus:ring-[#ff9900] focus:border-transparent outline-none transition resize-none"
+            className="w-full rounded-sm border text-slate-600 border-gray-300 focus:ring-2 focus:ring-[#ffcc00] focus:border-transparent outline-none transition resize-none"
             placeholder="Any dietary requirements or allergies..."
           />
         </div>
@@ -376,7 +376,7 @@ function AttendeeForm() {
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-[#ff9900] hover:bg-[#ec7211] text-white py-4 text-sm font-semibold rounded-sm"
+          className="w-full bg-[#ffcc00] hover:bg-[#ec7211] text-white py-4 text-sm font-semibold rounded-sm"
         >
           {isSubmitting ? 'Processing...' : 'Complete Registration'}
         </Button>
@@ -454,12 +454,12 @@ function SponsorForm() {
   return (
     <div className="bg-[#f3f3f3] border border-gray-200 rounded-sm p-8">
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-[#232f3e] mb-4">Sponsor Registration</h2>
+        <h2 className="text-3xl font-bold text-[#170d43] mb-4">Sponsor Registration</h2>
         <p className="text-gray-600">
           Partner with us to gain visibility and support Africa&apos;s digital transformation.
         </p>
         <div className="mt-4 p-4 bg-[#f3f3f3] border border-gray-200 rounded-sm">
-          <h3 className="font-bold text-[#232f3e] mb-2">Sponsorship Tiers</h3>
+          <h3 className="font-bold text-[#170d43] mb-2">Sponsorship Tiers</h3>
           <ul className="text-sm text-gray-600 space-y-1">
             <li>• Platinum: $50,000+ (Premium branding & keynote slot)</li>
             <li>• Gold: $30,000+ (Major branding & panel slot)</li>
@@ -476,7 +476,7 @@ function SponsorForm() {
             <Input
               {...register('companyName')}
               type="text"
-              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
+              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ffcc00] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="Your Company"
             />
             {errors.companyName && (
@@ -489,7 +489,7 @@ function SponsorForm() {
             <Input
               {...register('contactPerson')}
               type="text"
-              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
+              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ffcc00] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="Full Name"
             />
             {errors.contactPerson && (
@@ -502,7 +502,7 @@ function SponsorForm() {
             <Input
               {...register('email')}
               type="email"
-              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
+              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ffcc00] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="contact@company.com"
             />
             {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>}
@@ -513,7 +513,7 @@ function SponsorForm() {
             <Input
               {...register('phone')}
               type="tel"
-              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
+              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ffcc00] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="+263 XXX XXX XXX"
             />
             {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>}
@@ -526,7 +526,7 @@ function SponsorForm() {
             <Input
               {...register('website')}
               type="url"
-              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
+              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ffcc00] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="https://www.company.com"
             />
             {errors.website && (
@@ -570,7 +570,7 @@ function SponsorForm() {
           <Textarea
             {...register('companyDescription')}
             rows={4}
-            className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition resize-none"
+            className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ffcc00] text-slate-600 focus:border-transparent outline-none transition resize-none"
             placeholder="Tell us about your company and why you want to sponsor..."
           />
           {errors.companyDescription && (
@@ -587,7 +587,7 @@ function SponsorForm() {
               {...register('numberOfTeamMembers')}
               type="number"
               min="1"
-              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
+              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ffcc00] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="e.g., 5"
             />
             {errors.numberOfTeamMembers && (
@@ -602,7 +602,7 @@ function SponsorForm() {
             <Textarea
               {...register('teamMembers')}
               rows={4}
-              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition resize-none"
+              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ffcc00] text-slate-600 focus:border-transparent outline-none transition resize-none"
               placeholder="List team member names and roles (e.g., John Doe - Marketing Director, Jane Smith - Brand Manager)"
             />
             {errors.teamMembers && (
@@ -626,7 +626,7 @@ function SponsorForm() {
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-[#ff9900] hover:bg-[#ec7211] font-semibold rounded-sm text-white py-4 text-sm"
+          className="w-full bg-[#ffcc00] hover:bg-[#ec7211] font-semibold rounded-sm text-white py-4 text-sm"
         >
           {isSubmitting ? 'Submitting...' : 'Submit Sponsorship Application'}
         </Button>
@@ -706,12 +706,12 @@ function ExhibitorForm() {
   return (
     <div className="bg-[#f3f3f3] border border-gray-200 rounded-sm p-8">
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-[#232f3e] mb-4">Exhibitor Registration</h2>
+        <h2 className="text-3xl font-bold text-[#170d43] mb-4">Exhibitor Registration</h2>
         <p className="text-gray-600">
           Showcase your products and services to 2000+ delegates and industry leaders.
         </p>
         <div className="mt-4 p-4 bg-[#f3f3f3] border border-gray-200 rounded-sm">
-          <h3 className="font-bold text-[#232f3e] mb-2">Booth Packages</h3>
+          <h3 className="font-bold text-[#170d43] mb-2">Booth Packages</h3>
           <ul className="text-sm text-gray-600 space-y-1">
             <li>• Small (3x2m): $2,000 - Basic setup</li>
             <li>• Medium (4x3m): $4,000 - Standard with furniture</li>
@@ -727,7 +727,7 @@ function ExhibitorForm() {
             <Input
               {...register('companyName')}
               type="text"
-              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
+              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ffcc00] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="Your Company"
             />
             {errors.companyName && (
@@ -740,7 +740,7 @@ function ExhibitorForm() {
             <Input
               {...register('contactPerson')}
               type="text"
-              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
+              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ffcc00] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="Full Name"
             />
             {errors.contactPerson && (
@@ -753,7 +753,7 @@ function ExhibitorForm() {
             <Input
               {...register('email')}
               type="email"
-              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
+              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ffcc00] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="contact@company.com"
             />
             {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>}
@@ -764,7 +764,7 @@ function ExhibitorForm() {
             <Input
               {...register('phone')}
               type="tel"
-              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
+              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ffcc00] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="+263 XXX XXX XXX"
             />
             {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>}
@@ -777,7 +777,7 @@ function ExhibitorForm() {
             <Input
               {...register('website')}
               type="url"
-              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
+              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ffcc00] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="https://www.company.com"
             />
             {errors.website && (
@@ -790,7 +790,7 @@ function ExhibitorForm() {
             <Input
               {...register('industry')}
               type="text"
-              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
+              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ffcc00] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="e.g., Software, Hardware, Fintech"
             />
             {errors.industry && (
@@ -834,7 +834,7 @@ function ExhibitorForm() {
             <Input
               {...register('boothNumber')}
               type="text"
-              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
+              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ffcc00] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="e.g., B-12 (if you have a preference)"
             />
             <p className="mt-1 text-xs text-gray-500">Booth numbers assigned upon approval</p>
@@ -850,7 +850,7 @@ function ExhibitorForm() {
               {...register('numberOfTeamMembers')}
               type="number"
               min="1"
-              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition"
+              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ffcc00] text-slate-600 focus:border-transparent outline-none transition"
               placeholder="e.g., 3"
             />
             {errors.numberOfTeamMembers && (
@@ -865,7 +865,7 @@ function ExhibitorForm() {
             <Textarea
               {...register('teamMembers')}
               rows={3}
-              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition resize-none"
+              className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ffcc00] text-slate-600 focus:border-transparent outline-none transition resize-none"
               placeholder="List all team member names (e.g., John Doe, Jane Smith, Mike Johnson)"
             />
             {errors.teamMembers && (
@@ -881,7 +881,7 @@ function ExhibitorForm() {
           <Textarea
             {...register('productsServices')}
             rows={4}
-            className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition resize-none"
+            className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ffcc00] text-slate-600 focus:border-transparent outline-none transition resize-none"
             placeholder="Describe what you will showcase at the exhibition..."
           />
           {errors.productsServices && (
@@ -896,7 +896,7 @@ function ExhibitorForm() {
           <Textarea
             {...register('specialRequirements')}
             rows={3}
-            className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ff9900] text-slate-600 focus:border-transparent outline-none transition resize-none"
+            className="w-full rounded-sm border border-gray-300 focus:ring-2 focus:ring-[#ffcc00] text-slate-600 focus:border-transparent outline-none transition resize-none"
             placeholder="Any special setup requirements, power needs, etc..."
           />
         </div>
@@ -904,7 +904,7 @@ function ExhibitorForm() {
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-[#ff9900] hover:bg-[#ec7211] font-semibold rounded-sm text-white py-4 text-sm"
+          className="w-full bg-[#ffcc00] hover:bg-[#ec7211] font-semibold rounded-sm text-white py-4 text-sm"
         >
           {isSubmitting ? 'Submitting...' : 'Submit Exhibitor Application'}
         </Button>

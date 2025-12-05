@@ -37,7 +37,7 @@ export default function ContactPage() {
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">
-          <span className="text-[#ff9900]">Contact</span> Us
+          <span className="text-[#ffcc00]">Contact</span> Us
         </h1>
         <p className="text-md md:text-lg text-gray-300 mx-auto">
           {` Have questions about EVOLVE ICT SUMMIT 2026? We're here to help! `}
@@ -53,7 +53,7 @@ export default function ContactPage() {
             {/* FAQ Section */}
             <Card className="bg-white/5 backdrop-blur-sm border-gray-700 mt-16">
               <CardContent className="p-8">
-                <h2 className="text-2xl font-bold mb-6 text-[#ff9900]">
+                <h2 className="text-2xl font-bold mb-6 text-[#ffcc00]">
                   Frequently Asked Questions
                 </h2>
                 <div className="space-y-4">
@@ -87,7 +87,7 @@ export default function ContactPage() {
           <div className="space-y-6">
             <Card className="bg-white/5 backdrop-blur-sm border-gray-700">
               <CardContent className="p-8">
-                <h2 className="text-2xl font-bold mb-6 text-[#ff9900]">Get in Touch</h2>
+                <h2 className="text-2xl font-bold mb-6 text-[#ffcc00]">Get in Touch</h2>
                 <p className="text-gray-300 mb-8">
                   {`We're excited to hear from you! Whether you're interested in attending, `}
                   {`sponsoring, or speaking at EVOLVE ICT SUMMIT 2026, our team is ready to assist you.`}
@@ -99,8 +99,8 @@ export default function ContactPage() {
                       key={index}
                       className="flex items-start space-x-4 p-4 rounded-lg bg-white/5"
                     >
-                      <div className="p-3 bg-[#ff9900]/20 rounded-lg">
-                        <div className="text-[#ff9900]">{item.icon}</div>
+                      <div className="p-3 bg-[#ffcc00]/20 rounded-lg">
+                        <div className="text-[#ffcc00]">{item.icon}</div>
                       </div>
                       <div className="flex-1">
                         <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
@@ -124,10 +124,10 @@ export default function ContactPage() {
         {/* Map Placeholder */}
         <Card className="mt-8 bg-white/5 backdrop-blur-sm border-gray-700">
           <CardContent className="p-8">
-            <h2 className="text-2xl font-bold mb-6 text-[#ff9900]">Find Us Here</h2>
+            <h2 className="text-2xl font-bold mb-6 text-[#ffcc00]">Find Us Here</h2>
             <div className="bg-gray-800/50 rounded-lg h-64 flex items-center justify-center border border-gray-700">
               <div className="text-center">
-                <MapPin className="h-12 w-12 text-[#ff9900] mx-auto mb-4" />
+                <MapPin className="h-12 w-12 text-[#ffcc00] mx-auto mb-4" />
                 <p className="text-gray-300">Conference Center Location Map</p>
                 <p className="text-sm text-gray-400 mt-2">
                   123 Tech Street, San Francisco, CA 94107

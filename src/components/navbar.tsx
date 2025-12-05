@@ -38,7 +38,7 @@ export function Navbar() {
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-[#232f3e] backdrop-blur-sm shadow-md py-3' : 'bg-transparent py-4'
+        scrolled ? 'bg-[#170d43] backdrop-blur-sm shadow-md py-3' : 'bg-transparent py-4'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -46,9 +46,9 @@ export function Navbar() {
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="text-xl font-bold tracking-tight flex items-center gap-2">
-              <span className="text-[#ff9900]">EVOLVE</span>
+              <span className="text-[#ffcc00]">EVOLVE</span>
               <span className="text-white hidden md:flex">ICT SUMMIT</span>
-              <span className="text-[#ff9900] hidden md:flex">2026</span>
+              <span className="text-[#ffcc00] hidden md:flex">2026</span>
             </Link>
           </div>
 
@@ -62,15 +62,15 @@ export function Navbar() {
                   href={link.href}
                   className={`font-medium text-xs px-4 py-2 rounded-sm transition-all duration-200 relative ${
                     active
-                      ? 'text-[#ff9900]'
+                      ? 'text-[#ffcc00]'
                       : scrolled
-                        ? 'text-white hover:text-[#ff9900]'
-                        : 'text-white/90 hover:text-[#ff9900]'
+                        ? 'text-white hover:text-[#ffcc00]'
+                        : 'text-white/90 hover:text-[#ffcc00]'
                   }`}
                 >
                   {link.name}
                   {active && (
-                    <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-4 h-0.5 bg-[#ff9900] rounded-full"></span>
+                    <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-4 h-0.5 bg-[#ffcc00] rounded-full"></span>
                   )}
                 </Link>
               )
@@ -78,7 +78,7 @@ export function Navbar() {
             <Button
               className={`font-semibold px-6 py-2 rounded-sm ml-4 transition-all duration-200 text-xs ${
                 scrolled
-                  ? 'bg-[#ff9900] hover:bg-[#ec7211] text-white'
+                  ? 'bg-[#ffcc00] hover:bg-[#ec7211] text-white'
                   : 'bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white border border-white/20 '
               }`}
               asChild
@@ -103,7 +103,7 @@ export function Navbar() {
               </SheetTrigger>
               <SheetContent
                 side="right"
-                className="bg-[#232f3e] text-white border-l border-gray-700 p-4"
+                className="bg-[#170d43] text-white border-l border-gray-700 p-4"
               >
                 {/* Add SheetTitle for accessibility - hidden visually but available for screen readers */}
                 <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
@@ -111,9 +111,9 @@ export function Navbar() {
                 <div className="flex flex-col space-y-4 mt-8">
                   <div className="mb-4">
                     <Link href="/" className="text-sm md:text-xl font-bold tracking-tight">
-                      <span className="text-[#ff9900]">EVOLVE</span>
+                      <span className="text-[#ffcc00]">EVOLVE</span>
                       <span className="text-white"> ICT SUMMIT</span>
-                      <span className="text-[#ff9900] ml-2">2026</span>
+                      <span className="text-[#ffcc00] ml-2">2026</span>
                     </Link>
                   </div>
 
@@ -125,8 +125,8 @@ export function Navbar() {
                         href={link.href}
                         className={`font-medium  py-2 transition-colors duration-200 flex items-center text-xs${
                           active
-                            ? 'text-[#ff9900] pl-2 border-l-4 border-[#ff9900]'
-                            : 'text-white hover:text-[#ff9900] pl-2 border-l-4 border-transparent'
+                            ? 'text-[#ffcc00] pl-2 border-l-4 border-[#ffcc00]'
+                            : 'text-white hover:text-[#ffcc00] pl-2 border-l-4 border-transparent'
                         }`}
                       >
                         {link.name}
@@ -134,7 +134,7 @@ export function Navbar() {
                     )
                   })}
                   <Button
-                    className="bg-[#ff9900] hover:bg-[#ec7211] text-white  font-semibold mt-4 text-xs"
+                    className="bg-[#ffcc00] hover:bg-[#ec7211] text-white  font-semibold mt-4 text-xs"
                     asChild
                   >
                     <Link href="/register">Register now</Link>

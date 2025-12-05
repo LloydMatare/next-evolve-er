@@ -47,7 +47,7 @@ export function ContactForm() {
           {...register('name')}
           type="text"
           id="name"
-          className="w-full  rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition"
+          className="w-full  rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#ffcc00] focus:border-transparent outline-none transition"
           placeholder="John Doe"
         />
         {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>}
@@ -61,7 +61,7 @@ export function ContactForm() {
           {...register('email')}
           type="email"
           id="email"
-          className="w-full  rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition"
+          className="w-full  rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#ffcc00] focus:border-transparent outline-none transition"
           placeholder="john@example.com"
         />
         {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>}
@@ -75,7 +75,7 @@ export function ContactForm() {
           {...register('phone')}
           type="tel"
           id="phone"
-          className="w-full  rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition"
+          className="w-full  rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#ffcc00] focus:border-transparent outline-none transition"
           placeholder="+263 xxx xxx xxx"
         />
         {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>}
@@ -89,7 +89,7 @@ export function ContactForm() {
           {...register('message')}
           id="message"
           rows={5}
-          className="w-full  rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition resize-none"
+          className="w-full  rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#ffcc00] focus:border-transparent outline-none transition resize-none"
           placeholder="Tell us about your interest in the summit..."
         />
         {errors.message && <p className="mt-1 text-sm text-red-600">{errors.message.message}</p>}
@@ -98,7 +98,7 @@ export function ContactForm() {
       <Button
         type="submit"
         disabled={isSubmitting}
-        className="w-full bg-amber-500 hover:bg-amber-600 cursor-pointer text-white py-3 text-sm"
+        className="w-full bg-[#ffcc00] hover:bg-amber-600 cursor-pointer text-white py-3 text-sm"
       >
         {isSubmitting ? 'Sending...' : 'Send Message'}
       </Button>
