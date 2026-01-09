@@ -531,7 +531,7 @@ export default function DashboardPage() {
                   <div className="flex items-center gap-2">
                     <Mail className="w-4 h-4 text-blue-500" />
                     <span className="text-sm font-medium text-gray-900">
-                      support@evolveictsummit.com
+                      info@evolveictsummit.com
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
