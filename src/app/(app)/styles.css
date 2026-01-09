@@ -318,4 +318,37 @@ svg {
   .btn-secondary {
     @apply bg-white hover:bg-gray-100 text-[#170d43] font-semibold px-8 py-3 rounded-sm border border-gray-300 transition-all duration-200;
   }
+
+  /* Event-themed animations */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .delay-1000 {
+    animation-delay: 1s;
+  }
+
+  /* Event badge styles */
+  .event-badge {
+    @apply inline-flex items-center justify-center px-4 py-2 bg-[#ffcc00]/10 border border-[#ffcc00]/30 rounded-full;
+  }
+
+  /* Section divider with event styling */
+  .section-divider {
+    @apply relative;
+  }
+
+  .section-divider::before {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#ffcc00] to-transparent;
+  }
 }
