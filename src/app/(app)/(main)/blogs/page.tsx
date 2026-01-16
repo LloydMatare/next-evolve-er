@@ -180,17 +180,29 @@ export default function BlogsPage() {
       const data = await response.json()
 
       if (data.docs) {
-        const transformedBlogs = data.docs.map((blog: any) => ({
-          ...blog,
-          featuredImage: {
-            url: blog.featuredImage?.url || '/placeholder.png',
-            alt: blog.featuredImage?.alt || blog.title,
-          },
-          publishedAt: format(new Date(blog.publishedAt), 'MMMM dd, yyyy'),
-          likes: blog.likes || Math.floor(Math.random() * 500),
-          comments: blog.comments || Math.floor(Math.random() * 50),
-          trending: Math.random() > 0.7,
-        }))
+        const transformedBlogs = data.docs.map((blog: any) => {
+          let imageUrl = '/placeholder.png'
+          
+          if (typeof blog.featuredImage === 'object' && blog.featuredImage?.url) {
+            imageUrl = blog.featuredImage.url.startsWith('http') 
+              ? blog.featuredImage.url 
+              : `${window.location.origin}${blog.featuredImage.url}`
+          }
+          
+          return {
+            ...blog,
+            featuredImage: {
+              url: imageUrl,
+              alt: typeof blog.featuredImage === 'object' && blog.featuredImage?.alt 
+                ? blog.featuredImage.alt 
+                : blog.title,
+            },
+            publishedAt: format(new Date(blog.publishedAt), 'MMMM dd, yyyy'),
+            likes: blog.likes || Math.floor(Math.random() * 500),
+            comments: blog.comments || Math.floor(Math.random() * 50),
+            trending: Math.random() > 0.7,
+          }
+        })
         setBlogs(transformedBlogs)
       } else {
         throw new Error('Invalid response format')
@@ -697,7 +709,13 @@ export default function BlogsPage() {
                     >
                       {/* Image */}
                       <div className="relative h-48 overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900" />
+                        <Image
+                          src={blog.featuredImage.url}
+                          alt={blog.featuredImage.alt || blog.title}
+                          fill
+                          className="object-cover"
+                          unoptimized
+                        />
                         {/* Category Badge */}
                         <div className="absolute top-4 left-4">
                           <span
@@ -775,8 +793,14 @@ export default function BlogsPage() {
                     >
                       <div className="flex gap-6">
                         {/* Image */}
-                        <div className="flex-shrink-0 w-48 h-48 rounded-xl overflow-hidden">
-                          <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900" />
+                        <div className="flex-shrink-0 w-48 h-48 rounded-xl overflow-hidden relative">
+                          <Image
+                            src={blog.featuredImage.url}
+                            alt={blog.featuredImage.alt || blog.title}
+                            fill
+                            className="object-cover"
+                            unoptimized
+                          />
                         </div>
 
                         {/* Content */}

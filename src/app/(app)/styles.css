@@ -89,6 +89,10 @@ img {
   display: block;
 }
 
+li {
+  color: black;
+}
+
 h1 {
   margin: 40px 0;
   font-size: 64px;
@@ -321,7 +325,8 @@ svg {
 
   /* Event-themed animations */
   @keyframes float {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateY(0px);
     }
     50% {

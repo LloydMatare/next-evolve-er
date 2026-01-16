@@ -26,6 +26,7 @@ import {
 } from 'lucide-react'
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { format } from 'date-fns'
 import { useParams } from 'next/navigation'
@@ -94,7 +95,10 @@ const renderRichText = (node: RichTextNode): React.ReactNode => {
     }
     if (node.code) {
       element = (
-        <code key={Math.random()} className="bg-gray-100 px-2 py-1 rounded text-sm font-mono">
+        <code
+          key={Math.random()}
+          className="bg-gray-100 px-2 py-1 rounded text-sm font-mono text-black"
+        >
           {element}
         </code>
       )
@@ -111,7 +115,7 @@ const renderRichText = (node: RichTextNode): React.ReactNode => {
       return (
         <Tag
           key={Math.random()}
-          className={`mt-8 mb-4 scroll-mt-20 ${level === 1 ? 'text-4xl' : level === 2 ? 'text-3xl' : level === 3 ? 'text-2xl' : 'text-xl'} font-bold text-gray-900 leading-tight`}
+          className={`mt-8 mb-4 scroll-mt-20 ${level === 1 ? 'text-4xl' : level === 2 ? 'text-3xl' : level === 3 ? 'text-2xl' : 'text-xl'} font-bold text-black leading-tight`}
         >
           {node.children?.map(renderRichText)}
         </Tag>
@@ -119,7 +123,7 @@ const renderRichText = (node: RichTextNode): React.ReactNode => {
 
     case 'paragraph':
       return (
-        <p key={Math.random()} className="mb-6 text-gray-700 leading-relaxed text-lg">
+        <p key={Math.random()} className="mb-6 text-black leading-relaxed text-lg">
           {node.children?.map(renderRichText)}
         </p>
       )
@@ -128,7 +132,7 @@ const renderRichText = (node: RichTextNode): React.ReactNode => {
       return (
         <blockquote
           key={Math.random()}
-          className="my-8 pl-6 border-l-4 border-[#ffcc00] italic text-gray-600 text-xl"
+          className="my-8 pl-6 border-l-4 border-[#ffcc00] italic text-black text-xl"
         >
           {node.children?.map(renderRichText)}
         </blockquote>
@@ -139,7 +143,7 @@ const renderRichText = (node: RichTextNode): React.ReactNode => {
       return (
         <ListTag
           key={Math.random()}
-          className={`my-6 ${node.listType === 'bullet' ? 'list-disc' : 'list-decimal'} ml-8 space-y-2`}
+          className={`my-6 ${node.listType === 'bullet' ? 'list-disc' : 'list-decimal'} ml-8 space-y-2 text-black`}
         >
           {node.children?.map(renderRichText)}
         </ListTag>
@@ -147,7 +151,7 @@ const renderRichText = (node: RichTextNode): React.ReactNode => {
 
     case 'list-item':
       return (
-        <li key={Math.random()} className="text-gray-700 leading-relaxed">
+        <li key={Math.random()} className="text-black leading-relaxed">
           {node.children?.map(renderRichText)}
         </li>
       )
@@ -168,7 +172,11 @@ const renderRichText = (node: RichTextNode): React.ReactNode => {
     default:
       // Recursively render children for other node types
       if (node.children) {
-        return <div key={Math.random()}>{node.children.map(renderRichText)}</div>
+        return (
+          <div key={Math.random()} className="text-black">
+            {node.children.map(renderRichText)}
+          </div>
+        )
       }
       return null
   }
@@ -219,11 +227,21 @@ export default function BlogPostPage() {
 
       if (data.docs && data.docs.length > 0) {
         const blogData = data.docs[0]
+        
+        let imageUrl = '/placeholder.png'
+        if (typeof blogData.featuredImage === 'object' && blogData.featuredImage?.url) {
+          imageUrl = blogData.featuredImage.url.startsWith('http') 
+            ? blogData.featuredImage.url 
+            : `${window.location.origin}${blogData.featuredImage.url}`
+        }
+        
         const transformedBlog: BlogPost = {
           ...blogData,
           featuredImage: {
-            url: blogData.featuredImage?.url || '/placeholder.png',
-            alt: blogData.featuredImage?.alt || blogData.title,
+            url: imageUrl,
+            alt: typeof blogData.featuredImage === 'object' && blogData.featuredImage?.alt 
+              ? blogData.featuredImage.alt 
+              : blogData.title,
           },
           publishedAt: format(new Date(blogData.publishedAt), 'MMMM dd, yyyy'),
           likes: blogData.likes || Math.floor(Math.random() * 500),
@@ -276,14 +294,25 @@ export default function BlogPostPage() {
       if (response.ok) {
         const data = await response.json()
         if (data.docs) {
-          const transformedBlogs = data.docs.map((blog: any) => ({
-            ...blog,
-            featuredImage: {
-              url: blog.featuredImage?.url || '/placeholder.png',
-              alt: blog.featuredImage?.alt || blog.title,
-            },
-            publishedAt: format(new Date(blog.publishedAt), 'MMMM dd, yyyy'),
-          }))
+          const transformedBlogs = data.docs.map((blog: any) => {
+            let imageUrl = '/placeholder.png'
+            if (typeof blog.featuredImage === 'object' && blog.featuredImage?.url) {
+              imageUrl = blog.featuredImage.url.startsWith('http') 
+                ? blog.featuredImage.url 
+                : `${window.location.origin}${blog.featuredImage.url}`
+            }
+            
+            return {
+              ...blog,
+              featuredImage: {
+                url: imageUrl,
+                alt: typeof blog.featuredImage === 'object' && blog.featuredImage?.alt 
+                  ? blog.featuredImage.alt 
+                  : blog.title,
+              },
+              publishedAt: format(new Date(blog.publishedAt), 'MMMM dd, yyyy'),
+            }
+          })
           setRelatedBlogs(transformedBlogs)
         }
       }
@@ -361,7 +390,7 @@ export default function BlogPostPage() {
             <div className="w-20 h-20 border-4 border-[#ffcc00]/20 rounded-full"></div>
             <div className="absolute top-0 left-0 w-20 h-20 border-4 border-[#ffcc00] border-t-transparent rounded-full animate-spin"></div>
           </div>
-          <span className="mt-6 text-lg text-gray-600 font-medium">Loading article...</span>
+          <span className="mt-6 text-lg text-black font-medium">Loading article...</span>
         </div>
       </div>
     )
@@ -375,8 +404,8 @@ export default function BlogPostPage() {
             <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-red-100 to-red-50 rounded-2xl flex items-center justify-center">
               <span className="text-4xl">😔</span>
             </div>
-            <h2 className="text-3xl font-bold text-gray-300 mb-4">Article Not Found</h2>
-            <p className="text-lg text-gray-200 mb-8">
+            <h2 className="text-3xl font-bold text-black mb-4">Article Not Found</h2>
+            <p className="text-lg text-black mb-8">
               {error ||
                 'The requested article could not be found. It may have been moved or deleted.'}
             </p>
@@ -404,7 +433,7 @@ export default function BlogPostPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Progress Bar */}
-      <div className="fixed top-0 left-0 right-0 h-1 bg-gray-200 z-50">
+      <div className="fixed top-0 left-0 right-0 h-1 bg-gray-200 z-[60]">
         <div
           className="h-full bg-gradient-to-r from-[#ffcc00] to-amber-500 transition-all duration-300"
           style={{ width: `${progress}%` }}
@@ -412,17 +441,17 @@ export default function BlogPostPage() {
       </div>
 
       {/* Back Navigation */}
-      <div className="sticky top-0 z-40 pt-6 pb-6 px-4 bg-white/90 backdrop-blur-sm border-b border-gray-200">
+      <div className="sticky top-16 z-40 pt-6 pb-6 px-4 bg-white/95 backdrop-blur-md border-b border-gray-200 mt-16">
         <div className="container-custom">
           <div className="flex items-center justify-between">
             <Link href="/blogs">
-              <Button variant="ghost" className="text-gray-600 hover:text-[#ffcc00] group">
+              <Button variant="ghost" className="text-black hover:text-[#ffcc00] group">
                 <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
                 Back to Insights
               </Button>
             </Link>
             <div className="flex items-center gap-3">
-              <span className="text-sm text-gray-500 hidden md:inline">Share this article:</span>
+              <span className="text-sm text-black hidden md:inline">Share this article:</span>
               <div className="flex gap-2">
                 <button
                   onClick={() => shareBlog('twitter')}
@@ -447,7 +476,7 @@ export default function BlogPostPage() {
                 </button>
                 <button
                   onClick={() => shareBlog()}
-                  className="w-10 h-10 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 flex items-center justify-center transition-colors"
+                  className="w-10 h-10 rounded-lg bg-gray-100 text-black hover:bg-gray-200 flex items-center justify-center transition-colors"
                   title="Copy link"
                 >
                   {copied ? <Check className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
@@ -485,12 +514,12 @@ export default function BlogPostPage() {
             </div>
 
             {/* Title */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-6 leading-tight">
               {blog.title}
             </h1>
 
             {/* Excerpt */}
-            <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed">{blog.excerpt}</p>
+            <p className="text-xl md:text-2xl text-black mb-8 leading-relaxed">{blog.excerpt}</p>
 
             {/* Author & Meta Info */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 py-8 border-y border-gray-200">
@@ -504,20 +533,20 @@ export default function BlogPostPage() {
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h3 className="text-lg font-bold text-gray-900">{blog.authorName}</h3>
+                    <h3 className="text-lg font-bold text-black">{blog.authorName}</h3>
                     {blog.authorTitle && (
                       <>
-                        <span className="text-gray-400">•</span>
-                        <span className="text-gray-600">{blog.authorTitle}</span>
+                        <span className="text-black">•</span>
+                        <span className="text-black">{blog.authorTitle}</span>
                       </>
                     )}
                   </div>
-                  {blog.authorBio && <p className="text-gray-500 text-sm mt-1">{blog.authorBio}</p>}
+                  {blog.authorBio && <p className="text-black text-sm mt-1">{blog.authorBio}</p>}
                 </div>
               </div>
 
               <div className="flex flex-wrap gap-4">
-                <div className="flex items-center gap-4 text-gray-600">
+                <div className="flex items-center gap-4 text-black">
                   <div className="flex items-center gap-2">
                     <Calendar className="w-5 h-5" />
                     <span className="font-medium">{blog.publishedAt}</span>
@@ -566,7 +595,7 @@ export default function BlogPostPage() {
           <div className="flex flex-col lg:flex-row gap-12">
             {/* Main Content */}
             <article className="lg:flex-1 max-w-4xl mx-auto">
-              <div className="prose prose-lg max-w-none">
+              <div className="prose prose-lg max-w-none [&_li]:text-black">
                 {blog.content?.root?.children?.map((node, index) => (
                   <div key={index} className="mb-8">
                     {renderRichText(node)}
@@ -577,7 +606,7 @@ export default function BlogPostPage() {
               {/* Tags */}
               {blog.tags && blog.tags.length > 0 && (
                 <div className="mt-12 pt-8 border-t border-gray-200">
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  <h3 className="text-xl font-bold text-black mb-4 flex items-center gap-2">
                     <Tag className="w-5 h-5" />
                     Article Tags
                   </h3>
@@ -586,7 +615,7 @@ export default function BlogPostPage() {
                       <Link
                         key={index}
                         href={`/blogs?search=${encodeURIComponent(tagObj.tag)}`}
-                        className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full text-sm font-medium transition-colors"
+                        className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-black rounded-full text-sm font-medium transition-colors"
                       >
                         #{tagObj.tag}
                       </Link>
@@ -601,18 +630,18 @@ export default function BlogPostPage() {
                   <div className="flex items-center gap-6">
                     <button
                       onClick={() => setLiked(!liked)}
-                      className="flex items-center gap-2 text-gray-600 hover:text-red-500 transition-colors"
+                      className="flex items-center gap-2 text-black hover:text-red-500 transition-colors"
                     >
                       <Heart className={`w-5 h-5 ${liked ? 'fill-red-500 text-red-500' : ''}`} />
                       <span className="font-medium">{blog.likes + (liked ? 1 : 0)}</span>
                     </button>
-                    <button className="flex items-center gap-2 text-gray-600 hover:text-blue-500 transition-colors">
+                    <button className="flex items-center gap-2 text-black hover:text-blue-500 transition-colors">
                       <MessageCircle className="w-5 h-5" />
                       <span className="font-medium">{blog.comments}</span>
                     </button>
                     <button
                       onClick={() => setBookmarked(!bookmarked)}
-                      className={`flex items-center gap-2 transition-colors ${bookmarked ? 'text-[#ffcc00]' : 'text-gray-600 hover:text-[#ffcc00]'}`}
+                      className={`flex items-center gap-2 transition-colors ${bookmarked ? 'text-[#ffcc00]' : 'text-black hover:text-[#ffcc00]'}`}
                     >
                       <Bookmark className="w-5 h-5" />
                       <span className="font-medium">Save</span>
@@ -622,7 +651,7 @@ export default function BlogPostPage() {
                     <Button
                       onClick={printArticle}
                       variant="outline"
-                      className="border-gray-300 hover:border-[#ffcc00]"
+                      className="border-gray-300 hover:border-[#ffcc00] text-black"
                     >
                       <Printer className="w-4 h-4 mr-2" />
                       Print
@@ -643,13 +672,13 @@ export default function BlogPostPage() {
             <aside className="lg:w-80 space-y-8">
               {/* Reading Progress */}
               <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
-                <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <h3 className="text-lg font-bold text-black mb-4 flex items-center gap-2">
                   <BookOpen className="w-5 h-5" />
                   Reading Progress
                 </h3>
                 <div className="space-y-4">
                   <div>
-                    <div className="flex justify-between text-sm text-gray-600 mb-1">
+                    <div className="flex justify-between text-sm text-black mb-1">
                       <span>Progress</span>
                       <span>{Math.round(progress)}%</span>
                     </div>
@@ -662,16 +691,16 @@ export default function BlogPostPage() {
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-gray-900">
+                      <div className="text-2xl font-bold text-black">
                         {readingTime || blog.readTime}
                       </div>
-                      <div className="text-sm text-gray-500">Minutes</div>
+                      <div className="text-sm text-black">Minutes</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-gray-900">
+                      <div className="text-2xl font-bold text-black">
                         {blog.views.toLocaleString()}
                       </div>
-                      <div className="text-sm text-gray-500">Views</div>
+                      <div className="text-sm text-black">Views</div>
                     </div>
                   </div>
                 </div>
@@ -679,7 +708,7 @@ export default function BlogPostPage() {
 
               {/* Table of Contents */}
               <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">In This Article</h3>
+                <h3 className="text-lg font-bold text-black mb-4">In This Article</h3>
                 <nav className="space-y-2">
                   {blog.content?.root?.children
                     ?.filter((node: any) => node.type === 'heading' && node.level === 2)
@@ -687,7 +716,7 @@ export default function BlogPostPage() {
                       <a
                         key={index}
                         href={`#${heading.children?.[0]?.text?.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
-                        className="block py-2 text-gray-600 hover:text-[#ffcc00] transition-colors border-l-2 border-transparent hover:border-[#ffcc00] pl-3"
+                        className="block py-2 text-black hover:text-[#ffcc00] transition-colors border-l-2 border-transparent hover:border-[#ffcc00] pl-3"
                       >
                         {heading.children?.[0]?.text}
                       </a>
@@ -698,7 +727,7 @@ export default function BlogPostPage() {
               {/* Share Widget */}
               <div className="bg-gradient-to-br from-[#170d43] to-[#2a1b69] rounded-2xl p-6 text-white">
                 <h3 className="text-lg font-bold mb-4">Share This Insight</h3>
-                <p className="text-gray-300 mb-6 text-sm">
+                <p className="text-white/80 mb-6 text-sm">
                   Help others discover this valuable content by sharing it across your networks.
                 </p>
                 <div className="grid grid-cols-2 gap-3">
@@ -723,7 +752,7 @@ export default function BlogPostPage() {
                         onClick={() =>
                           shareBlog(item.platform.toLowerCase().replace(' copy link', ''))
                         }
-                        className={`${item.color} rounded-xl p-3 flex flex-col items-center justify-center transition-colors`}
+                        className={`${item.color} rounded-xl p-3 flex flex-col items-center justify-center transition-colors text-white`}
                       >
                         <Icon className="w-5 h-5 mb-1" />
                         <span className="text-xs font-medium">{item.platform}</span>
@@ -741,7 +770,7 @@ export default function BlogPostPage() {
       <div className="py-12 px-4 bg-gradient-to-b from-white to-gray-50">
         <div className="container-custom max-w-4xl mx-auto">
           <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">About the Author</h3>
+            <h3 className="text-2xl font-bold text-black mb-6">About the Author</h3>
             <div className="flex flex-col md:flex-row gap-6">
               <div className="flex-shrink-0">
                 <div className="w-24 h-24 rounded-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center text-white text-2xl font-bold">
@@ -753,21 +782,21 @@ export default function BlogPostPage() {
                 </div>
               </div>
               <div className="flex-1">
-                <h4 className="text-xl font-bold text-gray-900 mb-2">{blog.authorName}</h4>
+                <h4 className="text-xl font-bold text-black mb-2">{blog.authorName}</h4>
                 {blog.authorTitle && (
                   <p className="text-[#ffcc00] font-medium mb-3">{blog.authorTitle}</p>
                 )}
                 {blog.authorBio ? (
-                  <p className="text-gray-600 mb-4">{blog.authorBio}</p>
+                  <p className="text-black mb-4">{blog.authorBio}</p>
                 ) : (
-                  <p className="text-gray-600 mb-4">
+                  <p className="text-black mb-4">
                     {blog.authorName} is a contributor to the Evolve ICT Summit Insights platform,
                     sharing expertise and analysis on technology trends and digital transformation
                     in Africa.
                   </p>
                 )}
                 <div className="flex items-center gap-4">
-                  <span className="text-sm text-gray-500">Follow author:</span>
+                  <span className="text-sm text-black">Follow author:</span>
                   <div className="flex gap-2">
                     <button className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors">
                       <Twitter className="w-4 h-4" />
@@ -793,12 +822,12 @@ export default function BlogPostPage() {
                   <Target className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900">Continue Reading</h2>
-                  <p className="text-gray-600">More insights on this topic</p>
+                  <h2 className="text-3xl font-bold text-black">Continue Reading</h2>
+                  <p className="text-black">More insights on this topic</p>
                 </div>
               </div>
               <Link href="/blogs">
-                <Button variant="ghost" className="text-gray-600 hover:text-[#ffcc00]">
+                <Button variant="ghost" className="text-black hover:text-[#ffcc00]">
                   View All
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
@@ -809,24 +838,32 @@ export default function BlogPostPage() {
               {relatedBlogs.map((relatedBlog) => (
                 <Link key={relatedBlog.id} href={`/blogs/${relatedBlog.slug}`} className="group">
                   <article className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 h-full">
-                    <div className="h-48 bg-gradient-to-br from-gray-800 to-gray-900" />
+                    <div className="h-48 relative">
+                      <Image
+                        src={relatedBlog.featuredImage.url}
+                        alt={relatedBlog.featuredImage.alt || relatedBlog.title}
+                        fill
+                        className="object-cover"
+                        unoptimized
+                      />
+                    </div>
                     <div className="p-6">
                       <div className="flex items-center gap-2 mb-3">
-                        <span className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full">
+                        <span className="px-3 py-1 bg-gray-100 text-black text-xs font-medium rounded-full">
                           {relatedBlog.category.replace(/-/g, ' ')}
                         </span>
-                        <span className="text-sm text-gray-500">{relatedBlog.publishedAt}</span>
+                        <span className="text-sm text-black">{relatedBlog.publishedAt}</span>
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-[#ffcc00] transition-colors">
+                      <h3 className="text-xl font-bold text-black mb-3 line-clamp-2 group-hover:text-[#ffcc00] transition-colors">
                         {relatedBlog.title}
                       </h3>
-                      <p className="text-gray-600 mb-4 line-clamp-3">{relatedBlog.excerpt}</p>
+                      <p className="text-black mb-4 line-clamp-3">{relatedBlog.excerpt}</p>
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2 text-sm text-gray-500">
+                        <div className="flex items-center gap-2 text-sm text-black">
                           <Clock className="w-4 h-4" />
                           {relatedBlog.readTime} min read
                         </div>
-                        <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-[#ffcc00] transition-colors" />
+                        <ArrowRight className="w-5 h-5 text-black group-hover:text-[#ffcc00] transition-colors" />
                       </div>
                     </div>
                   </article>
@@ -847,7 +884,7 @@ export default function BlogPostPage() {
 
           <h2 className="text-4xl font-bold text-white mb-6">Get More Insights Like This</h2>
 
-          <p className="text-xl text-gray-300 mb-8">
+          <p className="text-xl text-white/80 mb-8">
             Join thousands of professionals who receive our weekly digest of the most important tech
             analysis, trends, and insights from across Africa.
           </p>
@@ -858,14 +895,14 @@ export default function BlogPostPage() {
                 <input
                   type="email"
                   placeholder="Enter your work email"
-                  className="w-full px-6 py-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#ffcc00] focus:border-transparent"
+                  className="w-full px-6 py-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#ffcc00] focus:border-transparent"
                 />
               </div>
               <Button className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:shadow-lg hover:shadow-amber-500/25 transition-shadow">
                 Subscribe Now
               </Button>
             </div>
-            <p className="text-sm text-gray-400 mt-4">
+            <p className="text-sm text-white/60 mt-4">
               No spam, ever. Unsubscribe anytime. Read our{' '}
               <a href="#" className="text-[#ffcc00] hover:text-amber-400">
                 Privacy Policy
