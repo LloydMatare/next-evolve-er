@@ -75,6 +75,7 @@ export interface Config {
     speakers: Speaker;
     programs: Program;
     blogs: Blog;
+    'previous-summits': PreviousSummit;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -90,6 +91,7 @@ export interface Config {
     speakers: SpeakersSelect<false> | SpeakersSelect<true>;
     programs: ProgramsSelect<false> | ProgramsSelect<true>;
     blogs: BlogsSelect<false> | BlogsSelect<true>;
+    'previous-summits': PreviousSummitsSelect<false> | PreviousSummitsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -478,6 +480,132 @@ export interface Blog {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "previous-summits".
+ */
+export interface PreviousSummit {
+  id: string;
+  /**
+   * e.g., 2025, 2024
+   */
+  year: string;
+  /**
+   * e.g., Summit 2025
+   */
+  title: string;
+  /**
+   * Main theme of the summit
+   */
+  theme: string;
+  stats: {
+    /**
+     * e.g., 1,500+
+     */
+    delegates: string;
+    /**
+     * e.g., 50+
+     */
+    speakers: string;
+    /**
+     * e.g., 80+
+     */
+    exhibitors: string;
+    /**
+     * e.g., 30+
+     */
+    startups: string;
+    /**
+     * e.g., 25+
+     */
+    countries: string;
+    /**
+     * e.g., 40+
+     */
+    partnerships: string;
+    /**
+     * Number of days, e.g., 2
+     */
+    days?: string | null;
+  };
+  /**
+   * Key highlights and memorable moments from the summit
+   */
+  highlights: {
+    highlight: string;
+    id?: string | null;
+  }[];
+  /**
+   * Focus areas and topics covered
+   */
+  themes: {
+    theme: string;
+    id?: string | null;
+  }[];
+  color:
+    | 'from-blue-500 to-cyan-400'
+    | 'from-purple-500 to-pink-400'
+    | 'from-green-500 to-teal-400'
+    | 'from-orange-500 to-red-400'
+    | 'from-indigo-500 to-purple-400';
+  gradient:
+    | 'bg-gradient-to-br from-blue-500 via-blue-600 to-cyan-500'
+    | 'bg-gradient-to-br from-purple-500 via-purple-600 to-pink-500'
+    | 'bg-gradient-to-br from-green-500 via-green-600 to-teal-500'
+    | 'bg-gradient-to-br from-orange-500 via-orange-600 to-red-500'
+    | 'bg-gradient-to-br from-indigo-500 via-indigo-600 to-purple-500';
+  /**
+   * Images from the summit
+   */
+  images?:
+    | {
+        image: string | Media;
+        title: string;
+        description: string;
+        category:
+          | 'Ceremony'
+          | 'Speeches'
+          | 'Exhibition'
+          | 'Panels'
+          | 'Networking'
+          | 'Competition'
+          | 'Awards'
+          | 'Workshops';
+        /**
+         * Starting number of likes (for display purposes)
+         */
+        likes?: number | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Videos from the summit
+   */
+  videos?:
+    | {
+        thumbnail?: (string | null) | Media;
+        /**
+         * YouTube embed URL (e.g., https://www.youtube.com/embed/VIDEO_ID)
+         */
+        videoUrl: string;
+        title: string;
+        description: string;
+        category: 'Highlights' | 'Speeches' | 'Panels' | 'Exhibition' | 'Competition' | 'Interviews';
+        /**
+         * Starting number of likes (for display purposes)
+         */
+        likes?: number | null;
+        id?: string | null;
+      }[]
+    | null;
+  status: 'draft' | 'published' | 'archived';
+  /**
+   * Higher numbers appear first (most recent)
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -531,6 +659,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'blogs';
         value: string | Blog;
+      } | null)
+    | ({
+        relationTo: 'previous-summits';
+        value: string | PreviousSummit;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -810,6 +942,65 @@ export interface BlogsSelect<T extends boolean = true> {
   metaTitle?: T;
   metaDescription?: T;
   views?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "previous-summits_select".
+ */
+export interface PreviousSummitsSelect<T extends boolean = true> {
+  year?: T;
+  title?: T;
+  theme?: T;
+  stats?:
+    | T
+    | {
+        delegates?: T;
+        speakers?: T;
+        exhibitors?: T;
+        startups?: T;
+        countries?: T;
+        partnerships?: T;
+        days?: T;
+      };
+  highlights?:
+    | T
+    | {
+        highlight?: T;
+        id?: T;
+      };
+  themes?:
+    | T
+    | {
+        theme?: T;
+        id?: T;
+      };
+  color?: T;
+  gradient?: T;
+  images?:
+    | T
+    | {
+        image?: T;
+        title?: T;
+        description?: T;
+        category?: T;
+        likes?: T;
+        id?: T;
+      };
+  videos?:
+    | T
+    | {
+        thumbnail?: T;
+        videoUrl?: T;
+        title?: T;
+        description?: T;
+        category?: T;
+        likes?: T;
+        id?: T;
+      };
+  status?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }

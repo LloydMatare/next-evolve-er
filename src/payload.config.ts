@@ -16,6 +16,7 @@ import { Payments } from './collections/Payments'
 import { Programs } from './collections/Programs'
 import { Speakers } from './collections/Speakers'
 import { Blogs } from './collections/Blogs'
+import { PreviousSummits } from './collections/PreviousSummits'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -27,7 +28,17 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Registrations, Tickets, Payments, Speakers, Programs, Blogs],
+  collections: [
+    Users,
+    Media,
+    Registrations,
+    Tickets,
+    Payments,
+    Speakers,
+    Programs,
+    Blogs,
+    PreviousSummits,
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
