@@ -59,42 +59,42 @@ export default function ContactPage() {
   const departments = [
     {
       name: 'Partnerships & Sponsorship',
-      email: 'partnerships@evolveictsummit.com',
+      email: 'info@evolveictsummit.com',
       description: 'Collaboration opportunities and sponsor packages',
       icon: <Users className="w-5 h-5" />,
       color: 'bg-gradient-to-r from-blue-500 to-cyan-400',
     },
     {
       name: 'Media & Press',
-      email: 'media@evolveictsummit.com',
+      email: 'info@evolveictsummit.com',
       description: 'Press inquiries, media partnerships, and coverage',
       icon: <MessageSquare className="w-5 h-5" />,
       color: 'bg-gradient-to-r from-purple-500 to-pink-400',
     },
     {
       name: 'Speaker & Program',
-      email: 'program@evolveictsummit.com',
+      email: 'info@evolveictsummit.com',
       description: 'Speaking opportunities and agenda questions',
       icon: <Lightbulb className="w-5 h-5" />,
       color: 'bg-gradient-to-r from-amber-500 to-orange-400',
     },
     {
       name: 'Registration & Tickets',
-      email: 'tickets@evolveictsummit.com',
+      email: 'info@evolveictsummit.com',
       description: 'Ticket inquiries and registration support',
       icon: <Shield className="w-5 h-5" />,
       color: 'bg-gradient-to-r from-emerald-500 to-teal-400',
     },
     {
       name: 'Technical Support',
-      email: 'tech@evolveictsummit.com',
+      email: 'info@evolveictsummit.com',
       description: 'Website issues and technical assistance',
       icon: <Headphones className="w-5 h-5" />,
       color: 'bg-gradient-to-r from-red-500 to-rose-400',
     },
     {
       name: 'Startup & Innovation',
-      email: 'innovation@evolveictsummit.com',
+      email: 'info@evolveictsummit.com',
       description: 'Startup participation and innovation showcase',
       icon: <Rocket className="w-5 h-5" />,
       color: 'bg-gradient-to-r from-indigo-500 to-purple-400',
@@ -233,7 +233,7 @@ export default function ContactPage() {
               </Card>
 
               {/* Quick Links */}
-              <Card className="bg-gradient-to-br from-[#170d43] to-[#2a1b69] border-0 rounded-2xl text-white">
+              {/* <Card className="bg-gradient-to-br from-[#170d43] to-[#2a1b69] border-0 rounded-2xl text-white">
                 <CardContent className="p-8">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-10 h-10 bg-gradient-to-r from-[#ffcc00] to-amber-500 rounded-lg flex items-center justify-center">
@@ -272,7 +272,7 @@ export default function ContactPage() {
                     </a>
                   </div>
                 </CardContent>
-              </Card>
+              </Card> */}
             </div>
           </div>
         </div>
