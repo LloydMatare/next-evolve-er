@@ -104,7 +104,7 @@ export default function AboutPage() {
           </div>
 
           {/* Stats bar */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mt-12">
+          {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mt-12">
             {stats.map((stat, index) => {
               const Icon = stat.icon
               return (
@@ -118,7 +118,7 @@ export default function AboutPage() {
                 </div>
               )
             })}
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -215,7 +215,7 @@ export default function AboutPage() {
               <span className="text-sm font-medium text-gray-700">Our Foundation</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-[#170d43] mb-4">Core Values</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 text-center">
               Guiding principles that shape every aspect of our summit
             </p>
           </div>
@@ -294,7 +294,7 @@ export default function AboutPage() {
             <h2 className="text-4xl md:text-5xl font-bold text-[#170d43] mb-4">
               Key Discussion Themes
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 text-center">
               Exploring the frontiers of digital transformation in Africa
             </p>
           </div>
@@ -314,10 +314,10 @@ export default function AboutPage() {
                   </h3>
                 </div>
                 <div className="mt-4 pt-4 border-t border-gray-100">
-                  <div className="flex items-center justify-between">
+                  {/* <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-500">Multiple sessions</span>
                     <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-[#ffcc00] transition-colors" />
-                  </div>
+                  </div> */}
                 </div>
               </div>
             ))}
@@ -400,7 +400,7 @@ export default function AboutPage() {
             <h2 className="text-4xl md:text-5xl font-bold text-[#170d43] mb-4">
               Who Should Attend
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 text-center">
               {`Join Africa's most influential digital transformation community`}
             </p>
           </div>
@@ -459,7 +459,7 @@ export default function AboutPage() {
               {` Be Part of Africa's Digital Revolution`}
             </h2>
 
-            <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-300 mb-8 text-center">
               Join visionary leaders, innovators, and change-makers shaping the future of technology
               in Africa.
             </p>

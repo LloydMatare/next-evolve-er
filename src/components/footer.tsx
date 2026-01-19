@@ -11,22 +11,22 @@ export function Footer() {
               <span className="text-[#ffcc00]">EVOLVE</span>
               <span className="text-white"> ICT SUMMIT 2026</span>
             </div>
-            <p className="text-gray-400 text-sm leading-relaxed">
+            <p className="text-gray-400! text-sm leading-relaxed">
               Empowering Africa&apos;s Digital Leap
             </p>
           </div>
           <div>
             <h4 className="font-bold mb-4 text-sm uppercase tracking-wide">Quick Links</h4>
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-2 text-sm text-white">
               <li>
-                <a href="#about" className="text-gray-400 hover:text-[#ffcc00] transition-colors">
+                <a href="#about" className="text-gray-400! hover:text-[#ffcc00] transition-colors">
                   About
                 </a>
               </li>
               <li>
                 <a
                   href="#objectives"
-                  className="text-gray-400 hover:text-[#ffcc00] transition-colors"
+                  className="text-gray-400! hover:text-[#ffcc00] transition-colors"
                 >
                   Program
                 </a>
@@ -34,13 +34,16 @@ export function Footer() {
               <li>
                 <a
                   href="#speakers"
-                  className="text-gray-400 hover:text-[#ffcc00] transition-colors"
+                  className="text-gray-400! hover:text-[#ffcc00] transition-colors"
                 >
                   Speakers
                 </a>
               </li>
               <li>
-                <a href="#tickets" className="text-gray-400 hover:text-[#ffcc00] transition-colors">
+                <a
+                  href="#tickets"
+                  className="text-gray-400! hover:text-[#ffcc00] transition-colors"
+                >
                   Tickets
                 </a>
               </li>
@@ -48,15 +51,15 @@ export function Footer() {
           </div>
           <div>
             <h4 className="font-bold mb-4 text-sm uppercase tracking-wide">Contact</h4>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li>June 11-12, 2026</li>
-              <li>Harare, Zimbabwe</li>
-              <li>info@evolveictsummit.com</li>
+            <ul className="space-y-2 text-sm text-gray-400!">
+              <li className="text-gray-400!">June 11-12, 2026</li>
+              <li className="text-gray-400!">Harare, Zimbabwe</li>
+              <li className="text-gray-400!">info@evolveictsummit.com</li>
             </ul>
           </div>
         </div>
         <div className="border-t border-gray-700 pt-8 text-center">
-          <p className="text-sm text-gray-400">© 2026 Evolve Africa. All rights reserved.</p>
+          <p className="text-sm text-gray-400!">© 2026 Evolve Africa. All rights reserved.</p>
         </div>
       </div>
     </footer>

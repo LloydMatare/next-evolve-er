@@ -122,7 +122,7 @@ export default function ContactPage() {
             {`Let's`} <span className="text-[#ffcc00]">Connect</span>
           </h1>
 
-          <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8">
+          <p className="text-xl md:text-2xl text-gray-300 text-center mb-8">
             Have questions about{' '}
             <span className="text-[#ffcc00] font-semibold">Evolve ICT Summit 2026</span>? Our team
             is here to help you every step of the way.
@@ -162,7 +162,7 @@ export default function ContactPage() {
             ))}
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div className="grid lg:grid-cols-3 gap-8 text-white!">
             {/* Contact Form */}
             <div className="lg:col-span-2">
               <Card className="bg-white/5 backdrop-blur-sm border-white/10 rounded-2xl overflow-hidden">
@@ -173,7 +173,7 @@ export default function ContactPage() {
                         <Send className="w-6 h-6 text-white" />
                       </div>
                       <div>
-                        <h2 className="text-2xl font-bold">Send Us a Message</h2>
+                        <h2 className="text-2xl font-bold text-white">Send Us a Message</h2>
                         <p className="text-gray-400">{`We'll respond within 24 hours`}</p>
                       </div>
                     </div>
@@ -188,13 +188,13 @@ export default function ContactPage() {
             {/* Departments & FAQ */}
             <div className="space-y-8">
               {/* Departments */}
-              <Card className="bg-white/5 backdrop-blur-sm border-white/10 rounded-2xl">
+              <Card className="bg-white/5 backdrop-blur-sm border-white/10 rounded-2xl text-white">
                 <CardContent className="p-8">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
                       <Users className="w-5 h-5 text-white" />
                     </div>
-                    <h3 className="text-xl font-bold">Contact by Department</h3>
+                    <h3 className="text-xl font-bold text-white">Contact by Department</h3>
                   </div>
                   <div className="space-y-4">
                     {departments.slice(0, 3).map((dept, index) => (
@@ -233,7 +233,7 @@ export default function ContactPage() {
               </Card>
 
               {/* Quick Links */}
-              <Card className="bg-gradient-to-br from-[#170d43] to-[#2a1b69] border-0 rounded-2xl">
+              <Card className="bg-gradient-to-br from-[#170d43] to-[#2a1b69] border-0 rounded-2xl text-white">
                 <CardContent className="p-8">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-10 h-10 bg-gradient-to-r from-[#ffcc00] to-amber-500 rounded-lg flex items-center justify-center">
@@ -287,7 +287,7 @@ export default function ContactPage() {
               <span className="text-sm font-medium text-white">Common Questions</span>
             </div>
             <h2 className="text-4xl font-bold text-white mb-4">Frequently Asked Questions</h2>
-            <p className="text-gray-300 max-w-2xl mx-auto">
+            <p className="text-gray-300 text-center">
               Quick answers to the questions we get asked the most
             </p>
           </div>
@@ -349,7 +349,7 @@ export default function ContactPage() {
 
           <div className="text-center mt-12">
             <Button
-              className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-white px-8 py-6 rounded-xl text-lg font-semibold hover:shadow-lg hover:shadow-amber-500/25 transition-shadow"
+              className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-white  text-lg font-semibold hover:shadow-lg hover:shadow-amber-500/25 transition-shadow"
               asChild
             >
               <Link href="/faq">
@@ -445,19 +445,19 @@ export default function ContactPage() {
             <span className="text-sm font-medium text-white">Ready to Connect?</span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h2 className="text-4xl md:text-5xl text-center font-bold text-white mb-6">
             {` Let's Build Something `}
             <span className="text-[#ffcc00]">Amazing</span> Together
           </h2>
 
-          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-300 mb-8 text-center">
             {`            Whether you're looking to attend, speak, sponsor, or partner, we're excited to
             collaborate with you on Africa's premier ICT event.`}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
-              className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-white px-8 py-6 rounded-xl text-lg font-semibold hover:shadow-lg hover:shadow-amber-500/25 transition-shadow"
+              className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-white font-semibold hover:shadow-lg hover:shadow-amber-500/25 transition-shadow"
               asChild
             >
               <Link href="/register">
@@ -468,8 +468,7 @@ export default function ContactPage() {
 
             <Button
               variant="outline"
-              className="border-white/30 text-white hover:bg-white/10 px-8 py-6 rounded-xl text-lg font-semibold"
-              asChild
+              className="border-white/30 text-black hover:bg-white/10 font-semibold"
             >
               <Link href="/partnerships">Explore Partnerships</Link>
             </Button>
