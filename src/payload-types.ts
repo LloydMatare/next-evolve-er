@@ -76,6 +76,7 @@ export interface Config {
     programs: Program;
     blogs: Blog;
     'previous-summits': PreviousSummit;
+    gallery: Gallery;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -92,6 +93,7 @@ export interface Config {
     programs: ProgramsSelect<false> | ProgramsSelect<true>;
     blogs: BlogsSelect<false> | BlogsSelect<true>;
     'previous-summits': PreviousSummitsSelect<false> | PreviousSummitsSelect<true>;
+    gallery: GallerySelect<false> | GallerySelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -606,6 +608,61 @@ export interface PreviousSummit {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "gallery".
+ */
+export interface Gallery {
+  id: string;
+  type: 'image' | 'video';
+  title: string;
+  description: string;
+  category:
+    | 'Ceremony'
+    | 'Speeches'
+    | 'Exhibition'
+    | 'Panels'
+    | 'Networking'
+    | 'Competition'
+    | 'Awards'
+    | 'Workshops'
+    | 'Youth'
+    | 'Behind Scenes'
+    | 'Media'
+    | 'Highlights';
+  year: number;
+  /**
+   * Upload the image file
+   */
+  image?: (string | null) | Media;
+  /**
+   * YouTube embed URL (e.g., https://www.youtube.com/embed/VIDEO_ID)
+   */
+  videoUrl?: string | null;
+  /**
+   * Custom thumbnail for the video (optional)
+   */
+  thumbnail?: (string | null) | Media;
+  /**
+   * Number of views for the video
+   */
+  views?: number | null;
+  /**
+   * Initial number of likes
+   */
+  likes?: number | null;
+  /**
+   * Mark as featured to highlight in the gallery
+   */
+  featured?: boolean | null;
+  status: 'draft' | 'published';
+  /**
+   * Lower numbers appear first
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -663,6 +720,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'previous-summits';
         value: string | PreviousSummit;
+      } | null)
+    | ({
+        relationTo: 'gallery';
+        value: string | Gallery;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -999,6 +1060,27 @@ export interface PreviousSummitsSelect<T extends boolean = true> {
         likes?: T;
         id?: T;
       };
+  status?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "gallery_select".
+ */
+export interface GallerySelect<T extends boolean = true> {
+  type?: T;
+  title?: T;
+  description?: T;
+  category?: T;
+  year?: T;
+  image?: T;
+  videoUrl?: T;
+  thumbnail?: T;
+  views?: T;
+  likes?: T;
+  featured?: T;
   status?: T;
   order?: T;
   updatedAt?: T;
