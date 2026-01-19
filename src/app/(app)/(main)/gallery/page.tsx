@@ -312,7 +312,7 @@ export default function GalleryPage() {
 
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">Gallery</h1>
 
-          <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8">
+          <p className="text-xl md:text-2xl text-gray-300 text-center mb-8">
             Relive the{' '}
             <span className="text-[#ffcc00] font-semibold">magic, moments, and milestones</span> of
             {` Africa's premier ICT summit`}

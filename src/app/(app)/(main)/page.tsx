@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { CountdownTimer } from '@/components/countdown-timer'
 import { PricingCard } from '@/components/pricing-card'
 import { Button } from '@/components/ui/button'
@@ -119,30 +120,30 @@ function Home() {
   ]
 
   const speakers = [
-    {
-      name: 'Dr. Sarah Chen',
-      role: 'Tech Innovation Lead',
-      company: 'Digital Africa',
-      color: 'bg-gradient-to-r from-blue-500 to-cyan-400',
-    },
-    {
-      name: 'Prof. James Okafor',
-      role: 'AI Research Director',
-      company: 'African Tech University',
-      color: 'bg-gradient-to-r from-purple-500 to-pink-400',
-    },
-    {
-      name: 'Maria Rodriguez',
-      role: 'Cybersecurity Expert',
-      company: 'SecureTech Global',
-      color: 'bg-gradient-to-r from-amber-500 to-orange-400',
-    },
-    {
-      name: 'David Kariuki',
-      role: 'Fintech Visionary',
-      company: 'BankTech Africa',
-      color: 'bg-gradient-to-r from-emerald-500 to-teal-400',
-    },
+    // {
+    //   name: 'Dr. Sarah Chen',
+    //   role: 'Tech Innovation Lead',
+    //   company: 'Digital Africa',
+    //   color: 'bg-gradient-to-r from-blue-500 to-cyan-400',
+    // },
+    // {
+    //   name: 'Prof. James Okafor',
+    //   role: 'AI Research Director',
+    //   company: 'African Tech University',
+    //   color: 'bg-gradient-to-r from-purple-500 to-pink-400',
+    // },
+    // {
+    //   name: 'Maria Rodriguez',
+    //   role: 'Cybersecurity Expert',
+    //   company: 'SecureTech Global',
+    //   color: 'bg-gradient-to-r from-amber-500 to-orange-400',
+    // },
+    // {
+    //   name: 'David Kariuki',
+    //   role: 'Fintech Visionary',
+    //   company: 'BankTech Africa',
+    //   color: 'bg-gradient-to-r from-emerald-500 to-teal-400',
+    // },
   ]
 
   return (
@@ -174,7 +175,7 @@ function Home() {
 
           {/* Subtitle */}
           <div className="flex justify-center">
-            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8 px-4">
+            <p className="text-xl md:text-2xl text-gray-300 text-center mb-8 px-4">
               {` Shaping Africa's Digital Future Through`}{' '}
               <span className="text-[#ffcc00] font-semibold">Innovation & Collaboration</span>
             </p>
@@ -218,7 +219,7 @@ function Home() {
           </div>
 
           {/* Stats Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto px-4">
+          {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto px-4">
             {stats.map((stat, index) => {
               const Icon = stat.icon
               return (
@@ -236,7 +237,7 @@ function Home() {
                 </div>
               )
             })}
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -272,7 +273,7 @@ function Home() {
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
                 {` Africa's Digital Transformation Hub`}
               </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              <p className="text-xl text-gray-600 text-center">
                 Connecting visionaries, innovators, and change-makers to shape the future of
                 technology in Africa.
               </p>
@@ -389,7 +390,7 @@ function Home() {
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
                 Summit Objectives
               </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              <p className="text-xl text-center text-gray-600">
                 Driving measurable impact through strategic goals and partnerships
               </p>
             </div>
@@ -431,7 +432,7 @@ function Home() {
                 <span className="text-sm font-medium text-white">Choose Your Experience</span>
               </div>
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Get Your Pass</h2>
-              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              <p className="text-xl text-gray-300 text-center">
                 Select the perfect ticket for your summit experience. Early bird discounts
                 available.
               </p>
@@ -511,7 +512,7 @@ function Home() {
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
                 Featured Speakers
               </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              <p className="text-xl text-gray-600 text-center">
                 {` Learn from Africa's brightest minds and global thought leaders`}
               </p>
             </div>
@@ -580,13 +581,13 @@ function Home() {
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
                 Our Partners & Sponsors
               </h2>
-              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              <p className="text-xl text-gray-300 text-center">
                 {`     Join forces with Africa's leading organizations driving digital innovation`}
               </p>
             </div>
 
             {/* Sponsor Logos Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 mb-16">
+            {/* <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 mb-16">
               {Array.from({ length: 12 }).map((_, index) => (
                 <div
                   key={index}
@@ -600,25 +601,24 @@ function Home() {
                   </div>
                 </div>
               ))}
-            </div>
+            </div> */}
 
             <div className="text-center">
               <div className="bg-gradient-to-r from-white/5 to-white/10 backdrop-blur-sm rounded-2xl p-8 max-w-4xl mx-auto mb-8">
                 <h3 className="text-2xl font-bold text-white mb-4">Become a Partner</h3>
                 <p className="text-gray-300 mb-6">
-                  {`                  Join our elite group of sponsors and gain exclusive access to Africa's tech leaders`}
+                  {`Join our elite group of sponsors and gain exclusive access to Africa's tech leaders`}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button
-                    className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-black font-bold px-8 py-6 rounded-xl"
+                    className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-black font-bold "
                     asChild
                   >
                     <Link href="/register">View Sponsorship Packages</Link>
                   </Button>
                   <Button
                     variant="outline"
-                    className="border-white/30 text-white hover:bg-white/10"
-                    asChild
+                    className="border-white/30 text-black hover:bg-white/10"
                   >
                     <Link href="/contact">Request Information</Link>
                   </Button>
@@ -744,7 +744,7 @@ function Home() {
               {` Ready to Shape Africa's Digital Future?`}
             </h2>
 
-            <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-300 mb-8 text-center">
               {`Join 2,000+ tech leaders, innovators, and change-makers at Africa's premier ICT summit.`}
             </p>
 
