@@ -284,7 +284,7 @@ export default function ContactPage() {
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-4">
               <Lightbulb className="w-4 h-4 text-[#ffcc00]" />
-              <span className="text-sm font-medium text-white">Common Questions</span>
+              <span className="text-sm font-medium text-white">Common Question.</span>
             </div>
             <h2 className="text-4xl font-bold text-white mb-4">Frequently Asked Questions</h2>
             <p className="text-gray-300 text-center">
