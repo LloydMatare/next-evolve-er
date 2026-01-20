@@ -21,7 +21,7 @@ function SubHero() {
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12">
         <Button
           size="lg"
-          className="bg-[#ffcc00] hover:bg-[#ec7211] text-white font-semibold text-sm px-10 py-6 rounded-sm transition-all duration-200"
+          className="bg-[#ffcc00] hover:bg-[#ec7211] text-white font-semibold text-sm  transition-all duration-200"
           asChild
         >
           <Link href="/register">
@@ -31,7 +31,7 @@ function SubHero() {
         <Button
           size="lg"
           variant="outline"
-          className="bg-transparent hover:bg-white/10 text-white border-white/30 font-semibold text-sm px-10 py-6 rounded-sm transition-all duration-200"
+          className="bg-transparent hover:bg-white/10 text-white border-white/30 font-semibold text-sm  transition-all duration-200"
           asChild
         >
           <Link href="#about">Learn more</Link>

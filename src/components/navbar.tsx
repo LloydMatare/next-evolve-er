@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Menu } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import Image from 'next/image'
 
 const navLinks = [
   { name: 'About', href: '/about' },
@@ -38,7 +39,9 @@ export function Navbar() {
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-[#170d43]/95 backdrop-blur-md shadow-md py-3' : 'bg-[#170d43]/80 backdrop-blur-sm py-4'
+        scrolled
+          ? 'bg-[#170d43]/95 backdrop-blur-md shadow-md py-3'
+          : 'bg-[#170d43]/80 backdrop-blur-sm py-4'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -46,9 +49,7 @@ export function Navbar() {
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="text-xl font-bold tracking-tight flex items-center gap-2">
-              <span className="text-[#ffcc00]">EVOLVE</span>
-              <span className="text-white hidden md:flex">ICT SUMMIT</span>
-              <span className="text-[#ffcc00] hidden md:flex">2026</span>
+              <Image src={'/logo.png'} alt="logo" width={90} height={80} />
             </Link>
           </div>
 

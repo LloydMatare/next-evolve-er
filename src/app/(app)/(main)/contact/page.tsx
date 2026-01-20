@@ -25,7 +25,7 @@ export default function ContactPage() {
     {
       icon: <Mail className="h-6 w-6" />,
       title: 'Email Address',
-      details: ['info@evolveictsummit.com', 'support@evolveictsummit.com'],
+      details: ['info@evolveictsummit.com'],
       description: 'For general inquiries and support',
       color: 'from-blue-500 to-cyan-400',
       gradient: 'bg-gradient-to-br from-blue-500 to-cyan-400',

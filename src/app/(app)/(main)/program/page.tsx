@@ -1,6 +1,5 @@
 'use client'
 
-import { Navbar } from '@/components/navbar'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -259,8 +258,7 @@ export default function ProgramPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-900">
-        <Navbar />
+      <div className="min-h-screen bg-blue-950">
         <div className="pt-32 flex items-center justify-center">
           <Loader2 className="h-8 w-8 animate-spin text-[#ffcc00]" />
           <span className="ml-2 text-[#ffcc00]">Loading program schedule...</span>
@@ -272,7 +270,6 @@ export default function ProgramPage() {
   if (error && sessions.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Navbar />
         <div className="pt-32 flex flex-col items-center justify-center">
           <div className="text-red-500 mb-4">Error: {error}</div>
           <Button onClick={fetchPrograms} className="bg-[#ffcc00] hover:bg-[#ec7211]">
@@ -285,8 +282,6 @@ export default function ProgramPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
-
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-[#170d43] via-[#161e2e] to-[#0f1419]">
         <div className="max-w-7xl mx-auto text-center">
@@ -316,12 +311,12 @@ export default function ProgramPage() {
           <div className="flex flex-wrap gap-4 justify-center">
             <Button
               onClick={downloadSchedule}
-              className="bg-[#ffcc00] hover:bg-[#ec7211] text-white px-8 py-3"
+              className="bg-[#ffcc00] hover:bg-[#ec7211] text-white"
             >
               <Download className="h-5 w-5 mr-2" />
               Download Schedule
             </Button>
-            <Button variant="outline" className="border-white text-black hover:bg-white/10">
+            <Button variant="outline" className="border-white text-black hover:bg-white/90">
               <Share2 className="h-5 w-5 mr-2" />
               Share Program
             </Button>
@@ -339,7 +334,7 @@ export default function ProgramPage() {
                 <Button
                   key={day.id}
                   onClick={() => setSelectedDay(day.value as 'day-1' | 'day-2')}
-                  className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
+                  className={`transition-all duration-300 ${
                     selectedDay === day.value
                       ? `bg-gradient-to-r ${day.color} text-white shadow-lg`
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -392,10 +387,10 @@ export default function ProgramPage() {
             {/* Session Type Filters */}
             <div className="flex flex-wrap gap-2">
               {sessionTypes.map((type) => (
-                <button
+                <Button
                   key={type.id}
                   onClick={() => setSelectedType(type.id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg border text-sm font-medium transition-all ${
+                  className={`flex items-center gap-2 border text-sm font-medium transition-all ${
                     selectedType === type.id
                       ? 'bg-[#ffcc00] text-white border-[#ffcc00]'
                       : 'bg-white text-gray-700 border-gray-300 hover:border-[#ffcc00] hover:text-[#ffcc00]'
@@ -403,7 +398,7 @@ export default function ProgramPage() {
                 >
                   {type.icon}
                   {type.name}
-                </button>
+                </Button>
               ))}
             </div>
           </div>

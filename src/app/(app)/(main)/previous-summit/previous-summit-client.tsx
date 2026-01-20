@@ -24,6 +24,7 @@ import SubHero from '@/components/sub-hero'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import type { MediaItem, SummitData } from './page'
 import Image from 'next/image'
+import { Button } from '@/components/ui/button'
 
 interface PreviousSummitClientProps {
   summitsData: SummitData[]
@@ -106,17 +107,17 @@ export default function PreviousSummitClient({ summitsData }: PreviousSummitClie
 
             <div className="flex gap-4 flex-wrap">
               {summitsData.map((summit) => (
-                <button
+                <Button
                   key={summit.year}
                   onClick={() => setActiveYear(summit.year)}
-                  className={`px-6 py-3 rounded-xl font-medium transition-all ${
+                  className={`transition-all ${
                     activeYear === summit.year
                       ? `bg-gradient-to-r ${summit.color} text-white shadow-lg`
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
                   Summit {summit.year}
-                </button>
+                </Button>
               ))}
             </div>
           </div>
@@ -127,7 +128,9 @@ export default function PreviousSummitClient({ summitsData }: PreviousSummitClie
       <section className="py-16 px-4">
         <div className="container-custom">
           {/* Summit Theme Card */}
-          <div className={`relative rounded-3xl overflow-hidden ${activeSummit.gradient} p-8 md:p-12 mb-16 text-white`}>
+          <div
+            className={`relative rounded-3xl overflow-hidden ${activeSummit.gradient} p-8 md:p-12 mb-16 text-white`}
+          >
             <div className="absolute top-6 right-6">
               <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium">
                 Year {activeYear}
@@ -255,12 +258,7 @@ export default function PreviousSummitClient({ summitsData }: PreviousSummitClie
                   >
                     {/* Image Container */}
                     <div className="aspect-square relative overflow-hidden">
-                      <Image
-                        src={image.url}
-                        alt={image.title}
-                        fill
-                        className="object-cover"
-                      />
+                      <Image src={image.url} alt={image.title} fill className="object-cover" />
 
                       {/* Hover Overlay */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -273,12 +271,15 @@ export default function PreviousSummitClient({ summitsData }: PreviousSummitClie
                       {/* Quick View Button */}
                       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                         <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/30">
-                          <Maximize2 className="w-6 h-6 text-white" />
+                          <Maximize2
+                            className="w-6 h-6 text-wh
+                          ite"
+                          />
                         </div>
                       </div>
 
                       {/* Like Button */}
-                      <button
+                      <Button
                         onClick={(e) => {
                           e.stopPropagation()
                           toggleLike(image.id)
@@ -288,7 +289,7 @@ export default function PreviousSummitClient({ summitsData }: PreviousSummitClie
                         <Heart
                           className={`w-5 h-5 ${likedItems.includes(image.id) ? 'fill-red-500 text-red-500' : 'text-white'}`}
                         />
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 ))}
@@ -419,7 +420,7 @@ export default function PreviousSummitClient({ summitsData }: PreviousSummitClie
               Ready for Summit 2026?
             </h2>
 
-            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-white/90 mb-8 text-center">
               Building on our legacy, Summit 2026 promises to be bigger, better, and more impactful
               than ever before.
             </p>
@@ -437,22 +438,22 @@ export default function PreviousSummitClient({ summitsData }: PreviousSummitClie
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-white">
                 <Target className="w-8 h-8 mx-auto mb-3" />
-                <div className="text-xl font-bold mb-1">2,000+ Delegates</div>
+                <div className="text-xl font-bold mb-1">100+ Delegates</div>
                 <div className="text-sm opacity-80">Expected Attendance</div>
               </div>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/register">
-                <button className="bg-white text-gray-900 hover:bg-gray-100 font-bold px-8 py-4 rounded-xl text-lg transition-all duration-300 hover:scale-105">
+                <Button className="bg-white text-gray-900 hover:bg-gray-100 font-bold transition-all duration-300 hover:scale-105">
                   Register for 2026
                   <ChevronRight className="w-5 h-5 inline ml-2" />
-                </button>
+                </Button>
               </Link>
               <Link href="/about">
-                <button className="bg-transparent hover:bg-white/10 text-white border-2 border-white/30 font-bold px-8 py-4 rounded-xl text-lg transition-colors">
+                <Button className="bg-transparent hover:bg-white/10 text-white border-2 border-white/30 font-bold transition-colors">
                   Learn More
-                </button>
+                </Button>
               </Link>
             </div>
           </div>
@@ -488,9 +489,7 @@ export default function PreviousSummitClient({ summitsData }: PreviousSummitClie
               <div className="bg-white p-8">
                 <div className="flex items-start justify-between mb-4">
                   <div>
-                    <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                      {selectedMedia.title}
-                    </h2>
+                    <h2 className="text-2xl font-bold text-gray-900 mb-2">{selectedMedia.title}</h2>
                     <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
                       <span className="bg-gray-100 px-3 py-1 rounded-full">
                         {selectedMedia.category}
@@ -506,7 +505,7 @@ export default function PreviousSummitClient({ summitsData }: PreviousSummitClie
 
                 <div className="flex items-center justify-between pt-6 border-t">
                   <div className="flex items-center gap-4">
-                    <button
+                    <Button
                       onClick={() => toggleLike(selectedMedia.id)}
                       className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
                     >
@@ -516,16 +515,16 @@ export default function PreviousSummitClient({ summitsData }: PreviousSummitClie
                       <span>
                         {selectedMedia.likes + (likedItems.includes(selectedMedia.id) ? 1 : 0)}
                       </span>
-                    </button>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+                    </Button>
+                    <Button className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
                       <Share2 className="w-5 h-5" />
                       <span>Share</span>
-                    </button>
+                    </Button>
                     {selectedMedia.type === 'image' && (
-                      <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+                      <Button className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
                         <Download className="w-5 h-5" />
                         <span>Download</span>
-                      </button>
+                      </Button>
                     )}
                   </div>
                 </div>

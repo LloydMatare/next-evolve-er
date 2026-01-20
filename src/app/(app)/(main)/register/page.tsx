@@ -92,12 +92,8 @@ type ExhibitorFormData = z.infer<typeof exhibitorSchema>
 // Helper functions
 function calculateAttendeeAmount(ticketType: string): number {
   switch (ticketType) {
-    case 'early-bird-1':
-      return 150
-    case 'early-bird-2':
-      return 175
     case 'regular':
-      return 200
+      return 250
     default:
       return 0
   }
@@ -380,57 +376,7 @@ function AttendeeForm() {
             name="ticketType"
             control={control}
             render={({ field }) => (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <button
-                  type="button"
-                  onClick={() => field.onChange('early-bird-1')}
-                  className={`p-4 rounded-xl border-2 transition-all ${
-                    field.value === 'early-bird-1'
-                      ? 'border-[#ffcc00] bg-gradient-to-br from-[#ffcc00]/10 to-amber-500/5'
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`}
-                >
-                  <div className="text-left">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-bold text-gray-900">Early Bird 1</span>
-                      {field.value === 'early-bird-1' && (
-                        <CheckCircle className="w-5 h-5 text-[#ffcc00]" />
-                      )}
-                    </div>
-                    <div className="text-2xl font-bold text-gray-900 mb-1">$150</div>
-                    <div className="text-sm text-gray-600">Before April 30, 2026</div>
-                    <div className="mt-3 flex items-center gap-2 text-sm text-[#ffcc00]">
-                      <Sparkles className="w-4 h-4" />
-                      <span>Best Value</span>
-                    </div>
-                  </div>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => field.onChange('early-bird-2')}
-                  className={`p-4 rounded-xl border-2 transition-all ${
-                    field.value === 'early-bird-2'
-                      ? 'border-[#ffcc00] bg-gradient-to-br from-[#ffcc00]/10 to-amber-500/5'
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`}
-                >
-                  <div className="text-left">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-bold text-gray-900">Early Bird 2</span>
-                      {field.value === 'early-bird-2' && (
-                        <CheckCircle className="w-5 h-5 text-[#ffcc00]" />
-                      )}
-                    </div>
-                    <div className="text-2xl font-bold text-gray-900 mb-1">$175</div>
-                    <div className="text-sm text-gray-600">Before May 30, 2026</div>
-                    <div className="mt-3 flex items-center gap-2 text-sm text-[#ffcc00]">
-                      <Gift className="w-4 h-4" />
-                      <span>Popular Choice</span>
-                    </div>
-                  </div>
-                </button>
-
+              <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
                 <button
                   type="button"
                   onClick={() => field.onChange('regular')}
@@ -447,8 +393,8 @@ function AttendeeForm() {
                         <CheckCircle className="w-5 h-5 text-[#ffcc00]" />
                       )}
                     </div>
-                    <div className="text-2xl font-bold text-gray-900 mb-1">$200</div>
-                    <div className="text-sm text-gray-600">From June 1, 2026</div>
+                    <div className="text-2xl font-bold text-gray-900 mb-1">$250</div>
+                    {/* <div className="text-sm text-gray-600">From June 1, 2026</div> */}
                     <div className="mt-3 flex items-center gap-2 text-sm text-[#ffcc00]">
                       <Star className="w-4 h-4" />
                       <span>Standard Rate</span>

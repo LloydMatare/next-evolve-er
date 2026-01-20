@@ -18,6 +18,7 @@ import { Dialog, DialogContent } from '@/components/ui/dialog'
 import SubHero from '@/components/sub-hero'
 import Image from 'next/image'
 import type { MediaItem } from './page'
+import { Button } from '@/components/ui/button'
 
 interface GalleryClientProps {
   images: MediaItem[]
@@ -103,7 +104,7 @@ export default function GalleryClient({ images, videos, categories, years }: Gal
                 <span className="text-sm text-gray-500">Category:</span>
                 <div className="flex flex-wrap gap-2">
                   {categories.map((category) => (
-                    <button
+                    <Button
                       key={category}
                       onClick={() => setActiveCategory(category)}
                       className={`px-3 py-1.5 text-sm rounded-full transition-all ${
@@ -113,7 +114,7 @@ export default function GalleryClient({ images, videos, categories, years }: Gal
                       }`}
                     >
                       {category}
-                    </button>
+                    </Button>
                   ))}
                 </div>
               </div>
@@ -123,7 +124,7 @@ export default function GalleryClient({ images, videos, categories, years }: Gal
                 <span className="text-sm text-gray-500">Year:</span>
                 <div className="flex gap-2">
                   {years.map((year) => (
-                    <button
+                    <Button
                       key={year}
                       onClick={() => setActiveYear(year)}
                       className={`px-3 py-1.5 text-sm rounded-full transition-all ${
@@ -133,7 +134,7 @@ export default function GalleryClient({ images, videos, categories, years }: Gal
                       }`}
                     >
                       {year}
-                    </button>
+                    </Button>
                   ))}
                 </div>
               </div>
@@ -141,13 +142,13 @@ export default function GalleryClient({ images, videos, categories, years }: Gal
 
             {/* View Toggle */}
             <div className="flex items-center gap-2">
-              <button
+              <Button
                 onClick={() => setViewMode('grid')}
                 className={`p-2 rounded-lg ${viewMode === 'grid' ? 'bg-[#ffcc00]/10 text-[#ffcc00]' : 'text-gray-400 hover:text-gray-600'}`}
               >
                 <Grid className="w-5 h-5" />
-              </button>
-              <button
+              </Button>
+              <Button
                 onClick={() => setViewMode('masonry')}
                 className={`p-2 rounded-lg ${viewMode === 'masonry' ? 'bg-[#ffcc00]/10 text-[#ffcc00]' : 'text-gray-400 hover:text-gray-600'}`}
               >
@@ -161,7 +162,7 @@ export default function GalleryClient({ images, videos, categories, years }: Gal
                     <div className="w-1.5 h-1.5 bg-current rounded" />
                   </div>
                 </div>
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -225,7 +226,7 @@ export default function GalleryClient({ images, videos, categories, years }: Gal
 
                   {/* Bottom Left Info */}
                   <div className="absolute bottom-4 left-4 flex items-center gap-4">
-                    <button
+                    <Button
                       onClick={(e) => {
                         e.stopPropagation()
                         toggleLike(image.id)
@@ -238,7 +239,7 @@ export default function GalleryClient({ images, videos, categories, years }: Gal
                       <span className="text-white text-sm">
                         {image.likes + (likedItems.includes(image.id) ? 1 : 0)}
                       </span>
-                    </button>
+                    </Button>
                     <div className="text-white/80 text-sm bg-black/30 px-3 py-1.5 rounded-full">
                       {image.year}
                     </div>
@@ -328,7 +329,7 @@ export default function GalleryClient({ images, videos, categories, years }: Gal
                           <Play className="w-4 h-4" />
                           <span>{video.views?.toLocaleString() || '0'}</span>
                         </div>
-                        <button
+                        <Button
                           onClick={(e) => {
                             e.stopPropagation()
                             toggleLike(video.id)
@@ -339,7 +340,7 @@ export default function GalleryClient({ images, videos, categories, years }: Gal
                             className={`w-4 h-4 ${likedItems.includes(video.id) ? 'fill-red-500 text-red-500' : ''}`}
                           />
                           <span>{video.likes + (likedItems.includes(video.id) ? 1 : 0)}</span>
-                        </button>
+                        </Button>
                       </div>
                       <div className="opacity-75">Watch now →</div>
                     </div>
@@ -372,9 +373,7 @@ export default function GalleryClient({ images, videos, categories, years }: Gal
               <div className="text-gray-300">Videos</div>
             </div>
             <div className="text-white">
-              <div className="text-4xl md:text-5xl font-bold mb-2">
-                {categories.length - 1}
-              </div>
+              <div className="text-4xl md:text-5xl font-bold mb-2">{categories.length - 1}</div>
               <div className="text-gray-300">Categories</div>
             </div>
             <div className="text-white">
@@ -434,19 +433,19 @@ export default function GalleryClient({ images, videos, categories, years }: Gal
                       <span>{selectedMedia.type === 'video' ? 'Video' : 'Photo'}</span>
                     </div>
                   </div>
-                  <button
+                  <Button
                     onClick={() => setIsDialogOpen(false)}
                     className="p-2 hover:bg-gray-100 rounded-full transition-colors"
                   >
                     <X className="w-5 h-5" />
-                  </button>
+                  </Button>
                 </div>
 
                 <p className="text-gray-700 mb-6">{selectedMedia.description}</p>
 
                 <div className="flex items-center justify-between pt-6 border-t">
                   <div className="flex items-center gap-4">
-                    <button
+                    <Button
                       onClick={() => toggleLike(selectedMedia.id)}
                       className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
                     >
@@ -456,11 +455,11 @@ export default function GalleryClient({ images, videos, categories, years }: Gal
                       <span>
                         {selectedMedia.likes + (likedItems.includes(selectedMedia.id) ? 1 : 0)}
                       </span>
-                    </button>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+                    </Button>
+                    <Button className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
                       <Share2 className="w-5 h-5" />
                       <span>Share</span>
-                    </button>
+                    </Button>
                     {selectedMedia.type === 'image' && selectedMedia.url && (
                       <a
                         href={selectedMedia.url}
