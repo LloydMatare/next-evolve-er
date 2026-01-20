@@ -438,24 +438,11 @@ function Home() {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-1 gap-8 max-w-6xl mx-auto">
               <PricingCard
-                title="Early Bird"
-                price="150"
-                period="Before April 30, 2026"
-                features={[
-                  'Full 2-day summit access',
-                  'Regular seating arrangement',
-                  'Daily lunch & refreshments',
-                  'Access to networking sessions',
-                  'Conference materials kit',
-                  'Digital certificate',
-                ]}
-              />
-              <PricingCard
-                title="Standard"
-                price="200"
-                period="Most Popular Choice"
+                title="Delegate"
+                price="250"
+                period="Delegate Standard"
                 features={[
                   'Full 2-day summit access',
                   'Priority seating areas',
@@ -467,24 +454,9 @@ function Home() {
                 ]}
                 highlighted
               />
-              <PricingCard
-                title="VIP"
-                price="350"
-                period="Ultimate Experience"
-                features={[
-                  'Full 2-day summit access',
-                  'Front-row VIP seating',
-                  'Gourmet dining experiences',
-                  'Exclusive VIP networking',
-                  'Premium gift package',
-                  'Photo with speakers',
-                  'Private lounge access',
-                  'Priority exhibition access',
-                ]}
-              />
             </div>
 
-            <div className="text-center mt-12">
+            {/* <div className="text-center mt-12">
               <p className="text-gray-400 mb-6">Group discounts available for 5+ registrations</p>
               <Button
                 className="bg-gradient-to-r from-emerald-500 to-teal-400 text-white px-8 py-6 rounded-xl text-lg font-bold hover:shadow-lg hover:shadow-emerald-500/25"
@@ -495,7 +467,7 @@ function Home() {
                   <Users className="w-5 h-5 ml-2" />
                 </Link>
               </Button>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>

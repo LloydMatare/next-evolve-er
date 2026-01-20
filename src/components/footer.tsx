@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
@@ -8,8 +9,7 @@ export function Footer() {
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
             <div className="text-2xl font-bold mb-4">
-              <span className="text-[#ffcc00]">EVOLVE</span>
-              <span className="text-white"> ICT SUMMIT 2026</span>
+              <Image src={'/logo.png'} alt="Evolve ICT Summit Logo" width={150} height={100} />
             </div>
             <p className="text-gray-400! text-sm leading-relaxed">
               Empowering Africa&apos;s Digital Leap

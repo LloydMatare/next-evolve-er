@@ -18,6 +18,8 @@ import {
   Heart,
   Share2,
   Bookmark,
+  LayoutGrid,
+  LayoutList,
 } from 'lucide-react'
 import React, { useState, useEffect } from 'react'
 import SubHero from '@/components/sub-hero'
@@ -25,6 +27,14 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { format } from 'date-fns'
 import Image from 'next/image'
+import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 // Types
 interface BlogPost {
@@ -182,20 +192,21 @@ export default function BlogsPage() {
       if (data.docs) {
         const transformedBlogs = data.docs.map((blog: any) => {
           let imageUrl = '/placeholder.png'
-          
+
           if (typeof blog.featuredImage === 'object' && blog.featuredImage?.url) {
-            imageUrl = blog.featuredImage.url.startsWith('http') 
-              ? blog.featuredImage.url 
+            imageUrl = blog.featuredImage.url.startsWith('http')
+              ? blog.featuredImage.url
               : `${window.location.origin}${blog.featuredImage.url}`
           }
-          
+
           return {
             ...blog,
             featuredImage: {
               url: imageUrl,
-              alt: typeof blog.featuredImage === 'object' && blog.featuredImage?.alt 
-                ? blog.featuredImage.alt 
-                : blog.title,
+              alt:
+                typeof blog.featuredImage === 'object' && blog.featuredImage?.alt
+                  ? blog.featuredImage.alt
+                  : blog.title,
             },
             publishedAt: format(new Date(blog.publishedAt), 'MMMM dd, yyyy'),
             likes: blog.likes || Math.floor(Math.random() * 500),
@@ -438,9 +449,9 @@ export default function BlogsPage() {
         <div className="container-custom">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { label: 'Total Articles', value: '156+', icon: '📝' },
-              { label: 'Monthly Readers', value: '50K+', icon: '👥' },
-              { label: 'Expert Authors', value: '42', icon: '✍️' },
+              { label: 'Total Articles', value: '4', icon: '📝' },
+              { label: 'Monthly Readers', value: '2K+', icon: '👥' },
+              { label: 'Expert Authors', value: '12', icon: '✍️' },
               { label: 'Avg. Read Time', value: '8 min', icon: '⏱️' },
             ].map((stat, index) => (
               <div key={index} className="text-center">
@@ -461,7 +472,7 @@ export default function BlogsPage() {
             <div className="flex-1">
               <div className="relative">
                 <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
+                <Input
                   type="text"
                   placeholder="Search insights, topics, or authors..."
                   className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#ffcc00]/50 focus:border-transparent"
@@ -475,61 +486,53 @@ export default function BlogsPage() {
             <div className="flex flex-wrap gap-3">
               {/* Category Dropdown */}
               <div className="relative">
-                <select
-                  className="appearance-none bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 pr-10 focus:outline-none focus:ring-2 focus:ring-[#ffcc00]/50 focus:border-transparent"
+                <Select
                   value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  onValueChange={(value) => setSelectedCategory(value)}
                 >
-                  {categories.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
-                </select>
-                <ChevronRight className="absolute right-3 top-1/2 transform -translate-y-1/2 rotate-90 w-4 h-4 text-gray-400 pointer-events-none" />
+                  <SelectTrigger className="bg-gray-50 border text-gray-800 placeholder:text-gray-800 border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#ffcc00]/50">
+                    <SelectValue placeholder="Select category" />
+                  </SelectTrigger>
+
+                  <SelectContent>
+                    {categories.map((category) => (
+                      <SelectItem key={category.id} value={category.id}>
+                        {category.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               {/* Sort Dropdown */}
               <div className="relative">
-                <select
-                  className="appearance-none bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 pr-10 focus:outline-none focus:ring-2 focus:ring-[#ffcc00]/50 focus:border-transparent"
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                >
-                  <option value="newest">Newest First</option>
-                  <option value="popular">Most Popular</option>
-                  <option value="trending">Trending Now</option>
-                </select>
-                <ChevronRight className="absolute right-3 top-1/2 transform -translate-y-1/2 rotate-90 w-4 h-4 text-gray-400 pointer-events-none" />
+                <Select value={sortBy} onValueChange={setSortBy}>
+                  <SelectTrigger className="bg-gray-50 border text-gray-800 border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#ffcc00]/50">
+                    <SelectValue placeholder="Sort by" />
+                  </SelectTrigger>
+
+                  <SelectContent>
+                    <SelectItem value="newest">Newest First</SelectItem>
+                    <SelectItem value="popular">Most Popular</SelectItem>
+                    <SelectItem value="trending">Trending Now</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
               {/* View Toggle */}
-              <div className="flex bg-gray-100 p-1 rounded-xl">
-                <button
+              <div className="flex gap-2">
+                <Button
                   onClick={() => setViewMode('grid')}
-                  className={`p-2 rounded-lg ${viewMode === 'grid' ? 'bg-white shadow-sm' : ''}`}
+                  className={`rounded-lg ${viewMode === 'grid' ? 'bg-white shadow-sm' : ''}`}
                 >
-                  <div className="flex flex-col gap-1">
-                    <div className="flex gap-1">
-                      <div className="w-2 h-2 bg-gray-400 rounded" />
-                      <div className="w-2 h-2 bg-gray-400 rounded" />
-                    </div>
-                    <div className="flex gap-1">
-                      <div className="w-2 h-2 bg-gray-400 rounded" />
-                      <div className="w-2 h-2 bg-gray-400 rounded" />
-                    </div>
-                  </div>
-                </button>
-                <button
+                  <LayoutGrid className="w-5 h-5 text-black hover:text-white" />
+                </Button>
+                <Button
                   onClick={() => setViewMode('list')}
                   className={`p-2 rounded-lg ${viewMode === 'list' ? 'bg-white shadow-sm' : ''}`}
                 >
-                  <div className="flex flex-col gap-1">
-                    <div className="w-8 h-1.5 bg-gray-400 rounded" />
-                    <div className="w-8 h-1.5 bg-gray-400 rounded" />
-                    <div className="w-8 h-1.5 bg-gray-400 rounded" />
-                  </div>
-                </button>
+                  <LayoutList className="w-5 h-5" />
+                </Button>
               </div>
             </div>
           </div>
@@ -538,10 +541,10 @@ export default function BlogsPage() {
           <div className="mt-6 overflow-x-auto">
             <div className="flex gap-2 pb-2">
               {categories.map((category) => (
-                <button
+                <Button
                   key={category.id}
                   onClick={() => setSelectedCategory(category.id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-xl whitespace-nowrap transition-all ${
+                  className={`flex items-center gap-2 whitespace-nowrap transition-all ${
                     selectedCategory === category.id
                       ? `${category.color} text-white shadow-lg`
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -549,7 +552,7 @@ export default function BlogsPage() {
                 >
                   <span>{category.icon}</span>
                   <span className="text-sm font-medium">{category.name}</span>
-                </button>
+                </Button>
               ))}
             </div>
           </div>
@@ -726,17 +729,17 @@ export default function BlogsPage() {
                         </div>
                         {/* Action Buttons */}
                         <div className="absolute top-4 right-4 flex gap-2">
-                          <button
+                          <Button
                             onClick={() => toggleLike(blog.id)}
                             className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
                           >
                             <Heart
                               className={`w-4 h-4 ${likedPosts.includes(blog.id) ? 'fill-red-500 text-red-500' : 'text-white'}`}
                             />
-                          </button>
-                          <button className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
+                          </Button>
+                          <Button className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
                             <Bookmark className="w-4 h-4 text-white" />
-                          </button>
+                          </Button>
                         </div>
                       </div>
 
@@ -859,7 +862,7 @@ export default function BlogsPage() {
                                   <Eye className="w-4 h-4" />
                                   {blog.views.toLocaleString()}
                                 </div>
-                                <button
+                                <Button
                                   onClick={() => toggleLike(blog.id)}
                                   className="flex items-center gap-1 hover:text-red-500 transition-colors"
                                 >
@@ -867,7 +870,7 @@ export default function BlogsPage() {
                                     className={`w-4 h-4 ${likedPosts.includes(blog.id) ? 'fill-red-500 text-red-500' : ''}`}
                                   />
                                   {blog.likes + (likedPosts.includes(blog.id) ? 1 : 0)}
-                                </button>
+                                </Button>
                               </div>
                               <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-[#ffcc00] transition-colors" />
                             </div>
@@ -903,7 +906,7 @@ export default function BlogsPage() {
 
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Never Miss an Insight</h2>
 
-          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-300 mb-8 text-white">
             Join 50,000+ professionals who receive our weekly digest of the most important tech
             news, analysis, and insights from across Africa.
           </p>
@@ -911,13 +914,13 @@ export default function BlogsPage() {
           <div className="max-w-lg mx-auto">
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1">
-                <input
+                <Input
                   type="email"
                   placeholder="Enter your work email"
-                  className="w-full px-6 py-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#ffcc00] focus:border-transparent"
+                  className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#ffcc00] focus:border-transparent"
                 />
               </div>
-              <Button className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:shadow-lg hover:shadow-amber-500/25 transition-shadow">
+              <Button className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-white font-semibold hover:shadow-lg hover:shadow-amber-500/25 transition-shadow">
                 Subscribe
               </Button>
             </div>

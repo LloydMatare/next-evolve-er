@@ -36,37 +36,43 @@ export default function AboutPage() {
   const coreValues = [
     {
       icon: Network,
-      title: 'Collaboration',
-      description: 'Bridging sectors for collective progress',
+      title: 'Vision',
+      description:
+        "Let's think about our world, Zimbabwe, Africa.Where we are today and where we would like to be tommorrow and how we can strategize together to get there.",
       color: 'from-blue-500 to-cyan-400',
     },
     {
       icon: Sparkles,
       title: 'Innovation',
-      description: "Showcasing Africa's digital creativity",
+      description:
+        "It is said you cannot do the same thing and expectt a different answer,Let's think of new ways that we can employ using ICT in order to advance the world we live in.",
       color: 'from-purple-500 to-pink-500',
     },
     {
       icon: Heart,
-      title: 'Inclusion',
-      description: 'Empowering women, youth, and SMEs',
+      title: 'Relevance',
+      description:
+        "Let's employ our knowledge and understanding of ICT to approprietely enhance our world and enviromnet in Africa.",
       color: 'from-red-500 to-orange-400',
     },
     {
       icon: Shield,
-      title: 'Sustainability',
-      description: 'Driving lasting digital transformation',
+      title: 'Mentorship',
+      description:
+        "A good man leaves an inheritance for his children's children. Let's impart the wealth of ICT KNOWLEDGE we have to the next generation.",
       color: 'from-green-500 to-emerald-400',
     },
   ]
 
   const keynoteThemes = [
-    'AI & Machine Learning in African Context',
-    'Digital Infrastructure & 5G Rollout',
-    'Fintech Revolution in Emerging Markets',
-    'Cybersecurity in Digital Economy',
-    'Green Tech & Sustainable Innovation',
-    'E-Government & Digital Services',
+    'Emerging Technologies',
+    'Digital Transformation & Infrastructure',
+    'Cybersecurirty & Digital Trust',
+    'Digital Economy & Skills',
+    'Data privacy, Governance & Regulation',
+    'Innovation, Startups & Enterprenuership',
+    'Blockchain, Digital Identity & Trust',
+    'Cloud & Zero-Trust Architecures',
   ]
 
   return (
@@ -192,11 +198,11 @@ export default function AboutPage() {
                   <div className="text-white font-medium">Days of Innovation</div>
                   <div className="mt-2 text-sm text-gray-300">Multiple tracks & sessions</div>
                   <Button
-                    className="mt-6 bg-[#ffcc00] hover:bg-[#e6b800] text-black font-semibold px-8 py-6 rounded-xl"
+                    className="mt-6 bg-[#ffcc00] hover:bg-[#e6b800] text-black font-semibold"
                     asChild
                   >
-                    <Link href="/schedule">
-                      View Schedule <ArrowRight className="ml-2 w-4 h-4" />
+                    <Link href="/program">
+                      View Program <ArrowRight className="ml-2 w-4 h-4" />
                     </Link>
                   </Button>
                 </div>
@@ -257,7 +263,7 @@ export default function AboutPage() {
                   <h3 className="text-2xl font-bold">Our Vision</h3>
                 </div>
                 <p className="text-lg leading-relaxed">
-                  {` To establish Zimbabwe as Africa's premier digital transformation hub, catalyzing
+                  {`To establish Zimbabwe as Africa's premier digital transformation hub, catalyzing
                   innovation and sustainable growth across the continent.`}
                 </p>
               </div>
@@ -313,12 +319,12 @@ export default function AboutPage() {
                     {theme}
                   </h3>
                 </div>
-                <div className="mt-4 pt-4 border-t border-gray-100">
-                  {/* <div className="flex items-center justify-between">
+                {/* <div className="mt-4 pt-4 border-t border-gray-100">
+                  <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-500">Multiple sessions</span>
                     <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-[#ffcc00] transition-colors" />
-                  </div> */}
-                </div>
+                  </div>
+                </div> */}
               </div>
             ))}
           </div>
@@ -467,7 +473,7 @@ export default function AboutPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button
                 size="lg"
-                className="bg-[#ffcc00] hover:bg-[#e6b800] text-black font-bold px-10 py-7 rounded-xl text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
+                className="bg-[#ffcc00] hover:bg-[#e6b800] text-black font-bold  shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
                 asChild
               >
                 <Link href="/register">
@@ -478,10 +484,10 @@ export default function AboutPage() {
               <Button
                 size="lg"
                 variant="outline"
-                className="bg-transparent hover:bg-white/10 text-white border-white/30 font-semibold px-10 py-7 rounded-xl text-lg"
+                className="bg-transparent hover:bg-white/10 text-white border-white/30 font-semibold "
                 asChild
               >
-                <Link href="/sponsors">Become a Sponsor</Link>
+                <Link href="/register">Become a Sponsor</Link>
               </Button>
             </div>
 
