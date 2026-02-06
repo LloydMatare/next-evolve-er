@@ -102,11 +102,11 @@ function calculateAttendeeAmount(ticketType: string): number {
 function calculateSponsorAmount(tier: string): number {
   switch (tier) {
     case 'platinum':
-      return 50000
-    case 'gold':
-      return 30000
-    case 'silver':
       return 15000
+    case 'gold':
+      return 10000
+    case 'silver':
+      return 7500
     case 'bronze':
       return 5000
     default:
@@ -116,12 +116,8 @@ function calculateSponsorAmount(tier: string): number {
 
 function calculateExhibitorAmount(boothSize: string): number {
   switch (boothSize) {
-    case 'small':
-      return 2000
-    case 'medium':
-      return 4000
     case 'large':
-      return 7000
+      return 1000
     default:
       return 0
   }
@@ -618,12 +614,12 @@ function SponsorForm() {
     {
       id: 'platinum',
       name: 'Platinum',
-      price: 50000,
+      price: 15000,
       color: 'from-gray-700 to-gray-900',
       icon: Crown,
     },
-    { id: 'gold', name: 'Gold', price: 30000, color: 'from-amber-500 to-yellow-400', icon: Award },
-    { id: 'silver', name: 'Silver', price: 15000, color: 'from-gray-400 to-gray-300', icon: Star },
+    { id: 'gold', name: 'Gold', price: 10000, color: 'from-amber-500 to-yellow-400', icon: Award },
+    { id: 'silver', name: 'Silver', price: 7500, color: 'from-gray-400 to-gray-300', icon: Star },
     {
       id: 'bronze',
       name: 'Bronze',
@@ -991,24 +987,10 @@ function ExhibitorForm() {
 
   const boothSizes = [
     {
-      id: 'small',
-      name: 'Small Booth',
-      price: 2000,
-      size: '3x3m',
-      color: 'from-emerald-400 to-teal-300',
-    },
-    {
-      id: 'medium',
-      name: 'Medium Booth',
-      price: 4000,
-      size: '6x3m',
-      color: 'from-emerald-500 to-teal-400',
-    },
-    {
       id: 'large',
-      name: 'Large Booth',
-      price: 7000,
-      size: '9x3m',
+      name: 'Exhibitors Booth',
+      price: 1000,
+      size: '3x3m',
       color: 'from-emerald-600 to-teal-500',
     },
   ]
@@ -1125,8 +1107,8 @@ function ExhibitorForm() {
                       <ul className="text-sm text-gray-600 space-y-1">
                         <li>• Basic power supply</li>
                         <li>• Wi-Fi access</li>
-                        <li>• Company signage</li>
-                        <li>• 2 exhibitor passes</li>
+                        <li>• Featuresd on social meadia & website</li>
+                        <li>• 1 delegate Ticket</li>
                       </ul>
                     </div>
                   </button>
