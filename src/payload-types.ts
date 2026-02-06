@@ -100,15 +100,13 @@ export interface Config {
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
   fallbackLocale: null;
   globals: {};
   globalsSelect: {};
   locale: null;
-  user: User & {
-    collection: 'users';
-  };
+  user: User;
   jobs: {
     tasks: unknown;
     workflows: unknown;
@@ -137,7 +135,7 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -155,13 +153,14 @@ export interface User {
       }[]
     | null;
   password?: string | null;
+  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
+  id: number;
   alt: string;
   updatedAt: string;
   createdAt: string;
@@ -180,7 +179,7 @@ export interface Media {
  * via the `definition` "registrations".
  */
 export interface Registration {
-  id: string;
+  id: number;
   email: string;
   type: 'attendee' | 'sponsor' | 'exhibitor';
   status?: ('pending' | 'approved' | 'rejected' | 'paid' | 'cancelled') | null;
@@ -220,8 +219,8 @@ export interface Registration {
     teamMembers: string;
     specialRequirements?: string | null;
   };
-  qrCode?: (string | null) | Media;
-  paymentProof?: (string | null) | Media;
+  qrCode?: (number | null) | Media;
+  paymentProof?: (number | null) | Media;
   notes?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -231,7 +230,7 @@ export interface Registration {
  * via the `definition` "tickets".
  */
 export interface Ticket {
-  id: string;
+  id: number;
   name: string;
   description?: string | null;
   type: 'attendee' | 'sponsor' | 'exhibitor';
@@ -267,14 +266,14 @@ export interface Ticket {
  * via the `definition` "payments".
  */
 export interface Payment {
-  id: string;
-  registration: string | Registration;
+  id: number;
+  registration: number | Registration;
   transactionId?: string | null;
   amount: number;
   currency?: ('USD' | 'ZWL') | null;
   paymentMethod: 'card' | 'mobile' | 'bank' | 'cash';
   status?: ('pending' | 'processing' | 'completed' | 'failed' | 'refunded') | null;
-  paymentProof?: (string | null) | Media;
+  paymentProof?: (number | null) | Media;
   mobileMoneyDetails?: {
     provider?: ('ecocash' | 'onemoney' | 'telecash') | null;
     phoneNumber?: string | null;
@@ -294,9 +293,9 @@ export interface Payment {
  * via the `definition` "speakers".
  */
 export interface Speaker {
-  id: string;
+  id: number;
   name: string;
-  photo?: (string | null) | Media;
+  photo?: (number | null) | Media;
   organization: string;
   designation: string;
   bio: string;
@@ -311,7 +310,7 @@ export interface Speaker {
   website?: string | null;
   email?: string | null;
   featured?: boolean | null;
-  sessions?: (string | Program)[] | null;
+  sessions?: (number | Program)[] | null;
   order?: number | null;
   updatedAt: string;
   createdAt: string;
@@ -321,7 +320,7 @@ export interface Speaker {
  * via the `definition` "programs".
  */
 export interface Program {
-  id: string;
+  id: number;
   title: string;
   description: string;
   day: 'day-1' | 'day-2';
@@ -347,7 +346,7 @@ export interface Program {
     | 'lunch'
     | 'break';
   track?: ('main' | 'ai' | 'security' | 'cloud' | 'fintech' | 'entrepreneurship' | 'social') | null;
-  speaker?: (string | null) | Speaker;
+  speaker?: (number | null) | Speaker;
   speakerName?: string | null;
   speakerTitle?: string | null;
   venue:
@@ -385,7 +384,7 @@ export interface Program {
   materials?:
     | {
         title?: string | null;
-        file?: (string | null) | Media;
+        file?: (number | null) | Media;
         url?: string | null;
         id?: string | null;
       }[]
@@ -403,7 +402,7 @@ export interface Program {
  * via the `definition` "blogs".
  */
 export interface Blog {
-  id: string;
+  id: number;
   title: string;
   /**
    * URL-friendly version of the title (e.g., digital-transformation-africa)
@@ -428,8 +427,8 @@ export interface Blog {
     };
     [k: string]: unknown;
   };
-  featuredImage: string | Media;
-  author: string | User;
+  featuredImage: number | Media;
+  author: number | User;
   /**
    * Name to display publicly (can be different from user account)
    */
@@ -485,7 +484,7 @@ export interface Blog {
  * via the `definition` "previous-summits".
  */
 export interface PreviousSummit {
-  id: string;
+  id: number;
   /**
    * e.g., 2025, 2024
    */
@@ -559,7 +558,7 @@ export interface PreviousSummit {
    */
   images?:
     | {
-        image: string | Media;
+        image: number | Media;
         title: string;
         description: string;
         category:
@@ -583,7 +582,7 @@ export interface PreviousSummit {
    */
   videos?:
     | {
-        thumbnail?: (string | null) | Media;
+        thumbnail?: (number | null) | Media;
         /**
          * YouTube embed URL (e.g., https://www.youtube.com/embed/VIDEO_ID)
          */
@@ -611,7 +610,7 @@ export interface PreviousSummit {
  * via the `definition` "gallery".
  */
 export interface Gallery {
-  id: string;
+  id: number;
   type: 'image' | 'video';
   title: string;
   description: string;
@@ -632,7 +631,7 @@ export interface Gallery {
   /**
    * Upload the image file
    */
-  image?: (string | null) | Media;
+  image?: (number | null) | Media;
   /**
    * YouTube embed URL (e.g., https://www.youtube.com/embed/VIDEO_ID)
    */
@@ -640,7 +639,7 @@ export interface Gallery {
   /**
    * Custom thumbnail for the video (optional)
    */
-  thumbnail?: (string | null) | Media;
+  thumbnail?: (number | null) | Media;
   /**
    * Number of views for the video
    */
@@ -666,7 +665,7 @@ export interface Gallery {
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: string;
+  id: number;
   key: string;
   data:
     | {
@@ -683,52 +682,52 @@ export interface PayloadKv {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
         relationTo: 'users';
-        value: string | User;
+        value: number | User;
       } | null)
     | ({
         relationTo: 'media';
-        value: string | Media;
+        value: number | Media;
       } | null)
     | ({
         relationTo: 'registrations';
-        value: string | Registration;
+        value: number | Registration;
       } | null)
     | ({
         relationTo: 'tickets';
-        value: string | Ticket;
+        value: number | Ticket;
       } | null)
     | ({
         relationTo: 'payments';
-        value: string | Payment;
+        value: number | Payment;
       } | null)
     | ({
         relationTo: 'speakers';
-        value: string | Speaker;
+        value: number | Speaker;
       } | null)
     | ({
         relationTo: 'programs';
-        value: string | Program;
+        value: number | Program;
       } | null)
     | ({
         relationTo: 'blogs';
-        value: string | Blog;
+        value: number | Blog;
       } | null)
     | ({
         relationTo: 'previous-summits';
-        value: string | PreviousSummit;
+        value: number | PreviousSummit;
       } | null)
     | ({
         relationTo: 'gallery';
-        value: string | Gallery;
+        value: number | Gallery;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -738,10 +737,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -761,7 +760,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
