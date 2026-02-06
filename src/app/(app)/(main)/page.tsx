@@ -61,60 +61,64 @@ function Home() {
 
   const features = [
     {
-      icon: Lightbulb,
-      title: 'Innovation Showcase',
-      description: "Explore cutting-edge tech from Africa's brightest minds",
-      color: 'from-blue-500 to-cyan-400',
-    },
-    {
       icon: Network,
       title: 'Strategic Networking',
-      description: 'Connect with industry leaders and decision makers',
+      description:
+        'Connecting government, private sector, academica and students into one collaborative ecosystem.',
       color: 'from-purple-500 to-pink-400',
     },
     {
-      icon: TargetIcon,
-      title: 'Growth Opportunities',
-      description: 'Access investment and partnership prospects',
-      color: 'from-amber-500 to-orange-400',
+      icon: Lightbulb,
+      title: 'Innovation Showcase',
+      description:
+        'Showcasing African-built solutions, innovation stories and emerging technology breakthrough.',
+      color: 'from-blue-500 to-cyan-400',
     },
     {
       icon: Shield,
       title: 'Expert Insights',
-      description: "Learn from thought leaders shaping Africa's digital future",
+      description:
+        'Driving conversations that shape digital policy, infrastructure groeth, and future-ready development.',
       color: 'from-emerald-500 to-teal-400',
+    },
+    {
+      icon: TargetIcon,
+      title: 'Growth Opportunities',
+      description:
+        'Expanding opportunities for investmen, partnerships, and technology transfer across borders.',
+      color: 'from-amber-500 to-orange-400',
     },
   ]
 
   const objectives = [
     {
       number: '01',
-      title: "Champion Africa's Digital Leap",
+      title: 'Collaboration',
       description: 'Creating an ecosystem of shared innovation',
     },
     {
       number: '02',
-      title: "Showcase Zimbabwe's Potential",
+      title: 'Identified industry sctors and industries',
       description: 'Positioning as a digital transformation hub',
     },
     {
       number: '03',
-      title: 'Foster Multi-Sector Collaboration',
+      title: 'Mentorship',
       description: 'Bridging government, corporates, and startups',
     },
     {
       number: '04',
-      title: 'Empower Youth & Women',
+      title: 'Awareness',
       description: 'Technology access and participation opportunities',
     },
     {
       number: '05',
-      title: 'Attract Investment',
+      title: 'Exposure',
       description: 'Partnerships and technology transfer prospects',
     },
     {
       number: '06',
-      title: 'Build Continental Connections',
+      title: 'Knowledge base',
       description: 'Networking across African tech ecosystems',
     },
   ]
@@ -176,8 +180,8 @@ function Home() {
           {/* Subtitle */}
           <div className="flex justify-center">
             <p className="text-xl md:text-2xl text-gray-300 text-center mb-8 px-4">
-              {` Shaping Africa's Digital Future Through`}{' '}
-              <span className="text-[#ffcc00] font-semibold">Innovation & Collaboration</span>
+              {`Empowering Africa's`}{' '}
+              <span className="text-[#ffcc00] font-semibold">Digital Leap</span>
             </p>
           </div>
 
@@ -713,14 +717,14 @@ function Home() {
             </div>
 
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              {` Ready to Shape Africa's Digital Future?`}
+              {` Ready to Shape Africa's Digital Leap?`}
             </h2>
 
             <p className="text-xl text-gray-300 mb-8 text-center">
               {`Join 2,000+ tech leaders, innovators, and change-makers at Africa's premier ICT summit.`}
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 mt-2 justify-center">
               <Button
                 size="lg"
                 className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-black font-bold px-8 py-6 rounded-xl text-lg hover:shadow-lg hover:shadow-amber-500/25 transition-shadow"
