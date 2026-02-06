@@ -36,28 +36,28 @@ export default function AboutPage() {
   const coreValues = [
     {
       icon: Network,
-      title: 'Vision',
+      title: 'Collaboration',
       description:
         "Let's think about our world, Zimbabwe, Africa.Where we are today and where we would like to be tommorrow and how we can strategize together to get there.",
       color: 'from-blue-500 to-cyan-400',
     },
     {
       icon: Sparkles,
-      title: 'Innovation',
+      title: 'Exposure',
       description:
         "It is said you cannot do the same thing and expectt a different answer,Let's think of new ways that we can employ using ICT in order to advance the world we live in.",
       color: 'from-purple-500 to-pink-500',
     },
     {
       icon: Heart,
-      title: 'Relevance',
+      title: 'Awareness',
       description:
         "Let's employ our knowledge and understanding of ICT to approprietely enhance our world and enviromnet in Africa.",
       color: 'from-red-500 to-orange-400',
     },
     {
       icon: Shield,
-      title: 'Mentorship',
+      title: 'Knowledge base',
       description:
         "A good man leaves an inheritance for his children's children. Let's impart the wealth of ICT KNOWLEDGE we have to the next generation.",
       color: 'from-green-500 to-emerald-400',
@@ -102,10 +102,8 @@ export default function AboutPage() {
 
           <div className="flex justify-center">
             <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8">
-              {`Shaping Africa's Digital Future Through  `}
-              <span className="text-[#ffcc00] font-semibold">
-                Innovation, Collaboration & Transformation
-              </span>
+              {`Empowering Africa's `}
+              <span className="text-[#ffcc00] font-semibold">Digital Leap</span>
             </p>
           </div>
 
