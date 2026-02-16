@@ -181,7 +181,7 @@ function Home() {
           <div className="flex justify-center">
             <p className="text-xl md:text-2xl text-gray-300 text-center mb-8 px-4">
               {`Empowering Africa's`}{' '}
-              <span className="text-[#ffcc00] font-semibold">Digital Leap</span>
+              <span className="text-[#ffcc00] font-semibold">Digital Leap.</span>
             </p>
           </div>
 
