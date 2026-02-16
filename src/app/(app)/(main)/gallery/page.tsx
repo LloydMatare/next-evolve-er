@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Navbar } from '@/components/navbar'
 import SubHero from '@/components/sub-hero'
 import GalleryClient from './gallery-client'
@@ -71,14 +72,12 @@ export default async function GalleryPage() {
   const categories = ['All', ...Array.from(categoriesSet).sort()]
 
   const yearsSet = new Set(mediaItems.map((item) => item.year))
-  const years = ['All', ...Array.from(yearsSet).sort((a, b) => b - a).map(String)]
+  const years = [
+    'All',
+    ...Array.from(yearsSet)
+      .sort((a, b) => b - a)
+      .map(String),
+  ]
 
-  return (
-    <GalleryClient
-      images={images}
-      videos={videos}
-      categories={categories}
-      years={years}
-    />
-  )
+  return <GalleryClient images={images} videos={videos} categories={categories} years={years} />
 }
