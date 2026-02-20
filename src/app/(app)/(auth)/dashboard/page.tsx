@@ -109,8 +109,6 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <Navbar />
-
       {/* Animated Hero Section */}
       <section className="relative pt-32 pb-20 px-4 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a051f] via-[#1a1448] to-[#0f172a]">
@@ -132,7 +130,7 @@ export default function DashboardPage() {
 
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">Welcome back!</h1>
 
-            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-center md:text-2xl text-gray-300">
               Track your registration and access event details
             </p>
           </motion.div>
