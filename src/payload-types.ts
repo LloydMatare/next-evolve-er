@@ -77,6 +77,7 @@ export interface Config {
     blogs: Blog;
     'previous-summits': PreviousSummit;
     gallery: Gallery;
+    'school-summit': SchoolSummit;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -94,6 +95,7 @@ export interface Config {
     blogs: BlogsSelect<false> | BlogsSelect<true>;
     'previous-summits': PreviousSummitsSelect<false> | PreviousSummitsSelect<true>;
     gallery: GallerySelect<false> | GallerySelect<true>;
+    'school-summit': SchoolSummitSelect<false> | SchoolSummitSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -662,6 +664,47 @@ export interface Gallery {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "school-summit".
+ */
+export interface SchoolSummit {
+  id: number;
+  title: string;
+  section:
+    | 'objectives'
+    | 'sub-themes'
+    | 'target-audience'
+    | 'why-attend'
+    | 'programme-highlights'
+    | 'expected-outcomes'
+    | 'featured-cards';
+  description: string;
+  objectiveIcon?: ('cpu' | 'briefcase' | 'lightbulb' | 'heart-handshake') | null;
+  skills?:
+    | {
+        skill: string;
+        id?: string | null;
+      }[]
+    | null;
+  cardImage?: (number | null) | Media;
+  /**
+   * YouTube embed URL or video URL
+   */
+  cardVideo?: string | null;
+  videoType?: ('youtube' | 'direct') | null;
+  /**
+   * URL to link to when card is clicked
+   */
+  cardLink?: string | null;
+  /**
+   * Lower numbers appear first
+   */
+  order?: number | null;
+  status: 'draft' | 'published';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -723,6 +766,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'gallery';
         value: number | Gallery;
+      } | null)
+    | ({
+        relationTo: 'school-summit';
+        value: number | SchoolSummit;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1082,6 +1129,30 @@ export interface GallerySelect<T extends boolean = true> {
   featured?: T;
   status?: T;
   order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "school-summit_select".
+ */
+export interface SchoolSummitSelect<T extends boolean = true> {
+  title?: T;
+  section?: T;
+  description?: T;
+  objectiveIcon?: T;
+  skills?:
+    | T
+    | {
+        skill?: T;
+        id?: T;
+      };
+  cardImage?: T;
+  cardVideo?: T;
+  videoType?: T;
+  cardLink?: T;
+  order?: T;
+  status?: T;
   updatedAt?: T;
   createdAt?: T;
 }

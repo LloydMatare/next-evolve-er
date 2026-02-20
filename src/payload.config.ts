@@ -18,6 +18,7 @@ import { Speakers } from './collections/Speakers'
 import { Blogs } from './collections/Blogs'
 import { PreviousSummits } from './collections/PreviousSummits'
 import { Gallery } from './collections/Gallery'
+import { SchoolSummit } from './collections/SchoolSummit'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -40,6 +41,7 @@ export default buildConfig({
     Blogs,
     PreviousSummits,
     Gallery,
+    SchoolSummit,
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
