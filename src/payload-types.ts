@@ -301,6 +301,7 @@ export interface Speaker {
   organization: string;
   designation: string;
   bio: string;
+  category?: ('keynote' | 'panelist' | 'workshop' | 'moderator') | null;
   expertise?:
     | {
         topic?: string | null;
@@ -312,6 +313,11 @@ export interface Speaker {
   website?: string | null;
   email?: string | null;
   featured?: boolean | null;
+  session?: {
+    title?: string | null;
+    time?: string | null;
+    location?: string | null;
+  };
   sessions?: (number | Program)[] | null;
   order?: number | null;
   updatedAt: string;
@@ -439,6 +445,14 @@ export interface Blog {
    * e.g., Senior Editor, Tech Writer, etc.
    */
   authorTitle?: string | null;
+  /**
+   * Brief biography of the author
+   */
+  authorBio?: string | null;
+  /**
+   * Profile picture of the author
+   */
+  authorAvatar?: (number | null) | Media;
   category:
     | 'technology-trends'
     | 'digital-transformation'
@@ -469,6 +483,12 @@ export interface Blog {
    */
   publishedAt?: string | null;
   featured?: boolean | null;
+  /**
+   * Mark as trending to highlight on the blog page
+   */
+  trending?: boolean | null;
+  likes?: number | null;
+  comments?: number | null;
   /**
    * Title for SEO purposes (optional)
    */
@@ -971,6 +991,7 @@ export interface SpeakersSelect<T extends boolean = true> {
   organization?: T;
   designation?: T;
   bio?: T;
+  category?: T;
   expertise?:
     | T
     | {
@@ -982,6 +1003,13 @@ export interface SpeakersSelect<T extends boolean = true> {
   website?: T;
   email?: T;
   featured?: T;
+  session?:
+    | T
+    | {
+        title?: T;
+        time?: T;
+        location?: T;
+      };
   sessions?: T;
   order?: T;
   updatedAt?: T;
@@ -1035,6 +1063,8 @@ export interface BlogsSelect<T extends boolean = true> {
   author?: T;
   authorName?: T;
   authorTitle?: T;
+  authorBio?: T;
+  authorAvatar?: T;
   category?: T;
   tags?:
     | T
@@ -1046,6 +1076,9 @@ export interface BlogsSelect<T extends boolean = true> {
   status?: T;
   publishedAt?: T;
   featured?: T;
+  trending?: T;
+  likes?: T;
+  comments?: T;
   metaTitle?: T;
   metaDescription?: T;
   views?: T;

@@ -14,7 +14,7 @@ const navLinks = [
   { name: 'Gallery', href: '/gallery' },
   { name: 'Blogs', href: '/blogs' },
   { name: 'Previous Summit', href: '/previous-summit' },
-  { name: 'School Summit', href: '/school-summit' },
+  { name: 'Student Summit', href: '/student-summit' },
   { name: 'Contact Us', href: '/contact' },
 ]
 

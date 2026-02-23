@@ -23,6 +23,7 @@ import {
   Smartphone,
   Network,
 } from 'lucide-react'
+import Link from 'next/link'
 
 const ICON_MAP: Record<string, React.ReactNode> = {
   cpu: <Cpu className="w-6 h-6" />,
@@ -168,10 +169,10 @@ async function SchoolSummit() {
               EVOLVE ICT SUMMIT 2026
             </div>
             <h1 className="text-4xl lg:text-6xl font-bold mb-6">Evolve Student Summit 2026</h1>
-            <p className="text-2xl lg:text-3xl text-purple-100 mb-4 font-light">
+            <p className="text-2xl lg:text-3xl text-purple-100 mb-4 font-light mb-4">
               Shaping Africa's Digital Leap
             </p>
-            <div className="flex flex-wrap justify-center gap-4 mb-8">
+            <div className="flex flex-wrap mt-4 justify-center gap-4 mb-8">
               <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
                 <Calendar className="w-4 h-4" />
                 <span>Coming 2026</span>
@@ -181,17 +182,23 @@ async function SchoolSummit() {
                 <span>Location TBA</span>
               </div>
             </div>
-            <p className="text-xl text-purple-100 max-w-3xl mx-auto">
+            <p className="text-sm md:text-xl text-center text-purple-100">
               A youth-focused platform empowering students with skills, exposure, and networks to
               actively participate in Africa's digital transformation.
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-4">
-              <button className="bg-purple-500 hover:bg-purple-600 text-white px-8 py-3 rounded-full font-semibold transition-all transform hover:scale-105 flex items-center gap-2">
+              <Link
+                href="/register"
+                className="bg-purple-500 hover:bg-purple-600 text-white px-8 py-3 rounded-full font-semibold transition-all transform hover:scale-105 flex items-center gap-2"
+              >
                 Register Interest <ArrowRight className="w-4 h-4" />
-              </button>
-              <button className="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-8 py-3 rounded-full font-semibold transition-all border border-white/30 flex items-center gap-2">
+              </Link>
+              <Link
+                href="/register"
+                className="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-8 py-3 rounded-full font-semibold transition-all border border-white/30 flex items-center gap-2"
+              >
                 Become a Partner <ChevronRight className="w-4 h-4" />
-              </button>
+              </Link>
             </div>
           </div>
         </div>
