@@ -209,9 +209,9 @@ export default function BlogsPage() {
                   : blog.title,
             },
             publishedAt: format(new Date(blog.publishedAt), 'MMMM dd, yyyy'),
-            likes: blog.likes || Math.floor(Math.random() * 500),
-            comments: blog.comments || Math.floor(Math.random() * 50),
-            trending: Math.random() > 0.7,
+            likes: blog.likes || 0,
+            comments: blog.comments || 0,
+            trending: blog.trending || false,
           }
         })
         setBlogs(transformedBlogs)
@@ -221,159 +221,10 @@ export default function BlogsPage() {
     } catch (err: any) {
       console.error('Error fetching blogs:', err)
       setError(err.message || 'Failed to load blog posts')
-      setBlogs(getSampleBlogs())
+      setBlogs([])
     } finally {
       setLoading(false)
     }
-  }
-
-  const getSampleBlogs = (): BlogPost[] => {
-    return [
-      {
-        id: '1',
-        title: 'Digital Transformation in Africa: The Road Ahead',
-        slug: 'digital-transformation-africa-road-ahead',
-        excerpt:
-          "Exploring the key trends and opportunities in Africa's digital revolution and how businesses can leverage technology for growth.",
-        content: {},
-        featuredImage: { url: '/placeholder.png', alt: 'Digital Transformation' },
-        authorName: 'Dr. Sarah Chen',
-        authorTitle: 'Tech Innovation Lead',
-        authorAvatar: '/placeholder.png',
-        category: 'digital-transformation',
-        tags: [{ tag: 'Digital Transformation' }, { tag: 'Africa' }, { tag: 'Technology' }],
-        readTime: 8,
-        status: 'published',
-        publishedAt: 'March 15, 2026',
-        featured: true,
-        trending: true,
-        views: 1245,
-        likes: 289,
-        comments: 42,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        id: '2',
-        title: 'AI Revolution: How Machine Learning is Transforming African Industries',
-        slug: 'ai-revolution-african-industries',
-        excerpt:
-          'A comprehensive look at AI applications across healthcare, agriculture, and finance sectors in Africa.',
-        content: {},
-        featuredImage: { url: '/placeholder.png', alt: 'AI Revolution' },
-        authorName: 'Prof. James Okafor',
-        authorTitle: 'AI Researcher',
-        authorAvatar: '/placeholder.png',
-        category: 'ai-ml',
-        tags: [{ tag: 'AI' }, { tag: 'Machine Learning' }, { tag: 'Innovation' }],
-        readTime: 12,
-        status: 'published',
-        publishedAt: 'February 28, 2026',
-        featured: true,
-        trending: true,
-        views: 3456,
-        likes: 512,
-        comments: 67,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        id: '3',
-        title: 'Preparing for Evolve ICT Summit 2026: Complete Guide',
-        slug: 'preparing-evolve-ict-summit-2026',
-        excerpt:
-          'What to expect and how to make the most of your summit experience, including networking tips and session planning.',
-        content: {},
-        featuredImage: { url: '/placeholder.png', alt: 'Summit Preparation' },
-        authorName: 'Event Team',
-        authorTitle: 'Event Organizers',
-        authorAvatar: '/placeholder.png',
-        category: 'event-updates',
-        tags: [{ tag: 'Summit' }, { tag: 'Event' }, { tag: 'Networking' }],
-        readTime: 6,
-        status: 'published',
-        publishedAt: 'January 20, 2026',
-        featured: false,
-        trending: true,
-        views: 987,
-        likes: 156,
-        comments: 23,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        id: '4',
-        title: 'Cybersecurity Landscape in Emerging Markets',
-        slug: 'cybersecurity-emerging-markets',
-        excerpt:
-          'Understanding the unique cybersecurity challenges and solutions for African businesses in the digital age.',
-        content: {},
-        featuredImage: { url: '/placeholder.png', alt: 'Cybersecurity' },
-        authorName: 'Maria Rodriguez',
-        authorTitle: 'Security Expert',
-        authorAvatar: '/placeholder.png',
-        category: 'cybersecurity',
-        tags: [{ tag: 'Security' }, { tag: 'Privacy' }, { tag: 'Technology' }],
-        readTime: 10,
-        status: 'published',
-        publishedAt: 'December 10, 2025',
-        featured: true,
-        trending: false,
-        views: 2341,
-        likes: 321,
-        comments: 45,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        id: '5',
-        title: 'Fintech Revolution: Mobile Money to Blockchain',
-        slug: 'fintech-revolution-africa',
-        excerpt:
-          'How financial technology is reshaping banking and payments across the African continent.',
-        content: {},
-        featuredImage: { url: '/placeholder.png', alt: 'Fintech' },
-        authorName: 'David Kariuki',
-        authorTitle: 'Fintech Analyst',
-        authorAvatar: '/placeholder.png',
-        category: 'fintech',
-        tags: [{ tag: 'Fintech' }, { tag: 'Blockchain' }, { tag: 'Banking' }],
-        readTime: 9,
-        status: 'published',
-        publishedAt: 'November 15, 2025',
-        featured: false,
-        trending: true,
-        views: 1890,
-        likes: 267,
-        comments: 34,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        id: '6',
-        title: 'Sustainable Tech: Green Computing in Africa',
-        slug: 'sustainable-tech-green-computing',
-        excerpt:
-          'Exploring environmentally friendly technology solutions and their impact on African development.',
-        content: {},
-        featuredImage: { url: '/placeholder.png', alt: 'Green Tech' },
-        authorName: 'Environmental Tech Group',
-        authorTitle: 'Sustainability Experts',
-        authorAvatar: '/placeholder.png',
-        category: 'technology-trends',
-        tags: [{ tag: 'Sustainability' }, { tag: 'Green Tech' }, { tag: 'Environment' }],
-        readTime: 7,
-        status: 'published',
-        publishedAt: 'October 5, 2025',
-        featured: false,
-        trending: false,
-        views: 1123,
-        likes: 189,
-        comments: 28,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-    ]
   }
 
   const toggleLike = (postId: string) => {
@@ -430,7 +281,7 @@ export default function BlogsPage() {
 
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">Insights & Analysis</h1>
 
-          <div className="flex justify-center">
+          <div className="flex justify-center mb-2">
             <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8">
               Expert perspectives on{' '}
               <span className="text-[#ffcc00] font-semibold">
@@ -449,10 +300,22 @@ export default function BlogsPage() {
         <div className="container-custom">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { label: 'Total Articles', value: '4', icon: '📝' },
-              { label: 'Monthly Readers', value: '2K+', icon: '👥' },
-              { label: 'Expert Authors', value: '12', icon: '✍️' },
-              { label: 'Avg. Read Time', value: '8 min', icon: '⏱️' },
+              { label: 'Total Articles', value: blogs.length, icon: '📝' },
+              {
+                label: 'Featured Posts',
+                value: blogs.filter((b) => b.featured).length,
+                icon: '⭐',
+              },
+              {
+                label: 'Total Views',
+                value: `${Math.round(blogs.reduce((sum, b) => sum + (b.views || 0), 0) / 1000)}K+`,
+                icon: '👁️',
+              },
+              {
+                label: 'Avg. Read Time',
+                value: `${Math.round(blogs.reduce((sum, b) => sum + b.readTime, 0) / (blogs.length || 1) || 5)} min`,
+                icon: '⏱️',
+              },
             ].map((stat, index) => (
               <div key={index} className="text-center">
                 <div className="text-2xl mb-1">{stat.icon}</div>

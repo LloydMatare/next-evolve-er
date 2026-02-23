@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button } from '@/components/ui/button'
 import { Check } from 'lucide-react'
+import Link from 'next/link'
 
 interface PricingCardProps {
   title: string
@@ -13,7 +14,7 @@ interface PricingCardProps {
 export function PricingCard({ title, price, period, features, highlighted }: PricingCardProps) {
   return (
     <div
-      className={`relative rounded-sm p-8 transition-all duration-200 ${
+      className={`relative text-black rounded-sm p-8 transition-all duration-200 ${
         highlighted
           ? 'bg-[#170d43] border-2 border-[#ffcc00] shadow-lg'
           : 'bg-white border border-gray-200 hover:shadow-md'
@@ -55,15 +56,17 @@ export function PricingCard({ title, price, period, features, highlighted }: Pri
         ))}
       </ul>
 
-      <Button
-        className={`w-full rounded-sm font-semibold ${
-          highlighted
-            ? 'bg-[#ffcc00] hover:bg-[#ec7211] text-white'
-            : 'bg-[#170d43] hover:bg-[#161e2e] text-white'
-        }`}
-      >
-        Buy Ticket
-      </Button>
+      <Link href="/register">
+        <button
+          className={`w-full rounded-sm font-semibold ${
+            highlighted
+              ? 'bg-[#ffcc00] hover:bg-[#ec7211] text-white'
+              : 'bg-[#170d43] hover:bg-[#161e2e] text-white'
+          }`}
+        >
+          Buy Ticket
+        </button>
+      </Link>
     </div>
   )
 }

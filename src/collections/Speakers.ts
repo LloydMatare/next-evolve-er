@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { CollectionConfig } from 'payload'
 
 export const Speakers: CollectionConfig = {
@@ -43,6 +44,18 @@ export const Speakers: CollectionConfig = {
       required: true,
     },
     {
+      name: 'category',
+      type: 'select',
+      label: 'Speaker Category',
+      options: [
+        { label: 'Keynote Speaker', value: 'keynote' },
+        { label: 'Panelist', value: 'panelist' },
+        { label: 'Workshop Leader', value: 'workshop' },
+        { label: 'Moderator', value: 'moderator' },
+      ],
+      defaultValue: 'panelist',
+    },
+    {
       name: 'expertise',
       type: 'array',
       label: 'Areas of Expertise',
@@ -79,6 +92,30 @@ export const Speakers: CollectionConfig = {
       type: 'checkbox',
       label: 'Featured Speaker',
       defaultValue: false,
+    },
+    {
+      name: 'session',
+      type: 'group',
+      label: 'Session Information',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          label: 'Session Title',
+        },
+        {
+          name: 'time',
+          type: 'text',
+          label: 'Session Time',
+          placeholder: 'e.g., Day 1 • 09:30 AM',
+        },
+        {
+          name: 'location',
+          type: 'text',
+          label: 'Session Location',
+          placeholder: 'e.g., Main Hall A',
+        },
+      ],
     },
     {
       name: 'sessions',

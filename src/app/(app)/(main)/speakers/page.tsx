@@ -22,7 +22,7 @@ import {
   Building,
   MapPin,
 } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
@@ -53,261 +53,88 @@ export default function Speakers() {
   const [searchQuery, setSearchQuery] = useState('')
   const [likedSpeakers, setLikedSpeakers] = useState<string[]>([])
   const [expandedSpeaker, setExpandedSpeaker] = useState<string | null>(null)
+  const [allSpeakers, setAllSpeakers] = useState<Speaker[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  // Fetch speakers from Payload API
+  useEffect(() => {
+    const fetchSpeakers = async () => {
+      try {
+        setLoading(true)
+        const response = await fetch(`/api/speakers?limit=1000&sort=-createdAt`)
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch speakers')
+        }
+
+        const data = await response.json()
+        const speakers = data.docs || []
+
+        // Transform Payload speaker data to match app format
+        const transformedSpeakers = speakers.map((speaker: any) => ({
+          id: speaker.id,
+          name: speaker.name,
+          title: speaker.designation,
+          company: speaker.organization,
+          bio: speaker.bio,
+          image: speaker.photo?.url || '/placeholder.png',
+          category: speaker.category || 'panelist',
+          topics: speaker.expertise?.map((e: any) => e.topic) || [],
+          featured: speaker.featured || false,
+          social: {
+            twitter: speaker.twitter,
+            linkedin: speaker.linkedin,
+            website: speaker.website,
+          },
+          session: {
+            title: speaker.session?.title || 'TBA',
+            time: speaker.session?.time || 'TBA',
+            location: speaker.session?.location || 'TBA',
+          },
+        }))
+
+        setAllSpeakers(transformedSpeakers)
+        setError(null)
+      } catch (err) {
+        console.error('Error fetching speakers:', err)
+        setError('Failed to load speakers. Please try again later.')
+        setAllSpeakers([])
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchSpeakers()
+  }, [])
+
+  const featuredSpeakers = allSpeakers.filter((speaker) => speaker.featured)
 
   const categories = [
-    { id: 'all', label: 'All Speakers', icon: Users, count: 42 },
-    { id: 'keynote', label: 'Keynote Speakers', icon: Mic, count: 8 },
-    { id: 'panelist', label: 'Panelists', icon: MessageSquare, count: 20 },
-    { id: 'workshop', label: 'Workshop Leaders', icon: BookOpen, count: 10 },
-    { id: 'moderator', label: 'Moderators', icon: Target, count: 4 },
-  ]
-
-  const featuredSpeakers: Speaker[] = [
+    { id: 'all', label: 'All Speakers', icon: Users, count: allSpeakers.length },
     {
-      id: '1',
-      name: 'Dr. Sarah Chen',
-      title: 'Tech Innovation Lead',
-      company: 'Digital Africa',
-      bio: 'Leading digital transformation initiatives across the African continent. Former Google executive with 15+ years of experience in emerging markets technology adoption.',
-      image: '/placeholder.png',
-      category: 'keynote',
-      topics: ['AI/ML', 'Digital Transformation', 'Emerging Markets'],
-      featured: true,
-      social: {
-        twitter: '@sarahchen',
-        linkedin: 'sarahchen',
-        website: 'digitalafrica.com',
-      },
-      session: {
-        title: 'The Future of African Tech',
-        time: 'Day 1 • 09:30 AM',
-        location: 'Main Hall A',
-      },
+      id: 'keynote',
+      label: 'Keynote Speakers',
+      icon: Mic,
+      count: allSpeakers.filter((s) => s.category === 'keynote').length,
     },
     {
-      id: '2',
-      name: 'Prof. James Okafor',
-      title: 'AI Research Director',
-      company: 'African Tech University',
-      bio: 'Pioneering AI research focused on solving African challenges. Author of "AI for Social Good" and advisor to multiple African governments on AI policy.',
-      image: '/placeholder.png',
-      category: 'keynote',
-      topics: ['Artificial Intelligence', 'Research', 'Policy'],
-      featured: true,
-      social: {
-        twitter: '@jamesokafor',
-        linkedin: 'jamesokafor',
-        website: 'atu.edu.ai',
-      },
-      session: {
-        title: 'AI Revolution in Africa',
-        time: 'Day 2 • 10:00 AM',
-        location: 'Main Hall A',
-      },
+      id: 'panelist',
+      label: 'Panelists',
+      icon: MessageSquare,
+      count: allSpeakers.filter((s) => s.category === 'panelist').length,
     },
     {
-      id: '3',
-      name: 'Maria Rodriguez',
-      title: 'Cybersecurity Expert',
-      company: 'SecureTech Global',
-      bio: 'Award-winning cybersecurity specialist with expertise in protecting critical African infrastructure. Founder of Women in Cybersecurity Africa.',
-      image: '/placeholder.png',
-      category: 'panelist',
-      topics: ['Cybersecurity', 'Infrastructure', 'Women in Tech'],
-      featured: true,
-      social: {
-        twitter: '@mariacyber',
-        linkedin: 'mariarodriguez',
-        website: 'securetech.global',
-      },
-      session: {
-        title: 'Women in Tech Leadership Panel',
-        time: 'Day 1 • 11:00 AM',
-        location: 'Hall B',
-      },
+      id: 'workshop',
+      label: 'Workshop Leaders',
+      icon: BookOpen,
+      count: allSpeakers.filter((s) => s.category === 'workshop').length,
     },
     {
-      id: '4',
-      name: 'David Kariuki',
-      title: 'Fintech Visionary',
-      company: 'BankTech Africa',
-      bio: 'Transforming banking through technology across East Africa. Built three successful fintech startups and now leads digital innovation at BankTech Africa.',
-      image: '/placeholder.png',
-      category: 'workshop',
-      topics: ['Fintech', 'Digital Banking', 'Startups'],
-      featured: true,
-      social: {
-        twitter: '@davidkariuki',
-        linkedin: 'davidkariuki',
-        website: 'banktech.africa',
-      },
-      session: {
-        title: 'Fintech Workshop: Mobile Money 2.0',
-        time: 'Day 2 • 02:00 PM',
-        location: 'Workshop Room 3',
-      },
-    },
-  ]
-
-  const allSpeakers: Speaker[] = [
-    ...featuredSpeakers,
-    // Additional speakers
-    {
-      id: '5',
-      name: 'Amina Bello',
-      title: 'E-Government Director',
-      company: 'Government of Ghana',
-      bio: 'Leading digital transformation of government services across Ghana. Implemented award-winning e-governance platforms serving 5+ million citizens.',
-      image: '/placeholder.png',
-      category: 'keynote',
-      topics: ['E-Government', 'Digital Services', 'Public Sector'],
-      featured: false,
-      social: {
-        linkedin: 'aminabello',
-      },
-      session: {
-        title: 'Digital Government Services',
-        time: 'Day 1 • 03:00 PM',
-        location: 'Hall C',
-      },
-    },
-    {
-      id: '6',
-      name: 'Kwame Mensah',
-      title: 'Telecom CEO',
-      company: 'AfriCom Networks',
-      bio: "Building Africa's next-generation telecommunications infrastructure. 20+ years of experience in telecom across 15 African countries.",
-      image: '/placeholder.png',
-      category: 'panelist',
-      topics: ['5G', 'Infrastructure', 'Connectivity'],
-      featured: false,
-      social: {
-        twitter: '@kwamemensah',
-        linkedin: 'kwamemensah',
-      },
-      session: {
-        title: '5G in Africa Panel',
-        time: 'Day 2 • 11:30 AM',
-        location: 'Hall B',
-      },
-    },
-    {
-      id: '7',
-      name: 'Naledi Modise',
-      title: 'HealthTech Founder',
-      company: 'MedTech Africa',
-      bio: 'Using technology to improve healthcare access in rural Africa. Built telemedicine platform serving 2+ million patients across Southern Africa.',
-      image: '/placeholder.png',
-      category: 'workshop',
-      topics: ['HealthTech', 'Telemedicine', 'Social Impact'],
-      featured: false,
-      social: {
-        twitter: '@naledimodise',
-        linkedin: 'naledimodise',
-      },
-      session: {
-        title: 'HealthTech Innovation Workshop',
-        time: 'Day 1 • 02:00 PM',
-        location: 'Workshop Room 2',
-      },
-    },
-    {
-      id: '8',
-      name: 'Thomas Schmidt',
-      title: 'European Tech Investor',
-      company: 'Berlin Ventures',
-      bio: 'Leading European investor focused on African tech startups. Has invested in 30+ African tech companies with $200M+ deployed.',
-      image: '/placeholder.png',
-      category: 'panelist',
-      topics: ['Investment', 'VC', 'Startup Funding'],
-      featured: false,
-      social: {
-        linkedin: 'thomasschmidt',
-      },
-      session: {
-        title: 'Investment in African Tech',
-        time: 'Day 2 • 03:30 PM',
-        location: 'Hall A',
-      },
-    },
-    {
-      id: '9',
-      name: 'Fatima Aliyu',
-      title: 'EdTech Innovator',
-      company: 'LearnAfrica',
-      bio: 'Revolutionizing education through technology across West Africa. Her platform has provided digital learning to 3+ million students.',
-      image: '/placeholder.png',
-      category: 'moderator',
-      topics: ['EdTech', 'Digital Learning', 'Youth Empowerment'],
-      featured: false,
-      social: {
-        twitter: '@fatimaaliyu',
-        linkedin: 'fatimaaliyu',
-      },
-      session: {
-        title: 'Future of Education Panel',
-        time: 'Day 1 • 10:00 AM',
-        location: 'Hall C',
-      },
-    },
-    {
-      id: '10',
-      name: 'Rahul Patel',
-      title: 'Blockchain Specialist',
-      company: 'ChainAfrica',
-      bio: 'Building blockchain solutions for African supply chains and financial systems. Former Ethereum core developer.',
-      image: '/placeholder.png',
-      category: 'workshop',
-      topics: ['Blockchain', 'Web3', 'Supply Chain'],
-      featured: false,
-      social: {
-        twitter: '@rahulpatel',
-        linkedin: 'rahulpatel',
-      },
-      session: {
-        title: 'Blockchain for Business Workshop',
-        time: 'Day 2 • 09:00 AM',
-        location: 'Workshop Room 1',
-      },
-    },
-    {
-      id: '11',
-      name: 'Sophie Williams',
-      title: 'ClimateTech CEO',
-      company: 'GreenTech Africa',
-      bio: 'Using technology to address climate challenges in Africa. Her company has deployed solar solutions to 500+ communities.',
-      image: '/placeholder.png',
-      category: 'panelist',
-      topics: ['ClimateTech', 'Sustainability', 'Clean Energy'],
-      featured: false,
-      social: {
-        twitter: '@sophiewilliams',
-        linkedin: 'sophiewilliams',
-      },
-      session: {
-        title: 'Green Technology Panel',
-        time: 'Day 1 • 04:00 PM',
-        location: 'Hall B',
-      },
-    },
-    {
-      id: '12',
-      name: 'Dr. Ken Njoroge',
-      title: 'Data Science Professor',
-      company: 'University of Nairobi',
-      bio: 'Leading data science research with applications in agriculture and healthcare. Author of "Data Science for Development".',
-      image: '/placeholder.png',
-      category: 'workshop',
-      topics: ['Data Science', 'AI Research', 'Academic'],
-      featured: false,
-      social: {
-        linkedin: 'kennjoroge',
-      },
-      session: {
-        title: 'Data Science Workshop',
-        time: 'Day 2 • 01:30 PM',
-        location: 'Workshop Room 4',
-      },
+      id: 'moderator',
+      label: 'Moderators',
+      icon: Target,
+      count: allSpeakers.filter((s) => s.category === 'moderator').length,
     },
   ]
 
@@ -371,7 +198,7 @@ export default function Speakers() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b text-black from-slate-50 to-white">
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 px-4 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a051f] via-[#1a1448] to-[#0f172a]">
@@ -570,13 +397,32 @@ export default function Speakers() {
             </div>
             <div className="flex items-center gap-3">
               <Button variant="outline" className="border-gray-300">
-                <DownloadIcon className="w-4 h-4 mr-2" />
+                <DownloadIcon className="w-4 text-black h-4 mr-2" />
                 Export List
               </Button>
             </div>
           </div>
 
-          {filteredSpeakers.length === 0 ? (
+          {loading ? (
+            <div className="text-center py-16">
+              <div className="flex justify-center mb-6">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#ffcc00]" />
+              </div>
+              <p className="text-gray-600">Loading speakers...</p>
+            </div>
+          ) : error ? (
+            <div className="text-center py-16">
+              <Users className="w-16 h-16 text-red-300 mx-auto mb-4" />
+              <h3 className="text-xl font-bold text-gray-700 mb-2">Error loading speakers</h3>
+              <p className="text-gray-500 mb-6">{error}</p>
+              <Button
+                onClick={() => window.location.reload()}
+                className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-black font-bold"
+              >
+                Try Again
+              </Button>
+            </div>
+          ) : filteredSpeakers.length === 0 ? (
             <div className="text-center py-16">
               <Users className="w-16 h-16 text-gray-300 mx-auto mb-4" />
               <h3 className="text-xl font-bold text-gray-700 mb-2">No speakers found</h3>
@@ -748,20 +594,28 @@ export default function Speakers() {
 
           <div className="grid md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-white mb-3">42</div>
+              <div className="text-4xl md:text-5xl font-bold text-white mb-3">
+                {allSpeakers.length}
+              </div>
               <div className="text-gray-300">Total Speakers</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-white mb-3">15</div>
-              <div className="text-gray-300">Countries Represented</div>
+              <div className="text-4xl md:text-5xl font-bold text-white mb-3">
+                {featuredSpeakers.length}
+              </div>
+              <div className="text-gray-300">Featured Speakers</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-white mb-3">60%</div>
-              <div className="text-gray-300">African Speakers</div>
+              <div className="text-4xl md:text-5xl font-bold text-white mb-3">
+                {allSpeakers.filter((s) => s.category === 'keynote').length}
+              </div>
+              <div className="text-gray-300">Keynote Speakers</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-white mb-3">40%</div>
-              <div className="text-gray-300">Women Speakers</div>
+              <div className="text-4xl md:text-5xl font-bold text-white mb-3">
+                {allSpeakers.filter((s) => s.category === 'workshop').length}
+              </div>
+              <div className="text-gray-300">Workshops</div>
             </div>
           </div>
         </div>

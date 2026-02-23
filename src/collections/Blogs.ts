@@ -81,6 +81,23 @@ export const Blogs: CollectionConfig = {
       },
     },
     {
+      name: 'authorBio',
+      type: 'textarea',
+      label: 'Author Bio',
+      admin: {
+        description: 'Brief biography of the author',
+      },
+    },
+    {
+      name: 'authorAvatar',
+      type: 'upload',
+      label: 'Author Avatar',
+      relationTo: 'media',
+      admin: {
+        description: 'Profile picture of the author',
+      },
+    },
+    {
       name: 'category',
       type: 'select',
       label: 'Category',
@@ -158,6 +175,34 @@ export const Blogs: CollectionConfig = {
       type: 'checkbox',
       label: 'Featured Post',
       defaultValue: false,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'trending',
+      type: 'checkbox',
+      label: 'Trending Post',
+      defaultValue: false,
+      admin: {
+        position: 'sidebar',
+        description: 'Mark as trending to highlight on the blog page',
+      },
+    },
+    {
+      name: 'likes',
+      type: 'number',
+      label: 'Likes',
+      defaultValue: 0,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'comments',
+      type: 'number',
+      label: 'Comments Count',
+      defaultValue: 0,
       admin: {
         position: 'sidebar',
       },

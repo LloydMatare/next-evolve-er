@@ -227,26 +227,37 @@ export default function BlogPostPage() {
 
       if (data.docs && data.docs.length > 0) {
         const blogData = data.docs[0]
-        
+
         let imageUrl = '/placeholder.png'
         if (typeof blogData.featuredImage === 'object' && blogData.featuredImage?.url) {
-          imageUrl = blogData.featuredImage.url.startsWith('http') 
-            ? blogData.featuredImage.url 
+          imageUrl = blogData.featuredImage.url.startsWith('http')
+            ? blogData.featuredImage.url
             : `${window.location.origin}${blogData.featuredImage.url}`
         }
-        
+
+        let authorAvatarUrl = '/placeholder.png'
+        if (typeof blogData.authorAvatar === 'object' && blogData.authorAvatar?.url) {
+          authorAvatarUrl = blogData.authorAvatar.url.startsWith('http')
+            ? blogData.authorAvatar.url
+            : `${window.location.origin}${blogData.authorAvatar.url}`
+        } else if (typeof blogData.authorAvatar === 'string') {
+          authorAvatarUrl = blogData.authorAvatar
+        }
+
         const transformedBlog: BlogPost = {
           ...blogData,
           featuredImage: {
             url: imageUrl,
-            alt: typeof blogData.featuredImage === 'object' && blogData.featuredImage?.alt 
-              ? blogData.featuredImage.alt 
-              : blogData.title,
+            alt:
+              typeof blogData.featuredImage === 'object' && blogData.featuredImage?.alt
+                ? blogData.featuredImage.alt
+                : blogData.title,
           },
+          authorAvatar: authorAvatarUrl,
           publishedAt: format(new Date(blogData.publishedAt), 'MMMM dd, yyyy'),
-          likes: blogData.likes || Math.floor(Math.random() * 500),
-          comments: blogData.comments || Math.floor(Math.random() * 50),
-          trending: Math.random() > 0.7,
+          likes: blogData.likes || 0,
+          comments: blogData.comments || 0,
+          trending: blogData.trending || false,
         }
         setBlog(transformedBlog)
         calculateReadingTime(transformedBlog.content)
@@ -297,18 +308,19 @@ export default function BlogPostPage() {
           const transformedBlogs = data.docs.map((blog: any) => {
             let imageUrl = '/placeholder.png'
             if (typeof blog.featuredImage === 'object' && blog.featuredImage?.url) {
-              imageUrl = blog.featuredImage.url.startsWith('http') 
-                ? blog.featuredImage.url 
+              imageUrl = blog.featuredImage.url.startsWith('http')
+                ? blog.featuredImage.url
                 : `${window.location.origin}${blog.featuredImage.url}`
             }
-            
+
             return {
               ...blog,
               featuredImage: {
                 url: imageUrl,
-                alt: typeof blog.featuredImage === 'object' && blog.featuredImage?.alt 
-                  ? blog.featuredImage.alt 
-                  : blog.title,
+                alt:
+                  typeof blog.featuredImage === 'object' && blog.featuredImage?.alt
+                    ? blog.featuredImage.alt
+                    : blog.title,
               },
               publishedAt: format(new Date(blog.publishedAt), 'MMMM dd, yyyy'),
             }
