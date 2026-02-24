@@ -24,6 +24,7 @@ import {
   Network,
 } from 'lucide-react'
 import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 const ICON_MAP: Record<string, React.ReactNode> = {
   cpu: <Cpu className="w-6 h-6" />,
@@ -187,18 +188,21 @@ async function SchoolSummit() {
               actively participate in Africa's digital transformation.
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-4">
-              <Link
-                href="/register"
-                className="bg-purple-500 hover:bg-purple-600 text-white px-8 py-3 rounded-full font-semibold transition-all transform hover:scale-105 flex items-center gap-2"
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="bg-purple-500 hover:bg-purple-600 text-white transition-all transform hover:scale-105 flex items-center gap-2"
               >
-                Register Interest <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                href="/register"
-                className="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-8 py-3 rounded-full font-semibold transition-all border border-white/30 flex items-center gap-2"
-              >
-                Become a Partner <ChevronRight className="w-4 h-4" />
-              </Link>
+                <Link href="/register" className="">
+                  Register Interest <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Button>
+              <Button className="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white flex items-center gap-2 transition-all border border-white/30 flex items-center gap-2">
+                <Link href="/register" className="flex items-center gap-2">
+                  Become a Partner <ChevronRight className="w-4 h-4" />
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
@@ -308,7 +312,7 @@ async function SchoolSummit() {
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Core Objectives</h2>
             <div className="w-24 h-1 bg-purple-600 mx-auto mb-6"></div>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-md md:text-xl text-gray-600 text-center">
               Empowering students with comprehensive skills and opportunities
             </p>
           </div>
@@ -437,6 +441,71 @@ async function SchoolSummit() {
         </div>
       </section>
 
+      {/* Experience the Energy: images + video */}
+      <section className="py-12 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-8 items-center">
+            <div className="bg-gray-900 rounded-2xl overflow-hidden shadow-lg">
+              <video
+                className="w-full h-64 md:h-96 object-cover"
+                src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+                poster="/api/placeholder/800/450"
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
+            </div>
+
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Experience the Energy</h3>
+              <p className="text-gray-600 mb-6">
+                Dive into highlights from past summits — hands-on workshops, student showcases,
+                mentorship clinics, and partner exhibits. Watch short demos or explore the gallery
+                below.
+              </p>
+
+              <div className="grid grid-cols-3 gap-4">
+                <div className="col-span-1 rounded-lg overflow-hidden border">
+                  <img
+                    src="/images/student-energy.svg"
+                    alt="Student energy"
+                    className="w-full h-24 object-cover bg-gray-50"
+                  />
+                </div>
+                <div className="col-span-1 rounded-lg overflow-hidden border">
+                  <img
+                    src="/images/student-workshop.svg"
+                    alt="Workshops"
+                    className="w-full h-24 object-cover bg-gray-50"
+                  />
+                </div>
+                <div className="col-span-1 rounded-lg overflow-hidden border">
+                  <img
+                    src="/api/placeholder/400/300"
+                    alt="Demo placeholder"
+                    className="w-full h-24 object-cover bg-gray-50"
+                  />
+                </div>
+              </div>
+
+              <div className="mt-6 flex gap-3">
+                <Button asChild>
+                  <a href="/register" className="px-4 py-2 inline-block">
+                    Register Interest
+                  </a>
+                </Button>
+                <Button asChild variant="ghost">
+                  <a href="/speakers/apply" className="px-4 py-2 inline-block">
+                    Apply to Speak
+                  </a>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Sub-Themes */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -494,8 +563,8 @@ async function SchoolSummit() {
                     key={index}
                     className="bg-white p-4 rounded-xl shadow-sm flex items-start gap-3"
                   >
-                    <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mt-0.5">
-                      <div className="w-2 h-2 bg-green-600 rounded-full"></div>
+                    <div className="w-5 h-5 bg-purple-100 rounded-full flex items-center justify-center mt-0.5">
+                      <div className="w-2 h-2 bg-purple-600 rounded-full"></div>
                     </div>
                     <span className="text-gray-700">{item}</span>
                   </div>
@@ -539,30 +608,18 @@ async function SchoolSummit() {
             Be part of shaping Africa's digital future. Register your interest today.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <button className="bg-white text-purple-900 hover:bg-purple-50 px-8 py-3 rounded-full font-semibold transition-all transform hover:scale-105">
+            <Button className="bg-white text-purple-900 hover:bg-purple-50  transition-all transform hover:scale-105">
               Register as Student
-            </button>
-            <button className="bg-purple-500 hover:bg-purple-600 text-white px-8 py-3 rounded-full font-semibold transition-all transform hover:scale-105 border border-white/30">
+            </Button>
+            <Button className="bg-purple-500 hover:bg-purple-600 text-white  transition-all transform hover:scale-105 border border-white/30">
               Partner with Us
-            </button>
-            <button className="bg-transparent hover:bg-white/10 text-white px-8 py-3 rounded-full font-semibold transition-all border border-white/30">
+            </Button>
+            <Button className="bg-transparent hover:bg-white/10 text-white  transition-all border border-white/30">
               Become a Mentor
-            </button>
+            </Button>
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <p className="text-gray-400 mb-4">© 2026 Evolve ICT Summit. All rights reserved.</p>
-            <p className="text-gray-500 text-sm">
-              Part of the Evolve ICT Summit ecosystem - Shaping Africa's Digital Leap
-            </p>
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }

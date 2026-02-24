@@ -201,7 +201,7 @@ function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 px-4">
             <Button
               size="lg"
-              className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-white font-bold px-8 py-6 rounded-xl text-lg hover:shadow-lg hover:shadow-amber-500/25 transition-all duration-300 hover:scale-105"
+              className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-white hover:shadow-lg hover:shadow-amber-500/25 transition-all duration-300 hover:scale-105"
               asChild
             >
               <Link href="/register">
@@ -212,10 +212,10 @@ function Home() {
             <Button
               size="lg"
               variant="outline"
-              className="bg-transparent hover:bg-white/10 text-white border-white/30 font-bold px-8 py-6 rounded-xl text-lg"
+              className="bg-transparent hover:bg-white/10 text-white border-white/30"
               asChild
             >
-              <Link href="#about">
+              <Link href="/gallery">
                 Watch Highlights
                 <Play className="w-5 h-5 ml-2" />
               </Link>
@@ -367,7 +367,7 @@ function Home() {
                     <div className="text-white font-medium">Days of Innovation</div>
                     <div className="mt-2 text-sm text-gray-300">Multiple tracks & sessions</div>
                     <Button
-                      className="mt-6 bg-gradient-to-r from-[#ffcc00] to-amber-500 text-black font-bold px-8 py-6 rounded-xl hover:shadow-lg hover:shadow-amber-500/25"
+                      className="mt-6 bg-gradient-to-r from-[#ffcc00] to-amber-500 text-black  hover:shadow-lg hover:shadow-amber-500/25"
                       asChild
                     >
                       <Link href="/schedule">
@@ -463,7 +463,7 @@ function Home() {
             {/* <div className="text-center mt-12">
               <p className="text-gray-400 mb-6">Group discounts available for 5+ registrations</p>
               <Button
-                className="bg-gradient-to-r from-emerald-500 to-teal-400 text-white px-8 py-6 rounded-xl text-lg font-bold hover:shadow-lg hover:shadow-emerald-500/25"
+                className="bg-gradient-to-r from-emerald-500 to-teal-400  font-bold hover:shadow-lg hover:shadow-emerald-500/25"
                 asChild
               >
                 <Link href="/register">
@@ -529,7 +529,7 @@ function Home() {
 
             <div className="text-center">
               <Button
-                className="bg-gradient-to-r from-[#170d43] to-[#2a1b69] text-white px-8 py-6 rounded-xl text-lg font-bold hover:shadow-lg hover:shadow-purple-500/25"
+                className="bg-gradient-to-r from-[#170d43] to-[#2a1b69] text-white font-bold hover:shadow-lg hover:shadow-purple-500/25"
                 asChild
               >
                 <Link href="/speakers">
@@ -585,7 +585,7 @@ function Home() {
                 <p className="text-gray-300 mb-6">
                   {`Join our elite group of sponsors and gain exclusive access to Africa's tech leaders`}
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center mt-4">
                   <Button
                     className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-black font-bold "
                     asChild
@@ -619,7 +619,7 @@ function Home() {
 
                 <h2 className="text-4xl font-bold text-gray-900 mb-6">{`  Let's Connect`}</h2>
 
-                <p className="text-lg text-gray-600 mb-8">
+                <p className="text-md md:text-lg text-gray-600 mb-8">
                   Have questions about the summit? Our team is ready to help you with registration,
                   partnerships, speaking opportunities, and more.
                 </p>
@@ -642,8 +642,8 @@ function Home() {
                     </div>
                     <div>
                       <h3 className="font-bold text-gray-900 mb-1">Phone</h3>
-                      <p className="text-gray-600">+263 242 123 456</p>
-                      <p className="text-gray-600">+263 242 987 654</p>
+                      <p className="text-gray-600">+263 242 494 407</p>
+                      <p className="text-gray-600">+263 8677 105 028</p>
                     </div>
                   </div>
 
@@ -727,7 +727,7 @@ function Home() {
             <div className="flex flex-col sm:flex-row gap-4 mt-2 justify-center">
               <Button
                 size="lg"
-                className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-black font-bold px-8 py-6 rounded-xl text-lg hover:shadow-lg hover:shadow-amber-500/25 transition-shadow"
+                className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-black hover:shadow-lg hover:shadow-amber-500/25 transition-shadow"
                 asChild
               >
                 <Link href="/register">
@@ -739,7 +739,7 @@ function Home() {
               <Button
                 size="lg"
                 variant="outline"
-                className="bg-transparent hover:bg-white/10 text-white border-white/30 font-bold px-8 py-6 rounded-xl text-lg"
+                className="bg-transparent hover:bg-white/10 text-white border-white/300"
                 asChild
               >
                 <Link href="/brochure">

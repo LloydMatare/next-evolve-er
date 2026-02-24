@@ -76,7 +76,7 @@ export default function AboutPage() {
   ]
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen text-black">
       {/* Hero Section with Animated Background */}
       <section className="relative pt-32 pb-20 px-4 overflow-hidden">
         {/* Animated background elements */}
@@ -446,6 +446,138 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Why Attend */}
+      <section className="section-padding bg-white">
+        <div className="container-custom">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div>
+              <h2 className="text-3xl font-bold mb-4">Why Attend</h2>
+              <p className="text-lg text-gray-600 mb-4">
+                Join peers, leaders and innovators to gain practical knowledge, expand your network,
+                and discover opportunities to grow your business or career.
+              </p>
+              <ul className="list-disc pl-5 text-gray-600 space-y-2">
+                <li>Learn from Africa's top tech leaders and practitioners</li>
+                <li>Hands-on workshops and practical sessions</li>
+                <li>Networking with investors, partners and peers</li>
+                <li>Discover market and product opportunities across the continent</li>
+              </ul>
+            </div>
+            <div className="flex justify-center">
+              <Image
+                src="/images/about-why-attend.svg"
+                alt="Why attend"
+                width={520}
+                height={360}
+                className="rounded-xl"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Expected Outcomes */}
+      <section className="section-padding bg-[#f8f9fa]">
+        <div className="container-custom">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold mb-4">Expected Outcomes</h2>
+            <p className="text-lg text-gray-600 text-center">What participants will take away</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="bg-white rounded-2xl p-6 text-center shadow-sm">
+              <Image src="/images/expected-outcome.svg" alt="Insights" width={140} height={120} />
+              <h3 className="text-lg font-semibold mt-4">Actionable Insights</h3>
+              <p className="text-sm text-gray-600 mt-2">
+                Practical knowledge you can apply immediately.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl p-6 text-center shadow-sm">
+              <Image
+                src="/images/expected-outcome.svg"
+                alt="Partnerships"
+                width={140}
+                height={120}
+              />
+              <h3 className="text-lg font-semibold mt-4">New Partnerships</h3>
+              <p className="text-sm text-gray-600 mt-2">
+                Connect with stakeholders and collaborators.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl p-6 text-center shadow-sm">
+              <Image
+                src="/images/expected-outcome.svg"
+                alt="Opportunities"
+                width={140}
+                height={120}
+              />
+              <h3 className="text-lg font-semibold mt-4">Market Opportunities</h3>
+              <p className="text-sm text-gray-600 mt-2">
+                Discover new markets and funding avenues.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Partner With Us */}
+      <section className="section-padding bg-white">
+        <div className="container-custom">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="order-2 md:order-1">
+              <h2 className="text-3xl font-bold mb-4">Why Partner With Us</h2>
+              <p className="text-lg text-gray-600 mb-4">
+                Partnering with Evolve places your brand at the center of Africa's digital
+                transformation agenda. Enjoy targeted visibility, curated meetings, and access to
+                decision-makers.
+              </p>
+              <div className="mt-4">
+                <Button
+                  className="bg-[#ffcc00] hover:bg-[#e6b800] text-black font-semibold"
+                  asChild
+                >
+                  <Link href="/partnerships">Partner With Us</Link>
+                </Button>
+              </div>
+            </div>
+
+            <div className="order-1 md:order-2 flex justify-center">
+              <Image
+                src="/images/partner.svg"
+                alt="Partner"
+                width={520}
+                height={360}
+                className="rounded-xl"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Lively preview (animated svg) */}
+      <section className="section-padding bg-white">
+        <div className="container-custom text-center">
+          <h2 className="text-3xl font-bold mb-4">Experience the Energy</h2>
+          <p className="text-gray-600 mb-6">A short glimpse of what the summit feels like.</p>
+          <div className="mx-auto max-w-md">
+            <img src="/images/lively.svg" alt="Lively preview" className="w-full rounded-xl" />
+          </div>
+        </div>
+      </section>
+
+      {/* Conclusion */}
+      <section className="section-padding bg-gradient-to-b from-[#f8f9fa] to-white">
+        <div className="container-custom text-center">
+          <h2 className="text-3xl font-bold mb-4">Join Us</h2>
+          <p className="text-md md:text-lg text-gray-600 text-center">
+            Be part of Africa's digital story—learn, collaborate and grow with a vibrant community
+            of innovators and leaders.
+          </p>
+        </div>
+      </section>
+
       {/* Final CTA */}
       <section className="relative overflow-hidden">
         {/* Background pattern */}
@@ -468,7 +600,7 @@ export default function AboutPage() {
               in Africa.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div className="flex flex-col sm:flex-row gap-4 mt-4 justify-center items-center">
               <Button
                 size="lg"
                 className="bg-[#ffcc00] hover:bg-[#e6b800] text-black font-bold  shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"

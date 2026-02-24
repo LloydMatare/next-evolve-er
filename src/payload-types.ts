@@ -73,6 +73,7 @@ export interface Config {
     tickets: Ticket;
     payments: Payment;
     speakers: Speaker;
+    'speaker-applications': SpeakerApplication;
     programs: Program;
     blogs: Blog;
     'previous-summits': PreviousSummit;
@@ -91,6 +92,7 @@ export interface Config {
     tickets: TicketsSelect<false> | TicketsSelect<true>;
     payments: PaymentsSelect<false> | PaymentsSelect<true>;
     speakers: SpeakersSelect<false> | SpeakersSelect<true>;
+    'speaker-applications': SpeakerApplicationsSelect<false> | SpeakerApplicationsSelect<true>;
     programs: ProgramsSelect<false> | ProgramsSelect<true>;
     blogs: BlogsSelect<false> | BlogsSelect<true>;
     'previous-summits': PreviousSummitsSelect<false> | PreviousSummitsSelect<true>;
@@ -402,6 +404,34 @@ export interface Program {
    * Lower numbers appear first
    */
   order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "speaker-applications".
+ */
+export interface SpeakerApplication {
+  id: number;
+  name: string;
+  email: string;
+  organization: string;
+  designation: string;
+  bio: string;
+  category?: ('keynote' | 'panelist' | 'workshop' | 'moderator') | null;
+  expertise?:
+    | {
+        topic?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  linkedin?: string | null;
+  twitter?: string | null;
+  website?: string | null;
+  session?: {
+    title?: string | null;
+    description?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -772,6 +802,10 @@ export interface PayloadLockedDocument {
         value: number | Speaker;
       } | null)
     | ({
+        relationTo: 'speaker-applications';
+        value: number | SpeakerApplication;
+      } | null)
+    | ({
         relationTo: 'programs';
         value: number | Program;
       } | null)
@@ -1012,6 +1046,35 @@ export interface SpeakersSelect<T extends boolean = true> {
       };
   sessions?: T;
   order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "speaker-applications_select".
+ */
+export interface SpeakerApplicationsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  organization?: T;
+  designation?: T;
+  bio?: T;
+  category?: T;
+  expertise?:
+    | T
+    | {
+        topic?: T;
+        id?: T;
+      };
+  linkedin?: T;
+  twitter?: T;
+  website?: T;
+  session?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

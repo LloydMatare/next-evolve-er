@@ -15,6 +15,7 @@ import { Tickets } from './collections/Tickets'
 import { Payments } from './collections/Payments'
 import { Programs } from './collections/Programs'
 import { Speakers } from './collections/Speakers'
+import { SpeakerApplications } from './collections/SpeakerApplications'
 import { Blogs } from './collections/Blogs'
 import { PreviousSummits } from './collections/PreviousSummits'
 import { Gallery } from './collections/Gallery'
@@ -37,6 +38,7 @@ export default buildConfig({
     Tickets,
     Payments,
     Speakers,
+    SpeakerApplications,
     Programs,
     Blogs,
     PreviousSummits,
