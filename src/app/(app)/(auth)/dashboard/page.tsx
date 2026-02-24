@@ -534,7 +534,7 @@ export default function DashboardPage() {
                   </div>
                   <div className="flex items-center gap-2">
                     <Phone className="w-4 h-4 text-blue-500" />
-                    <span className="text-sm font-medium text-gray-900">+263 242 123 456</span>
+                    <span className="text-sm font-medium text-gray-900">+263 242 494 407</span>
                   </div>
                 </div>
               </div>

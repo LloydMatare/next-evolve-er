@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="420" viewBox="0 0 800 420">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <g transform="translate(80,40)">
+    <rect width="640" height="340" rx="18" fill="#0f1724"/>
+    <g>
+      <circle cx="120" cy="120" r="18" fill="#ffcc00">
+        <animate attributeName="r" values="12;22;12" dur="1.6s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="220" cy="90" r="12" fill="#ff9900">
+        <animate attributeName="cy" values="90;110;90" dur="1.2s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="320" cy="140" r="10" fill="#00c2ff">
+        <animate attributeName="cx" values="320;360;320" dur="1.4s" repeatCount="indefinite" />
+      </circle>
+    </g>
+    <text x="380" y="200" fill="#ffffff" font-size="22" font-family="sans-serif">A glimpse of the summit energy</text>
+  </g>
+</svg>

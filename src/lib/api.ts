@@ -34,6 +34,46 @@ export async function createRegistration(data: RegistrationData): Promise<any> {
   }
 }
 
+// helper for speaker applications
+export interface SpeakerApplicationData {
+  name: string
+  email: string
+  organization: string
+  designation: string
+  bio: string
+  category: string
+  expertise?: Array<{ topic: string }>
+  linkedin?: string
+  twitter?: string
+  website?: string
+  session?: {
+    title?: string
+    description?: string
+  }
+}
+
+export async function createSpeakerApplication(data: SpeakerApplicationData): Promise<any> {
+  try {
+    const response = await fetch(`${API_URL}/speaker-applications`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+
+    if (!response.ok) {
+      const error = await response.text()
+      throw new Error(`Failed to create speaker application: ${error}`)
+    }
+
+    return await response.json()
+  } catch (error) {
+    console.error('API Error:', error)
+    throw error
+  }
+}
+
 export async function createPayment(data: any): Promise<any> {
   try {
     const response = await fetch(`${API_URL}/payments`, {

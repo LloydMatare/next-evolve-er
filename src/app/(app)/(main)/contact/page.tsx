@@ -33,7 +33,7 @@ export default function ContactPage() {
     {
       icon: <Phone className="h-6 w-6" />,
       title: 'Phone Numbers',
-      details: ['+263 242 123 456', '+263 242 987 654'],
+      details: ['+263 242 494 407', '+263 8677 105 028'],
       description: 'Available Mon-Fri, 9am to 6pm CAT',
       color: 'from-emerald-500 to-teal-400',
       gradient: 'bg-gradient-to-br from-emerald-500 to-teal-400',
@@ -349,7 +349,7 @@ export default function ContactPage() {
 
           <div className="text-center mt-12">
             <Button
-              className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-white  text-lg font-semibold hover:shadow-lg hover:shadow-amber-500/25 transition-shadow"
+              className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-white hover:shadow-lg hover:shadow-amber-500/25 transition-shadow"
               asChild
             >
               <Link href="/faq">

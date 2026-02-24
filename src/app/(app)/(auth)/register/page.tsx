@@ -27,7 +27,7 @@ import {
   Crown,
   TrendingUp,
 } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Select,
   SelectContent,
@@ -125,6 +125,9 @@ function calculateExhibitorAmount(boothSize: string): number {
 
 export default function RegisterPage() {
   const [activeTab, setActiveTab] = useState('attendee')
+  const [selectedSponsorTier, setSelectedSponsorTier] = useState<
+    'platinum' | 'gold' | 'silver' | 'bronze'
+  >('bronze')
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
@@ -147,8 +150,7 @@ export default function RegisterPage() {
 
           <div className="flex justify-center">
             <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8">
-              Join{' '}
-              <span className="text-[#ffcc00] font-semibold">2,000+ innovators and leaders</span>{' '}
+              Join <span className="text-[#ffcc00] font-semibold"> innovators and leaders</span>{' '}
               {`at Africa's premier ICT summit`}
             </p>
           </div>
@@ -170,7 +172,15 @@ export default function RegisterPage() {
       {/* Registration Navigation */}
       <section className="py-8 px-4 bg-white border-b border-gray-200">
         <div className="container-custom">
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <Tabs
+            value={activeTab}
+            onValueChange={(val) => {
+              setActiveTab(val)
+              // ensure sponsor tab has a sensible default tier when opened
+              if (val === 'sponsor') setSelectedSponsorTier((t) => t || 'bronze')
+            }}
+            className="w-full"
+          >
             <div className="flex justify-center mb-8">
               <TabsList className="bg-gray-100 h-auto p-1 grid md:grid-cols-3 gap-4 md:gap-0 w-full max-w-4xl rounded-2xl border border-gray-200">
                 <TabsTrigger
@@ -213,7 +223,7 @@ export default function RegisterPage() {
               </TabsContent>
 
               <TabsContent value="sponsor">
-                <SponsorForm />
+                <SponsorForm initialTier={selectedSponsorTier} />
               </TabsContent>
 
               <TabsContent value="exhibitor">
@@ -233,7 +243,7 @@ export default function RegisterPage() {
               <span className="text-sm font-medium text-gray-700">Registration Benefits</span>
             </div>
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Why Register?</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-md md:text-xl text-gray-600 text-center">
               {`Get exclusive access to Africa's premier tech event`}
             </p>
           </div>
@@ -244,32 +254,24 @@ export default function RegisterPage() {
                 <Globe className="w-6 h-6 text-white" />
               </div>
               <h3 className="font-bold text-gray-900 mb-2">Global Networking</h3>
-              <p className="text-sm text-gray-600">
-                Connect with 2,000+ tech leaders from across Africa
-              </p>
             </div>
             <div className="bg-white rounded-2xl p-6 text-center shadow-lg">
               <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-400 rounded-xl flex items-center justify-center mx-auto mb-4">
                 <Award className="w-6 h-6 text-white" />
               </div>
               <h3 className="font-bold text-gray-900 mb-2">Expert Insights</h3>
-              <p className="text-sm text-gray-600">Learn from 50+ industry-leading speakers</p>
             </div>
             <div className="bg-white rounded-2xl p-6 text-center shadow-lg">
               <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-orange-400 rounded-xl flex items-center justify-center mx-auto mb-4">
                 <Zap className="w-6 h-6 text-white" />
               </div>
               <h3 className="font-bold text-gray-900 mb-2">Innovation Showcase</h3>
-              <p className="text-sm text-gray-600">
-                Explore cutting-edge tech from 100+ exhibitors
-              </p>
             </div>
             <div className="bg-white rounded-2xl p-6 text-center shadow-lg">
               <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-400 rounded-xl flex items-center justify-center mx-auto mb-4">
                 <Shield className="w-6 h-6 text-white" />
               </div>
               <h3 className="font-bold text-gray-900 mb-2">Secure Experience</h3>
-              <p className="text-sm text-gray-600">SSL secured payments & data protection</p>
             </div>
           </div>
         </div>
@@ -574,7 +576,7 @@ function AttendeeForm() {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full mt-6 bg-gradient-to-r from-[#ffcc00] to-amber-500 text-white font-bold px-8 py-6 rounded-xl text-lg hover:shadow-lg hover:shadow-amber-500/25 transition-shadow"
+              className="w-full mt-6 bg-gradient-to-r from-[#ffcc00] to-amber-500 text-white  hover:shadow-lg hover:shadow-amber-500/25 transition-shadow"
             >
               {isSubmitting ? (
                 'Processing...'
@@ -593,19 +595,33 @@ function AttendeeForm() {
 }
 
 // Sponsor Registration Form - Fixed version
-function SponsorForm() {
+function SponsorForm({ initialTier }: { initialTier?: 'platinum' | 'gold' | 'silver' | 'bronze' }) {
   const {
     register,
     handleSubmit,
     control,
+    reset,
+    getValues,
     formState: { errors, isSubmitting },
     watch,
   } = useForm<SponsorFormData>({
     resolver: zodResolver(sponsorSchema),
     defaultValues: {
-      sponsorshipTier: 'bronze',
+      sponsorshipTier: initialTier || 'bronze',
     },
   })
+
+  // Keep form in sync when parent changes the initial tier
+  useEffect(() => {
+    if (initialTier) {
+      try {
+        const values = getValues()
+        reset({ ...values, sponsorshipTier: initialTier })
+      } catch (e) {
+        reset({ sponsorshipTier: initialTier })
+      }
+    }
+  }, [initialTier, getValues, reset])
 
   const selectedTier = watch('sponsorshipTier')
   const amount = calculateSponsorAmount(selectedTier)
@@ -949,7 +965,7 @@ function SponsorForm() {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full mt-6 bg-gradient-to-r from-blue-500 to-cyan-400 text-white font-bold px-8 py-6 rounded-xl text-lg hover:shadow-lg hover:shadow-blue-500/25 transition-shadow"
+              className="w-full mt-6 bg-gradient-to-r from-blue-500 to-cyan-400 text-white  hover:shadow-lg hover:shadow-blue-500/25 transition-shadow"
             >
               {isSubmitting ? (
                 'Processing...'
@@ -1365,7 +1381,7 @@ function ExhibitorForm() {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full mt-6 bg-gradient-to-r from-emerald-500 to-teal-400 text-white font-bold px-8 py-6 rounded-xl text-lg hover:shadow-lg hover:shadow-emerald-500/25 transition-shadow"
+              className="w-full mt-6 bg-gradient-to-r from-emerald-500 to-teal-400 text-white  hover:shadow-lg hover:shadow-emerald-500/25 transition-shadow"
             >
               {isSubmitting ? (
                 'Processing...'

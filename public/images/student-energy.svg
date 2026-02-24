@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0%" stop-color="#7c3aed" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="#0f172a" />
+  <g transform="translate(80,60)">
+    <g>
+      <circle cx="120" cy="110" r="60" fill="url(#g)">
+        <animate attributeName="r" dur="3s" values="50;70;50" repeatCount="indefinite"/>
+        <animate attributeName="opacity" dur="3s" values="0.9;0.5;0.9" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="260" cy="70" r="36" fill="#fff" opacity="0.06">
+        <animate attributeName="cx" dur="4s" values="240;280;240" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    <text x="10" y="220" fill="#fff" font-family="Inter, system-ui, Arial" font-size="28" font-weight="700">Experience the Energy</text>
+    <text x="10" y="250" fill="#93c5fd" font-family="Inter, system-ui, Arial" font-size="14">Workshops, showcases & live demos — feel the momentum.</text>
+  </g>
+</svg>

@@ -232,10 +232,10 @@ export default function Speakers() {
               <Sparkles className="w-4 h-4 text-[#ffcc00]" />
               <span className="text-sm font-medium text-gray-700">Headline Speakers</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            <h2 className="text-md md:text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               Keynote Presentations
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 text-center">
               Hear from industry pioneers and visionaries at the forefront of digital transformation
             </p>
           </div>
@@ -362,10 +362,10 @@ export default function Speakers() {
               {categories.map((category) => {
                 const Icon = category.icon
                 return (
-                  <button
+                  <Button
                     key={category.id}
                     onClick={() => setFilterCategory(category.id)}
-                    className={`flex items-center gap-2 px-4 py-3 rounded-xl transition-all ${
+                    className={`flex items-center gap-2 transition-all ${
                       filterCategory === category.id
                         ? 'bg-gradient-to-r from-[#170d43] to-[#2a1b69] text-white'
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -374,7 +374,7 @@ export default function Speakers() {
                     <Icon className="w-4 h-4" />
                     <span className="font-medium">{category.label}</span>
                     <span className="text-sm opacity-75">({category.count})</span>
-                  </button>
+                  </Button>
                 )
               })}
             </div>
@@ -417,7 +417,7 @@ export default function Speakers() {
               <p className="text-gray-500 mb-6">{error}</p>
               <Button
                 onClick={() => window.location.reload()}
-                className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-black font-bold"
+                className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-black "
               >
                 Try Again
               </Button>
@@ -437,7 +437,7 @@ export default function Speakers() {
                     setFilterCategory('all')
                     setSearchQuery('')
                   }}
-                  className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-black font-bold"
+                  className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-black"
                 >
                   Clear Filters
                 </Button>
@@ -465,14 +465,14 @@ export default function Speakers() {
                     <div className="flex flex-col items-center mb-6">
                       <div className="relative mb-4">
                         <div className="w-24 h-24 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 border-4 border-gray-100" />
-                        <button
+                        <Button
                           onClick={() => toggleLike(speaker.id)}
                           className="absolute -bottom-2 -right-2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors"
                         >
                           <Heart
                             className={`w-5 h-5 ${likedSpeakers.includes(speaker.id) ? 'fill-red-500 text-red-500' : 'text-gray-400'}`}
                           />
-                        </button>
+                        </Button>
                       </div>
 
                       <h3 className="text-lg font-bold text-gray-900 text-center">
@@ -587,7 +587,7 @@ export default function Speakers() {
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-white mb-4">Our Speaker Community</h2>
-            <p className="text-gray-300 max-w-2xl mx-auto">
+            <p className="text-gray-300 text-center">
               Bringing together the brightest minds from across Africa and the world
             </p>
           </div>
@@ -633,13 +633,13 @@ export default function Speakers() {
             Want to Speak at Evolve ICT Summit?
           </h2>
 
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          <p className="text-md md:text-xl text-gray-600 mb-8 text-center">
             {`            Share your expertise with Africa's premier tech audience. Applications for speaking opportunities are now open.`}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
-              className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-black font-bold px-8 py-6 rounded-xl text-lg hover:shadow-lg hover:shadow-amber-500/25"
+              className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-black  hover:shadow-lg hover:shadow-amber-500/25"
               asChild
             >
               <Link href="/speakers/apply">
@@ -650,7 +650,7 @@ export default function Speakers() {
 
             <Button
               variant="outline"
-              className="border-gray-300 text-gray-700 hover:border-[#ffcc00] px-8 py-6 rounded-xl text-lg"
+              className="border-gray-300 text-gray-700 hover:border-[#ffcc00] "
               asChild
             >
               <Link href="/schedule">

@@ -57,7 +57,7 @@ export function PricingCard({ title, price, period, features, highlighted }: Pri
       </ul>
 
       <Link href="/register">
-        <button
+        <Button
           className={`w-full rounded-sm font-semibold ${
             highlighted
               ? 'bg-[#ffcc00] hover:bg-[#ec7211] text-white'
@@ -65,7 +65,7 @@ export function PricingCard({ title, price, period, features, highlighted }: Pri
           }`}
         >
           Buy Ticket
-        </button>
+        </Button>
       </Link>
     </div>
   )
