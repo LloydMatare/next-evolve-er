@@ -255,7 +255,7 @@ export default function SpeakersApply() {
               Section {currentSection + 1} of {formSections.length}
             </span>
             <span className="text-sm text-purple-500">
-              {Math.round(((currentSection + 1) / formSections.length) * 100)}% Complete
+              {Math.round(((currentSection + 1) / formSections.length) * 100)}% Complete.
             </span>
           </div>
           <div className="h-2 bg-purple-100 rounded-full overflow-hidden">
