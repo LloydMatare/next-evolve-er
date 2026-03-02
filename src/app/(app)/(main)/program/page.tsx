@@ -21,6 +21,7 @@ import {
   Search,
   Loader2,
 } from 'lucide-react'
+import Image from 'next/image'
 import { useState, useEffect } from 'react'
 
 // Types
@@ -283,8 +284,22 @@ export default function ProgramPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-[#170d43] via-[#161e2e] to-[#0f1419]">
-        <div className="max-w-7xl mx-auto text-center">
+      <section className="pt-32 pb-20 px-4 relative overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 w-full h-full">
+          <Image
+            src="/bg-2.jpg" // Replace with your actual image path
+            alt="Event Program Background"
+            fill
+            className="object-cover"
+            priority
+            quality={100}
+          />
+          {/* Dark overlay for better text readability */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#170d43]/90 via-[#161e2e]/90 to-[#0f1419]/90" />
+        </div>
+
+        <div className="max-w-7xl mx-auto text-center relative z-10">
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
             Event <span className="text-[#ffcc00]">Program</span>
           </h1>
@@ -316,8 +331,8 @@ export default function ProgramPage() {
               <Download className="h-5 w-5 mr-2" />
               Download Schedule
             </Button>
-            <Button variant="outline" className="border-white text-black hover:bg-white/90">
-              <Share2 className="h-5 w-5 mr-2" />
+            <Button variant="outline" className="border-white text-black hover:bg-white/20">
+              <Share2 className="h-5 w-5 mr-2 text-black" />
               Share Program
             </Button>
           </div>

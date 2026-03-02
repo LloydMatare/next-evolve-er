@@ -272,23 +272,22 @@ export interface Ticket {
 export interface Payment {
   id: number;
   registration: number | Registration;
-  transactionId?: string | null;
+  orderId: string;
   amount: number;
-  currency?: ('USD' | 'ZWL') | null;
-  paymentMethod: 'card' | 'mobile' | 'bank' | 'cash';
-  status?: ('pending' | 'processing' | 'completed' | 'failed' | 'refunded') | null;
-  paymentProof?: (number | null) | Media;
-  mobileMoneyDetails?: {
-    provider?: ('ecocash' | 'onemoney' | 'telecash') | null;
-    phoneNumber?: string | null;
-    transactionCode?: string | null;
-  };
-  bankTransferDetails?: {
-    bankName?: string | null;
-    accountNumber?: string | null;
-    reference?: string | null;
-  };
-  notes?: string | null;
+  currency: string;
+  paymentMethod: 'paynow' | 'card' | 'mobile' | 'bank';
+  status: 'initiated' | 'pending' | 'paid' | 'failed' | 'cancelled';
+  pollUrl?: string | null;
+  instructions?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  paidAt?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -991,27 +990,14 @@ export interface TicketsSelect<T extends boolean = true> {
  */
 export interface PaymentsSelect<T extends boolean = true> {
   registration?: T;
-  transactionId?: T;
+  orderId?: T;
   amount?: T;
   currency?: T;
   paymentMethod?: T;
   status?: T;
-  paymentProof?: T;
-  mobileMoneyDetails?:
-    | T
-    | {
-        provider?: T;
-        phoneNumber?: T;
-        transactionCode?: T;
-      };
-  bankTransferDetails?:
-    | T
-    | {
-        bankName?: T;
-        accountNumber?: T;
-        reference?: T;
-      };
-  notes?: T;
+  pollUrl?: T;
+  instructions?: T;
+  paidAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }

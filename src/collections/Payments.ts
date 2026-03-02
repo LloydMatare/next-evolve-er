@@ -1,3 +1,4 @@
+// collections/Payments.ts
 import { CollectionConfig } from 'payload'
 
 export const Payments: CollectionConfig = {
@@ -7,27 +8,22 @@ export const Payments: CollectionConfig = {
     plural: 'Payments',
   },
   admin: {
-    useAsTitle: 'transactionId',
-    defaultColumns: ['transactionId', 'registration', 'amount', 'status', 'createdAt'],
+    useAsTitle: 'orderId',
+    defaultColumns: ['orderId', 'amount', 'status', 'paymentMethod', 'createdAt'],
     group: 'Registrations',
   },
   fields: [
     {
       name: 'registration',
       type: 'relationship',
-      label: 'Registration',
       relationTo: 'registrations',
       required: true,
-      hasMany: false,
     },
     {
-      name: 'transactionId',
+      name: 'orderId',
       type: 'text',
-      label: 'Transaction ID',
-      unique: true,
-      admin: {
-        readOnly: true,
-      },
+      label: 'Order ID',
+      required: true,
     },
     {
       name: 'amount',
@@ -37,13 +33,10 @@ export const Payments: CollectionConfig = {
     },
     {
       name: 'currency',
-      type: 'select',
+      type: 'text',
       label: 'Currency',
       defaultValue: 'USD',
-      options: [
-        { label: 'USD', value: 'USD' },
-        { label: 'ZWL', value: 'ZWL' },
-      ],
+      required: true,
     },
     {
       name: 'paymentMethod',
@@ -51,107 +44,41 @@ export const Payments: CollectionConfig = {
       label: 'Payment Method',
       required: true,
       options: [
+        { label: 'Paynow', value: 'paynow' },
         { label: 'Credit/Debit Card', value: 'card' },
         { label: 'Mobile Money', value: 'mobile' },
         { label: 'Bank Transfer', value: 'bank' },
-        { label: 'Cash', value: 'cash' },
       ],
     },
     {
       name: 'status',
       type: 'select',
       label: 'Payment Status',
-      defaultValue: 'pending',
+      required: true,
       options: [
+        { label: 'Initiated', value: 'initiated' },
         { label: 'Pending', value: 'pending' },
-        { label: 'Processing', value: 'processing' },
-        { label: 'Completed', value: 'completed' },
+        { label: 'Paid', value: 'paid' },
         { label: 'Failed', value: 'failed' },
-        { label: 'Refunded', value: 'refunded' },
+        { label: 'Cancelled', value: 'cancelled' },
       ],
-      admin: {
-        position: 'sidebar',
-      },
+      defaultValue: 'pending',
     },
     {
-      name: 'paymentProof',
-      type: 'upload',
-      label: 'Payment Proof',
-      relationTo: 'media',
+      name: 'pollUrl',
+      type: 'text',
+      label: 'Poll URL',
     },
     {
-      name: 'mobileMoneyDetails',
-      type: 'group',
-      label: 'Mobile Money Details',
-      admin: {
-        condition: (data) => data.paymentMethod === 'mobile',
-      },
-      fields: [
-        {
-          name: 'provider',
-          type: 'select',
-          label: 'Provider',
-          options: [
-            { label: 'EcoCash', value: 'ecocash' },
-            { label: 'OneMoney', value: 'onemoney' },
-            { label: 'Telecash', value: 'telecash' },
-          ],
-        },
-        {
-          name: 'phoneNumber',
-          type: 'text',
-          label: 'Phone Number',
-        },
-        {
-          name: 'transactionCode',
-          type: 'text',
-          label: 'Transaction Code',
-        },
-      ],
+      name: 'instructions',
+      type: 'json',
+      label: 'Payment Instructions',
     },
     {
-      name: 'bankTransferDetails',
-      type: 'group',
-      label: 'Bank Transfer Details',
-      admin: {
-        condition: (data) => data.paymentMethod === 'bank',
-      },
-      fields: [
-        {
-          name: 'bankName',
-          type: 'text',
-          label: 'Bank Name',
-        },
-        {
-          name: 'accountNumber',
-          type: 'text',
-          label: 'Account Number',
-        },
-        {
-          name: 'reference',
-          type: 'text',
-          label: 'Reference',
-        },
-      ],
-    },
-    {
-      name: 'notes',
-      type: 'textarea',
-      label: 'Notes',
+      name: 'paidAt',
+      type: 'date',
+      label: 'Paid At',
     },
   ],
   timestamps: true,
-  hooks: {
-    beforeChange: [
-      async ({ data, operation }) => {
-        if (operation === 'create') {
-          // Generate transaction ID
-          const transactionId =
-            'TXN-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9).toUpperCase()
-          data.transactionId = transactionId
-        }
-        return data
-      },
-    ],
-  },
 }

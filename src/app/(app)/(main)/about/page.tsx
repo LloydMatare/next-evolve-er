@@ -24,6 +24,7 @@ import {
 import Link from 'next/link'
 import React from 'react'
 import Image from 'next/image'
+import HeroSection from '@/components/hero-section'
 
 export default function AboutPage() {
   const stats = [
@@ -78,53 +79,7 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen text-black">
       {/* Hero Section with Animated Background */}
-      <section className="relative pt-32 pb-20 px-4 overflow-hidden">
-        {/* Animated background elements */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a051f] via-[#1a1448] to-[#0f1419]">
-          <div className="absolute top-0 left-0 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#ffcc00]/5 rounded-full blur-3xl" />
-        </div>
-
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
-
-        <div className="container-custom relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-            <Sparkles className="w-4 h-4 text-[#ffcc00]" />
-            <span className="text-sm font-medium text-white">{`Africa's Premier ICT Event`}</span>
-          </div>
-
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight">
-            Evolve
-            <span className="block text-[#ffcc00] mt-2">ICT Summit</span>
-          </h1>
-
-          <div className="flex justify-center">
-            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8">
-              {`Empowering Africa's `}
-              <span className="text-[#ffcc00] font-semibold">Digital Leap</span>
-            </p>
-          </div>
-
-          {/* Stats bar */}
-          {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mt-12">
-            {stats.map((stat, index) => {
-              const Icon = stat.icon
-              return (
-                <div
-                  key={index}
-                  className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center hover:bg-white/10 transition-all duration-300 hover:scale-105"
-                >
-                  <Icon className="w-8 h-8 text-[#ffcc00] mx-auto mb-2" />
-                  <div className="text-2xl font-bold text-white">{stat.value}</div>
-                  <div className="text-sm text-gray-400">{stat.label}</div>
-                </div>
-              )
-            })}
-          </div> */}
-        </div>
-      </section>
+      <HeroSection />
 
       {/* Event Synopsis Card */}
       <section className="section-padding bg-white relative -mt-10">

@@ -19,6 +19,7 @@ import SubHero from '@/components/sub-hero'
 import Image from 'next/image'
 import type { MediaItem } from './page'
 import { Button } from '@/components/ui/button'
+import HeroSection from '@/components/hero-section'
 
 interface GalleryClientProps {
   images: MediaItem[]
@@ -63,31 +64,7 @@ export default function GalleryClient({ images, videos, categories, years }: Gal
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-4 overflow-hidden">
-        {/* Animated background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a051f] via-[#1a1448] to-[#0f1419]">
-          <div className="absolute top-20 left-10 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-10 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[#ffcc00]/5 rounded-full blur-3xl" />
-        </div>
-
-        <div className="container-custom relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-            <Grid className="w-4 h-4 text-[#ffcc00]" />
-            <span className="text-sm font-medium text-white">Visual Journey</span>
-          </div>
-
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">Gallery</h1>
-
-          <p className="text-xl md:text-2xl text-gray-300 text-center mb-8">
-            Relive the{' '}
-            <span className="text-[#ffcc00] font-semibold">magic, moments, and milestones</span> of
-            {` Africa's premier ICT summit`}
-          </p>
-
-          <SubHero />
-        </div>
-      </section>
+      <HeroSection />
 
       {/* Filter Controls */}
       <section className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200">
