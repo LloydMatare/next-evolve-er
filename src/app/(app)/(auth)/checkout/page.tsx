@@ -1,7 +1,6 @@
 //@ts-nocheck
 'use client'
 
-import { Navbar } from '@/components/navbar'
 import { Button } from '@/components/ui/button'
 import {
   CreditCard,
@@ -19,6 +18,7 @@ import React, { useState, useEffect } from 'react'
 import { toast } from 'sonner'
 import { createPayment, updateRegistrationStatus } from '@/lib/api'
 import { motion } from 'framer-motion'
+import { PRICES } from '@/lib/prices'
 
 export default function CheckoutPage() {
   const [registrationData, setRegistrationData] = useState<any>(null)
@@ -41,40 +41,22 @@ export default function CheckoutPage() {
 
     switch (registrationData.type) {
       case 'attendee':
-        switch (registrationData.ticketType) {
-          case 'early-bird-1':
-            return 150
-          case 'early-bird-2':
-            return 175
-          case 'regular':
-            return 200
-          default:
-            return 0
-        }
+        return PRICES.ATTENDEE.REGULAR
       case 'sponsor':
         switch (registrationData.sponsorshipTier) {
           case 'platinum':
-            return 50000
+            return PRICES.SPONSOR.PLATINUM
           case 'gold':
-            return 30000
+            return PRICES.SPONSOR.GOLD
           case 'silver':
-            return 15000
+            return PRICES.SPONSOR.SILVER
           case 'bronze':
-            return 5000
+            return PRICES.SPONSOR.BRONZE
           default:
             return 0
         }
       case 'exhibitor':
-        switch (registrationData.boothSize) {
-          case 'small':
-            return 2000
-          case 'medium':
-            return 4000
-          case 'large':
-            return 7000
-          default:
-            return 0
-        }
+        return PRICES.EXHIBITOR.LARGE
       default:
         return 0
     }
@@ -91,41 +73,89 @@ export default function CheckoutPage() {
     try {
       const amount = getAmount()
 
-      // Create payment record in Payload
-      const paymentData = {
-        registration: registrationData.id,
-        amount: amount,
-        currency: 'USD',
-        paymentMethod: selectedPaymentMethod,
-        status: 'pending',
+      if (selectedPaymentMethod === 'paynow') {
+        // Initiate Paynow payment
+        const response = await fetch('/api/payment/initiate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            registrationId: registrationData.id,
+            amount,
+            email: registrationData.email,
+            orderId: registrationData.orderId,
+            type: registrationData.type,
+          }),
+        })
+
+        const data = await response.json()
+
+        if (data.success) {
+          // Create payment record
+          const paymentData = {
+            registration: registrationData.id,
+            amount: amount,
+            currency: 'USD',
+            paymentMethod: 'paynow',
+            status: 'initiated',
+          }
+
+          await createPayment(paymentData)
+          await updateRegistrationStatus(registrationData.id, 'pending', 'paynow')
+
+          // Store order data
+          const orderData = {
+            ...registrationData,
+            paymentMethod: 'paynow',
+            amount: amount,
+            status: 'pending',
+            pollUrl: data.pollUrl,
+          }
+
+          sessionStorage.setItem('pendingOrder', JSON.stringify(orderData))
+          sessionStorage.removeItem('registrationData')
+
+          // Redirect to Paynow
+          window.location.href = data.redirectUrl
+        } else {
+          toast.error(data.error || 'Payment initiation failed')
+        }
+      } else {
+        // Handle other payment methods (card, mobile, bank)
+        const paymentData = {
+          registration: registrationData.id,
+          amount: amount,
+          currency: 'USD',
+          paymentMethod: selectedPaymentMethod,
+          status: 'pending',
+        }
+
+        const paymentResponse = await createPayment(paymentData)
+
+        // Update registration status and payment method
+        await updateRegistrationStatus(registrationData.id, 'pending', selectedPaymentMethod)
+
+        // Store in sessionStorage for dashboard
+        const orderData = {
+          ...registrationData,
+          paymentId: paymentResponse.doc.id,
+          transactionId: paymentResponse.doc.transactionId,
+          paymentMethod: selectedPaymentMethod,
+          amount: amount,
+          status: 'pending',
+          orderId: registrationData.orderId || 'ORD-' + Date.now(),
+          createdAt: new Date().toISOString(),
+        }
+
+        sessionStorage.setItem('pendingOrder', JSON.stringify(orderData))
+        sessionStorage.removeItem('registrationData')
+
+        toast.success('Payment initiated! Your registration is pending approval.')
+
+        // Redirect to dashboard
+        setTimeout(() => {
+          window.location.href = '/dashboard'
+        }, 1500)
       }
-
-      const paymentResponse = await createPayment(paymentData)
-
-      // Update registration status and payment method
-      await updateRegistrationStatus(registrationData.id, 'pending', selectedPaymentMethod)
-
-      // Store in sessionStorage for dashboard
-      const orderData = {
-        ...registrationData,
-        paymentId: paymentResponse.doc.id,
-        transactionId: paymentResponse.doc.transactionId,
-        paymentMethod: selectedPaymentMethod,
-        amount: amount,
-        status: 'pending',
-        orderId: registrationData.orderId || 'ORD-' + Date.now(),
-        createdAt: new Date().toISOString(),
-      }
-
-      sessionStorage.setItem('pendingOrder', JSON.stringify(orderData))
-      sessionStorage.removeItem('registrationData')
-
-      toast.success('Payment initiated! Your registration is pending approval.')
-
-      // Redirect to dashboard
-      setTimeout(() => {
-        window.location.href = '/dashboard'
-      }, 1500)
     } catch (error) {
       console.error('Payment error:', error)
       toast.error('Failed to process payment. Please try again.')
@@ -134,6 +164,7 @@ export default function CheckoutPage() {
     }
   }
 
+  // Define payment methods only once
   const paymentMethods = [
     {
       id: 'card',
@@ -158,6 +189,14 @@ export default function CheckoutPage() {
       description: 'Direct bank deposit or transfer',
       color: 'from-amber-500 to-orange-600',
       badge: 'Corporate',
+    },
+    {
+      id: 'paynow',
+      name: 'Paynow',
+      icon: Smartphone,
+      description: 'Pay with EcoCash, OneMoney, Telecash, or Visa/Mastercard',
+      color: 'from-green-500 to-emerald-600',
+      badge: 'Instant Payment',
     },
   ]
 
@@ -195,7 +234,7 @@ export default function CheckoutPage() {
 
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">Complete Payment</h1>
 
-            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8">
+            <p className="text-xl md:text-2xl text-gray-300 text-center mb-8">
               Almost there! Complete your payment to secure your spot
             </p>
           </motion.div>
@@ -342,7 +381,7 @@ export default function CheckoutPage() {
                 <div className="p-8">
                   {/* Payment Methods Grid */}
                   <div className="mb-8">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
                       {paymentMethods.map((method) => {
                         const Icon = method.icon
                         return (
@@ -489,6 +528,38 @@ export default function CheckoutPage() {
                           </div>
                         </div>
                       )}
+
+                      {selectedPaymentMethod === 'paynow' && (
+                        <div className="space-y-4">
+                          <p className="text-gray-700">
+                            You will be redirected to Paynow's secure payment page to complete your
+                            payment using:
+                          </p>
+                          <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-5 border border-green-200">
+                            <ul className="space-y-3 text-sm text-gray-700">
+                              <li className="flex items-center gap-3">
+                                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                <span>EcoCash (Zimswitch)</span>
+                              </li>
+                              <li className="flex items-center gap-3">
+                                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                <span>OneMoney</span>
+                              </li>
+                              <li className="flex items-center gap-3">
+                                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                <span>Telecash</span>
+                              </li>
+                              <li className="flex items-center gap-3">
+                                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                <span>Visa/Mastercard</span>
+                              </li>
+                            </ul>
+                            <p className="text-sm text-gray-600 mt-4">
+                              After payment, you'll be redirected back to our site automatically.
+                            </p>
+                          </div>
+                        </div>
+                      )}
                     </motion.div>
                   )}
 
@@ -527,7 +598,9 @@ export default function CheckoutPage() {
                           </div>
                         ) : (
                           <>
-                            Pay ${getAmount()}
+                            {selectedPaymentMethod === 'paynow'
+                              ? 'Pay with Paynow'
+                              : `Pay $${getAmount()}`}
                             <Lock className="w-5 h-5 ml-2" />
                           </>
                         )}

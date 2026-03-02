@@ -40,6 +40,8 @@ import {
 import Link from 'next/link'
 import React from 'react'
 import { ContactForm } from '@/components/contact-form'
+import Image from 'next/image'
+import HeroSection from '@/components/hero-section'
 
 function Home() {
   const stats = [
@@ -153,97 +155,7 @@ function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section - Full Width */}
-      <section className="relative min-h-screen w-full flex items-center justify-center pt-20 overflow-hidden">
-        {/* Animated background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a051f] via-[#1a1448] to-[#0f172a] w-full">
-          <div className="absolute top-20 left-10 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[#ffcc00]/5 rounded-full blur-3xl" />
-        </div>
-
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px] w-full" />
-
-        <div className="relative z-10 text-center w-full px-4 sm:px-6 lg:px-8">
-          {/* Event Badge */}
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-            <Sparkles className="w-4 h-4 text-[#ffcc00]" />
-            <span className="text-sm font-medium text-white">{`Africa's Premier ICT Summit`}</span>
-          </div>
-
-          {/* Main Title */}
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight px-4">
-            Evolve
-            <span className="block text-[#ffcc00] mt-2">ICT Summit 2026</span>
-          </h1>
-
-          {/* Subtitle */}
-          <div className="flex justify-center">
-            <p className="text-xl md:text-2xl text-gray-300 text-center mb-8 px-4">
-              {`Empowering Africa's`}{' '}
-              <span className="text-[#ffcc00] font-semibold">Digital Leap.</span>
-            </p>
-          </div>
-
-          {/* Event Details */}
-          <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-12 px-4">
-            <div className="flex items-center gap-2 text-gray-300">
-              <Calendar className="w-5 h-5 text-[#ffcc00]" />
-              <span className="font-medium">June 11-12, 2026</span>
-            </div>
-            <div className="flex items-center gap-2 text-gray-300">
-              <MapPin className="w-5 h-5 text-[#ffcc00]" />
-              <span className="font-medium">Harare International Conference Centre</span>
-            </div>
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 px-4">
-            <Button
-              size="lg"
-              className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-white hover:shadow-lg hover:shadow-amber-500/25 transition-all duration-300 hover:scale-105"
-              asChild
-            >
-              <Link href="/register">
-                Register Now
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Link>
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="bg-transparent hover:bg-white/10 text-white border-white/30"
-              asChild
-            >
-              <Link href="/gallery">
-                Watch Highlights
-                <Play className="w-5 h-5 ml-2" />
-              </Link>
-            </Button>
-          </div>
-
-          {/* Stats Grid */}
-          {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto px-4">
-            {stats.map((stat, index) => {
-              const Icon = stat.icon
-              return (
-                <div
-                  key={index}
-                  className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center hover:bg-white/10 transition-all duration-300 hover:scale-105"
-                >
-                  <div
-                    className={`w-12 h-12 bg-gradient-to-br ${stat.color} rounded-lg flex items-center justify-center mx-auto mb-3`}
-                  >
-                    <Icon className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="text-2xl font-bold text-white">{stat.value}</div>
-                  <div className="text-sm text-gray-300 mt-1">{stat.label}</div>
-                </div>
-              )
-            })}
-          </div> */}
-        </div>
-      </section>
+      <HeroSection />
 
       {/* Countdown Timer - Full Width */}
       <section className="relative py-16 w-full bg-gradient-to-r from-[#170d43] to-[#2a1b69] overflow-hidden">

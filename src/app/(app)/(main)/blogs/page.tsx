@@ -35,6 +35,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import HeroSection from '@/components/hero-section'
 
 // Types
 interface BlogPost {
@@ -266,34 +267,7 @@ export default function BlogsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-4 overflow-hidden">
-        {/* Animated background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a051f] via-[#1a1448] to-[#0f1419]">
-          <div className="absolute top-10 left-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
-        </div>
-
-        <div className="container-custom relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-            <BookOpen className="w-4 h-4 text-[#ffcc00]" />
-            <span className="text-sm font-medium text-white">Knowledge Hub</span>
-          </div>
-
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">Insights & Analysis</h1>
-
-          <div className="flex justify-center mb-2">
-            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8">
-              Expert perspectives on{' '}
-              <span className="text-[#ffcc00] font-semibold">
-                digital transformation, innovation, and technology trends
-              </span>{' '}
-              {`shaping Africa's future`}
-            </p>
-          </div>
-
-          <SubHero />
-        </div>
-      </section>
+      <HeroSection />
 
       {/* Stats Bar */}
       <section className="py-8 px-4 bg-gradient-to-r from-[#170d43] to-[#2a1b69]">

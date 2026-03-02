@@ -25,6 +25,7 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import Image from 'next/image'
 
 const ICON_MAP: Record<string, React.ReactNode> = {
   cpu: <Cpu className="w-6 h-6" />,
@@ -161,16 +162,33 @@ async function SchoolSummit() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#0a051f] via-[#1a1448] to-[#0f172a] w-full text-white overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="absolute inset-0 bg-[url('/api/placeholder/1920/1080')] opacity-10 bg-cover bg-center"></div>
+      <section className="relative w-full text-white overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 w-full h-full">
+          <Image
+            src="/bg-1.jpg" // Replace with your actual image path
+            alt="Student Summit Background"
+            fill
+            className="object-cover"
+            priority
+            quality={100}
+          />
+          {/* Dark overlay for better text readability */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0a051f]/80 via-[#1a1448]/80 to-[#0f172a]/80" />
+          {/* Additional subtle dark overlay */}
+          <div className="absolute inset-0 bg-black/20" />
+        </div>
+
+        {/* Optional pattern overlay - you can keep or remove this */}
+        <div className="absolute inset-0 bg-[url('/api/placeholder/1920/1080')] opacity-10 bg-cover bg-center mix-blend-overlay"></div>
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
           <div className="text-center">
             <div className="inline-block bg-purple-500/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold mb-6 border border-purple-400/30">
               EVOLVE ICT SUMMIT 2026
             </div>
             <h1 className="text-4xl lg:text-6xl font-bold mb-6">Evolve Student Summit 2026</h1>
-            <p className="text-2xl lg:text-3xl text-purple-100 mb-4 font-light mb-4">
+            <p className="text-2xl lg:text-3xl text-purple-100 mb-4 font-light">
               Shaping Africa's Digital Leap
             </p>
             <div className="flex flex-wrap mt-4 justify-center gap-4 mb-8">
@@ -191,22 +209,28 @@ async function SchoolSummit() {
               <Button
                 asChild
                 size="lg"
-                variant="outline"
                 className="bg-purple-500 hover:bg-purple-600 text-white transition-all transform hover:scale-105 flex items-center gap-2"
               >
-                <Link href="/register" className="">
+                <Link href="/register">
                   Register Interest <ArrowRight className="w-4 h-4" />
                 </Link>
               </Button>
-              <Button className="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white flex items-center gap-2 transition-all border border-white/30 flex items-center gap-2">
-                <Link href="/register" className="flex items-center gap-2">
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white border-white/30 transition-all flex items-center gap-2"
+              >
+                <Link href="/partner">
                   Become a Partner <ChevronRight className="w-4 h-4" />
                 </Link>
               </Button>
             </div>
           </div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent"></div>
+
+        {/* Bottom fade gradient */}
+        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/50 to-transparent"></div>
       </section>
 
       {/* Overview Section */}

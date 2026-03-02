@@ -42,6 +42,7 @@ import { createRegistration } from '@/lib/api'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { PRICES } from '@/lib/prices'
 
 // Validation Schemas
 const attendeeSchema = z.object({
@@ -91,36 +92,28 @@ type ExhibitorFormData = z.infer<typeof exhibitorSchema>
 
 // Helper functions
 function calculateAttendeeAmount(ticketType: string): number {
-  switch (ticketType) {
-    case 'regular':
-      return 250
-    default:
-      return 0
-  }
+  // Always return the regular price regardless of ticket type
+  return PRICES.ATTENDEE.REGULAR
 }
 
 function calculateSponsorAmount(tier: string): number {
   switch (tier) {
     case 'platinum':
-      return 15000
+      return PRICES.SPONSOR.PLATINUM
     case 'gold':
-      return 10000
+      return PRICES.SPONSOR.GOLD
     case 'silver':
-      return 7500
+      return PRICES.SPONSOR.SILVER
     case 'bronze':
-      return 5000
+      return PRICES.SPONSOR.BRONZE
     default:
       return 0
   }
 }
 
 function calculateExhibitorAmount(boothSize: string): number {
-  switch (boothSize) {
-    case 'large':
-      return 1000
-    default:
-      return 0
-  }
+  // Always return the large booth price
+  return PRICES.EXHIBITOR.LARGE
 }
 
 export default function RegisterPage() {
