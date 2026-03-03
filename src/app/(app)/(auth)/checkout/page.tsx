@@ -246,8 +246,8 @@ const handlePayment = async () => {
       </section>
 
       {/* Main Content */}
-      <section className="py-12 px-4">
-        <div className="container-custom max-w-7xl mx-auto">
+      <section className="py-12 px-2 md:px-4">
+        <div className="container-custom max-w-2xl md:max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Order Summary - Left Sidebar */}
             <motion.div
@@ -350,7 +350,7 @@ const handlePayment = async () => {
                         <p className="text-sm text-gray-600">Total Amount</p>
                         <p className="text-lg font-bold text-gray-900">Including all fees</p>
                       </div>
-                      <p className="text-4xl font-bold text-[#ffcc00]">${getAmount()}</p>
+                      <p className="text-lg md:text-4xl font-bold text-[#ffcc00]">${getAmount()}</p>
                     </div>
                   </motion.div>
                 </div>
