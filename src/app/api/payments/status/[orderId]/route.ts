@@ -1,16 +1,21 @@
 //@ts-nocheck
 // app/api/payment/status/[orderId]/route.ts
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 
-export async function GET(request: Request, { params }: { params: { orderId: string } }) {
+// Use NextRequest instead of Request for better compatibility
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ orderId: string }> }
+) {
   try {
     const payload = await getPayload({
       config: configPromise,
     })
 
-    const { orderId } = params
+    // Await the params
+    const { orderId } = await params
 
     const registrations = await payload.find({
       collection: 'registrations',
