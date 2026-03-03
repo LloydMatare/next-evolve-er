@@ -7,7 +7,6 @@ import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { CheckCircle, ArrowRight, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import Link from 'next/link'
 import { toast } from 'sonner'
 
 export default function PaymentSuccessPage() {
@@ -65,7 +64,7 @@ export default function PaymentSuccessPage() {
               </div>
               <h1 className="text-2xl font-bold text-white mb-2">Payment Successful!</h1>
               <p className="text-gray-300 mb-6">
-                Your payment has been confirmed. You'll be redirected to your dashboard.
+                {`Your payment has been confirmed. You'll be redirected to your dashboard.`}
               </p>
             </>
           )}
@@ -77,7 +76,7 @@ export default function PaymentSuccessPage() {
               </div>
               <h1 className="text-2xl font-bold text-white mb-2">Payment Pending</h1>
               <p className="text-gray-300 mb-6">
-                Your payment is being processed. We'll notify you once confirmed.
+                {`Your payment is being processed. We'll notify you once confirmed.`}
               </p>
               <Button
                 onClick={() => (window.location.href = '/dashboard')}
