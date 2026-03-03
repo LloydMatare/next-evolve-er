@@ -272,7 +272,7 @@ export interface Ticket {
 export interface Payment {
   id: number;
   registration: number | Registration;
-  orderId: string;
+  order_id: string;
   amount: number;
   currency: string;
   paymentMethod: 'paynow' | 'card' | 'mobile' | 'bank';
@@ -990,7 +990,7 @@ export interface TicketsSelect<T extends boolean = true> {
  */
 export interface PaymentsSelect<T extends boolean = true> {
   registration?: T;
-  orderId?: T;
+  order_id?: T;
   amount?: T;
   currency?: T;
   paymentMethod?: T;
