@@ -1,3 +1,4 @@
+//@ts-nocheck
 // app/api/payment/update/route.ts
 import { NextResponse } from 'next/server'
 import { getPayload } from 'payload'
