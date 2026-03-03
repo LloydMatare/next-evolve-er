@@ -1,57 +1,72 @@
-// app/api/payment/initiate/route.ts (singular "payment")
+//@ts-nocheck
+// app/api/payment/initiate/route.ts
 import { NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
+import { paynow } from '@/lib/paynow'
 
 export async function POST(request: Request) {
   try {
     const { registrationId, amount, email, orderId, type } = await request.json()
 
+    console.log('Payment initiation request:', { registrationId, amount, email, orderId, type })
+
     const payload = await getPayload({
       config: configPromise,
     })
 
-    // For now, since we're not fully integrated with Paynow SDK,
-    // we'll simulate a successful payment initiation
-    // Later replace this with actual Paynow integration
+    // Create a Paynow payment
+    const payment = paynow.createPayment(`Order-${orderId}`, email)
+    payment.add('Registration Fee', amount, 1)
 
-    // Create a mock Paynow response
-    const mockResponse = {
-      success: true,
-      redirectUrl: `https://www.paynow.co.zw/interface?orderId=${orderId}&amount=${amount}`,
-      pollUrl: `https://www.paynow.co.zw/poll/${orderId}`,
-      instructions: {
-        paynow: 'Follow the instructions on the Paynow page to complete payment',
-      },
-    }
+    // Send payment to Paynow
+    const response = await paynow.send(payment)
 
-    // Save payment initiation in database
-    await payload.create({
-      collection: 'payments',
-      data: {
+    console.log('Paynow response:', response)
+
+    if (response.success) {
+      // Save payment initiation in database
+      const paymentData = {
         registration: registrationId,
-        amount,
+        order_id: orderId,        // FIXED: Changed from orderId to order_id
+        amount: amount,
         currency: 'USD',
         paymentMethod: 'paynow',
         status: 'initiated',
-        pollUrl: mockResponse.pollUrl,
-        instructions: mockResponse.instructions,
-        orderId,
-      },
-    })
+        pollUrl: response.pollUrl,
+        instructions: response.instructions,
+      }
 
-    return NextResponse.json({
-      success: true,
-      redirectUrl: mockResponse.redirectUrl,
-      pollUrl: mockResponse.pollUrl,
-      instructions: mockResponse.instructions,
-    })
+      console.log('Creating payment with data:', paymentData)
+
+      const result = await payload.create({
+        collection: 'payments',
+        data: paymentData,
+      })
+
+      console.log('Payment created successfully:', result.id)
+
+      return NextResponse.json({
+        success: true,
+        redirectUrl: response.redirectUrl,
+        pollUrl: response.pollUrl,
+        instructions: response.instructions,
+      })
+    } else {
+      return NextResponse.json(
+        {
+          success: false,
+          error: response.error || 'Payment initiation failed',
+        },
+        { status: 400 },
+      )
+    }
   } catch (error) {
     console.error('Payment initiation error:', error)
     return NextResponse.json(
       {
         success: false,
-        error: 'Payment initiation failed',
+        error: 'Payment initiation failed: ' + (error.message || 'Unknown error'),
       },
       { status: 500 },
     )

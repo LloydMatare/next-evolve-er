@@ -62,107 +62,111 @@ export default function CheckoutPage() {
     }
   }
 
-  const handlePayment = async () => {
-    if (!selectedPaymentMethod || !registrationData?.id) {
-      toast.error('Please select a payment method')
-      return
-    }
+const handlePayment = async () => {
+  if (!selectedPaymentMethod || !registrationData?.id) {
+    toast.error('Please select a payment method')
+    return
+  }
 
-    setIsProcessing(true)
+  setIsProcessing(true)
 
-    try {
-      const amount = getAmount()
+  try {
+    const amount = getAmount()
 
-      if (selectedPaymentMethod === 'paynow') {
-        // Initiate Paynow payment
-        const response = await fetch('/api/payment/initiate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            registrationId: registrationData.id,
-            amount,
-            email: registrationData.email,
-            orderId: registrationData.orderId,
-            type: registrationData.type,
-          }),
-        })
+    if (selectedPaymentMethod === 'paynow') {
+      // Initiate Paynow payment
+      const response = await fetch('/api/payments/initiate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          registrationId: registrationData.id,
+          amount,
+          email: registrationData.email,
+          orderId: registrationData.orderId,
+          type: registrationData.type,
+        }),
+      })
 
-        const data = await response.json()
+      const data = await response.json()
 
-        if (data.success) {
-          // Create payment record
-          const paymentData = {
-            registration: registrationData.id,
-            amount: amount,
-            currency: 'USD',
-            paymentMethod: 'paynow',
-            status: 'initiated',
-          }
-
-          await createPayment(paymentData)
-          await updateRegistrationStatus(registrationData.id, 'pending', 'paynow')
-
-          // Store order data
-          const orderData = {
-            ...registrationData,
-            paymentMethod: 'paynow',
-            amount: amount,
-            status: 'pending',
-            pollUrl: data.pollUrl,
-          }
-
-          sessionStorage.setItem('pendingOrder', JSON.stringify(orderData))
-          sessionStorage.removeItem('registrationData')
-
-          // Redirect to Paynow
-          window.location.href = data.redirectUrl
-        } else {
-          toast.error(data.error || 'Payment initiation failed')
-        }
-      } else {
-        // Handle other payment methods (card, mobile, bank)
+      if (data.success) {
+        // Create payment record
         const paymentData = {
           registration: registrationData.id,
+          order_id: registrationData.orderId, // Added for consistency
           amount: amount,
           currency: 'USD',
           paymentMethod: selectedPaymentMethod,
-          status: 'pending',
+          status: 'initiated',
         }
 
-        const paymentResponse = await createPayment(paymentData)
-
-        // Update registration status and payment method
+        await createPayment(paymentData)
         await updateRegistrationStatus(registrationData.id, 'pending', selectedPaymentMethod)
 
-        // Store in sessionStorage for dashboard
+        // Store order data
         const orderData = {
           ...registrationData,
-          paymentId: paymentResponse.doc.id,
-          transactionId: paymentResponse.doc.transactionId,
           paymentMethod: selectedPaymentMethod,
           amount: amount,
           status: 'pending',
-          orderId: registrationData.orderId || 'ORD-' + Date.now(),
-          createdAt: new Date().toISOString(),
+          pollUrl: data.pollUrl,
         }
 
         sessionStorage.setItem('pendingOrder', JSON.stringify(orderData))
         sessionStorage.removeItem('registrationData')
 
-        toast.success('Payment initiated! Your registration is pending approval.')
-
-        // Redirect to dashboard
-        setTimeout(() => {
-          window.location.href = '/dashboard'
-        }, 1500)
+        // Redirect to Paynow
+        window.location.href = data.redirectUrl
+      } else {
+        toast.error(data.error || 'Payment initiation failed')
       }
-    } catch (error) {
-      console.error('Payment error:', error)
-      toast.error('Failed to process payment. Please try again.')
-    } finally {
-      setIsProcessing(false)
+    } else {
+      // Handle other payment methods (card, mobile, bank)
+      const paymentData = {
+        registration: registrationData.id,
+        order_id: registrationData.orderId, // CRITICAL FIX: Add this line!
+        amount: amount,
+        currency: 'USD',
+        paymentMethod: selectedPaymentMethod,
+        status: 'pending',
+      }
+
+      console.log('Creating payment with data:', paymentData) // Add for debugging
+      
+      const paymentResponse = await createPayment(paymentData)
+
+      // Update registration status and payment method
+      await updateRegistrationStatus(registrationData.id, 'pending', selectedPaymentMethod)
+
+      // Store in sessionStorage for dashboard
+      const orderData = {
+        ...registrationData,
+        paymentId: paymentResponse.doc.id,
+        transactionId: paymentResponse.doc.transactionId,
+        paymentMethod: selectedPaymentMethod,
+        amount: amount,
+        status: 'pending',
+        orderId: registrationData.orderId || 'ORD-' + Date.now(),
+        createdAt: new Date().toISOString(),
+      }
+
+      sessionStorage.setItem('pendingOrder', JSON.stringify(orderData))
+      sessionStorage.removeItem('registrationData')
+
+      toast.success('Payment initiated! Your registration is pending approval.')
+
+      // Redirect to dashboard
+      setTimeout(() => {
+        window.location.href = '/dashboard'
+      }, 1500)
     }
+  } catch (error) {
+    console.error('Payment error:', error)
+    toast.error('Failed to process payment. Please try again.')
+  } finally {
+    setIsProcessing(false)
   }
+}
 
   // Define payment methods only once
   const paymentMethods = [
@@ -589,7 +593,7 @@ export default function CheckoutPage() {
                       <Button
                         onClick={handlePayment}
                         disabled={!selectedPaymentMethod || isProcessing}
-                        className="w-full bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white font-bold px-8 py-6 rounded-xl text-lg shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {isProcessing ? (
                           <div className="flex items-center justify-center gap-3">
