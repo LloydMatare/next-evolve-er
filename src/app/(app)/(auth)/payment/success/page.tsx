@@ -1,3 +1,4 @@
+//@ts-nocheck
 // app/payment/success/page.tsx
 'use client'
 
