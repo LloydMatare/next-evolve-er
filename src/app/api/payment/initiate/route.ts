@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       // Save payment initiation in database
       const paymentData = {
         registration: registrationId,
-        orderId: orderId,
+        order_id: orderId,        // FIXED: Changed from orderId to order_id
         amount: amount,
         currency: 'USD',
         paymentMethod: 'paynow',
@@ -39,10 +39,12 @@ export async function POST(request: Request) {
 
       console.log('Creating payment with data:', paymentData)
 
-      await payload.create({
+      const result = await payload.create({
         collection: 'payments',
         data: paymentData,
       })
+
+      console.log('Payment created successfully:', result.id)
 
       return NextResponse.json({
         success: true,

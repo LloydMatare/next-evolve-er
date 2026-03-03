@@ -81,7 +81,7 @@ export async function createPayment(data: any): Promise<any> {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({...data}),
     })
 
     if (!response.ok) {
