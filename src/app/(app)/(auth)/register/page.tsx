@@ -210,7 +210,7 @@ export default function RegisterPage() {
             </div>
 
             {/* Content */}
-            <div className="max-w-4xl mx-auto">
+            <div className="">
               <TabsContent value="attendee">
                 <AttendeeForm />
               </TabsContent>
@@ -346,11 +346,11 @@ function AttendeeForm() {
       <div className="bg-gradient-to-r from-[#ffcc00] to-amber-500 p-8 text-white">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-3xl font-bold mb-2">Attendee Registration</h2>
+            <h2 className="text-lg md:text-3xl font-bold mb-2">Attendee Registration</h2>
             <p className="opacity-90">{`Secure your spot at Africa's premier ICT summit`}</p>
           </div>
           <div className="text-right">
-            <div className="text-4xl font-bold">${amount}</div>
+            <div className="text-lg md:text-4xl font-bold">${amount}</div>
             <div className="text-sm opacity-80">per ticket</div>
           </div>
         </div>
@@ -575,7 +575,7 @@ function AttendeeForm() {
                 'Processing...'
               ) : (
                 <>
-                  Complete Registration
+                 Register
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </>
               )}
@@ -696,11 +696,11 @@ function SponsorForm({ initialTier }: { initialTier?: 'platinum' | 'gold' | 'sil
       <div className="bg-gradient-to-r from-blue-500 to-cyan-400 p-8 text-white">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-3xl font-bold mb-2">Sponsorship Application</h2>
+            <h2 className="text-lg md:text-3xl font-bold mb-2">Sponsorship Application</h2>
             <p className="opacity-90">{`Partner with Africa's premier tech event`}</p>
           </div>
           <div className="text-right">
-            <div className="text-4xl font-bold">${amount.toLocaleString()}</div>
+            <div className="text-lg md:text-4xl font-bold">${amount.toLocaleString()}</div>
             <div className="text-sm opacity-80">{selectedTier} Tier</div>
           </div>
         </div>
@@ -964,7 +964,7 @@ function SponsorForm({ initialTier }: { initialTier?: 'platinum' | 'gold' | 'sil
                 'Processing...'
               ) : (
                 <>
-                  Apply for Sponsorship
+                  Apply
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </>
               )}
@@ -1064,11 +1064,11 @@ function ExhibitorForm() {
       <div className="bg-gradient-to-r from-emerald-500 to-teal-400 p-8 text-white">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-3xl font-bold mb-2">Exhibitor Registration</h2>
+            <h2 className="text-lg ms:text-3xl font-bold mb-2">Exhibitor Registration</h2>
             <p className="opacity-90">{`Showcase your technology to Africa's tech leaders`}</p>
           </div>
           <div className="text-right">
-            <div className="text-4xl font-bold">${amount.toLocaleString()}</div>
+            <div className="text-lg ms:text-4xl font-bold">${amount.toLocaleString()}</div>
             <div className="text-sm opacity-80">{selectedBoothSize} booth</div>
           </div>
         </div>
@@ -1380,7 +1380,7 @@ function ExhibitorForm() {
                 'Processing...'
               ) : (
                 <>
-                  Apply as Exhibitor
+                  Apply
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </>
               )}

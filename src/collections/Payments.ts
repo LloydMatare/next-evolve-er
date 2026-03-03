@@ -8,8 +8,8 @@ export const Payments: CollectionConfig = {
     plural: 'Payments',
   },
   admin: {
-    useAsTitle: 'orderId',
-    defaultColumns: ['orderId', 'amount', 'status', 'paymentMethod', 'createdAt'],
+    useAsTitle: 'order_id', // Changed from orderId to order_id
+    defaultColumns: ['order_id', 'amount', 'status', 'paymentMethod', 'createdAt'], // Changed here too
     group: 'Registrations',
   },
   fields: [
@@ -20,7 +20,7 @@ export const Payments: CollectionConfig = {
       required: true,
     },
     {
-      name: 'orderId',
+      name: 'order_id', // Changed from orderId to order_id
       type: 'text',
       label: 'Order ID',
       required: true,
@@ -39,7 +39,7 @@ export const Payments: CollectionConfig = {
       required: true,
     },
     {
-      name: 'paymentMethod',
+      name: 'paymentMethod', // This will become payment_method in the DB
       type: 'select',
       label: 'Payment Method',
       required: true,
@@ -51,7 +51,7 @@ export const Payments: CollectionConfig = {
       ],
     },
     {
-      name: 'status',
+      name: 'status', // This will become status in the DB (already matches)
       type: 'select',
       label: 'Payment Status',
       required: true,
@@ -65,20 +65,20 @@ export const Payments: CollectionConfig = {
       defaultValue: 'pending',
     },
     {
-      name: 'pollUrl',
+      name: 'pollUrl', // This will become poll_url in the DB
       type: 'text',
       label: 'Poll URL',
     },
     {
-      name: 'instructions',
+      name: 'instructions', // This will become instructions in the DB (jsonb works fine)
       type: 'json',
       label: 'Payment Instructions',
     },
     {
-      name: 'paidAt',
+      name: 'paidAt', // This will become paid_at in the DB
       type: 'date',
       label: 'Paid At',
     },
   ],
-  timestamps: true,
+  timestamps: true, // This creates created_at and updated_at (matches your DB)
 }
