@@ -37,6 +37,7 @@ export default function PaymentSuccessContent() {
         setStatus('pending')
       }
     } catch (error) {
+      console.log('Error : ', error)
       setStatus('error')
     }
   }

@@ -1,27 +1,25 @@
-//@ts-nocheck
-// app/api/payment/update/route.ts
-import { NextResponse } from 'next/server'
+// app/api/paynow/update/route.ts
+// @ts-nocheck
+import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
+import { getPaynowInstance } from '@/lib/paynow'
 
-export async function POST(request: Request) {
+export async function POST(req: NextRequest) {
   try {
+    const formData = await req.formData()
+    const data = Object.fromEntries(formData)
+
+    console.log('Paynow webhook received:', data)
+
+    const { reference, status, paynowreference, amount } = data
+    const orderId = reference.replace('Order-', '')
+
     const payload = await getPayload({
       config: configPromise,
     })
 
-    // Parse Paynow result data (this is a mock - actual implementation will depend on Paynow's format)
-    const formData = await request.formData()
-    const data = Object.fromEntries(formData.entries())
-
-    // Mock extraction of payment details
-    const reference = (data.reference as string) || ''
-    const status = (data.status as string) || 'Paid'
-
-    // Extract order ID from reference (e.g., "Order-ORD-12345")
-    const orderId = reference.replace('Order-', '')
-
-    // Find registration by order ID
+    // Find the registration by orderId
     const registrations = await payload.find({
       collection: 'registrations',
       where: {
@@ -37,41 +35,47 @@ export async function POST(request: Request) {
 
     const registration = registrations.docs[0]
 
-    // Update registration status
-    if (status === 'Paid') {
+    // Find the payment
+    const payments = await payload.find({
+      collection: 'payments',
+      where: {
+        order_id: {
+          equals: orderId,
+        },
+      },
+    })
+
+    if (payments.docs.length > 0) {
+      const payment = payments.docs[0]
+
+      // Update payment status
+      await payload.update({
+        collection: 'payments',
+        id: payment.id,
+        data: {
+          status: status === 'paid' ? 'completed' : 'failed',
+          paynowReference: paynowreference,
+          updatedAt: new Date().toISOString(),
+        },
+      })
+    }
+
+    // Update registration status if payment is successful
+    if (status === 'paid') {
       await payload.update({
         collection: 'registrations',
         id: registration.id,
         data: {
-          status: 'paid',
+          status: 'pending', // Still pending approval
           paymentStatus: 'paid',
+          updatedAt: new Date().toISOString(),
         },
       })
-
-      // Update payment record
-      const payments = await payload.find({
-        collection: 'payments',
-        where: {
-          registration: {
-            equals: registration.id,
-          },
-        },
-      })
-
-      if (payments.docs.length > 0) {
-        await payload.update({
-          collection: 'payments',
-          id: payments.docs[0].id,
-          data: {
-            status: 'paid',
-          },
-        })
-      }
     }
 
     return NextResponse.json({ success: true })
   } catch (error) {
-    console.error('Payment update error:', error)
-    return NextResponse.json({ error: 'Failed to update payment' }, { status: 500 })
+    console.error('Paynow webhook error:', error)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
