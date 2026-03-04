@@ -1,9 +1,9 @@
-//@ts-nocheck
-// app/api/payment/initiate/route.ts
+// app/api/payments/initiate/route.ts
+// @ts-nocheck
 import { NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
-import { paynow } from '@/lib/paynow'
+import { getPaynowInstance } from '@/lib/paynow'
 
 export async function POST(request: Request) {
   try {
@@ -14,6 +14,8 @@ export async function POST(request: Request) {
     const payload = await getPayload({
       config: configPromise,
     })
+
+    const paynow = getPaynowInstance()
 
     // Create a Paynow payment
     const payment = paynow.createPayment(`Order-${orderId}`, email)
@@ -28,7 +30,7 @@ export async function POST(request: Request) {
       // Save payment initiation in database
       const paymentData = {
         registration: registrationId,
-        order_id: orderId,        // FIXED: Changed from orderId to order_id
+        order_id: orderId,
         amount: amount,
         currency: 'USD',
         paymentMethod: 'paynow',
@@ -51,6 +53,7 @@ export async function POST(request: Request) {
         redirectUrl: response.redirectUrl,
         pollUrl: response.pollUrl,
         instructions: response.instructions,
+        paymentId: result.id,
       })
     } else {
       return NextResponse.json(

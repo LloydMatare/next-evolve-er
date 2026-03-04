@@ -62,138 +62,140 @@ export default function CheckoutPage() {
     }
   }
 
-const handlePayment = async () => {
-  if (!selectedPaymentMethod || !registrationData?.id) {
-    toast.error('Please select a payment method')
-    return
-  }
+  const handlePayment = async () => {
+    if (!selectedPaymentMethod || !registrationData?.id) {
+      toast.error('Please select a payment method')
+      return
+    }
 
-  setIsProcessing(true)
+    setIsProcessing(true)
 
-  try {
-    const amount = getAmount()
+    try {
+      const amount = getAmount()
 
-    if (selectedPaymentMethod === 'paynow') {
-      // Initiate Paynow payment
-      const response = await fetch('/api/payments/initiate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          registrationId: registrationData.id,
-          amount,
-          email: registrationData.email,
-          orderId: registrationData.orderId,
-          type: registrationData.type,
-        }),
-      })
+      if (selectedPaymentMethod === 'paynow') {
+        const testModeEmail = 'digitalpayments@compulink.co.zw' // Replace with your Paynow test email
 
-      const data = await response.json()
+        // Initiate Paynow payment
+        const response = await fetch('/api/payments/initiate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            registrationId: registrationData.id,
+            amount,
+            email: testModeEmail, // Use merchant email for
+            orderId: registrationData.orderId,
+            type: registrationData.type,
+          }),
+        })
 
-      if (data.success) {
-        // Create payment record
+        const data = await response.json()
+
+        if (data.success) {
+          // Create payment record
+          const paymentData = {
+            registration: registrationData.id,
+            order_id: registrationData.orderId, // Added for consistency
+            amount: amount,
+            currency: 'USD',
+            paymentMethod: 'paynow',
+            status: 'initiated',
+          }
+
+          await createPayment(paymentData)
+          await updateRegistrationStatus(registrationData.id, 'pending', 'paynow')
+
+          // Store order data
+          const orderData = {
+            ...registrationData,
+            paymentMethod: 'paynow',
+            amount: amount,
+            status: 'pending',
+            pollUrl: data.pollUrl,
+          }
+
+          sessionStorage.setItem('pendingOrder', JSON.stringify(orderData))
+          sessionStorage.removeItem('registrationData')
+
+          // Redirect to Paynow
+          window.location.href = data.redirectUrl
+        } else {
+          toast.error(data.error || 'Payment initiation failed')
+        }
+      } else {
+        // Handle other payment methods (card, mobile, bank)
         const paymentData = {
           registration: registrationData.id,
-          order_id: registrationData.orderId, // Added for consistency
+          order_id: registrationData.orderId, // CRITICAL FIX: Add this line!
           amount: amount,
           currency: 'USD',
-          paymentMethod: selectedPaymentMethod,
-          status: 'initiated',
+          paymentMethod: 'paynow',
+          status: 'pending',
         }
 
-        await createPayment(paymentData)
-        await updateRegistrationStatus(registrationData.id, 'pending', selectedPaymentMethod)
+        console.log('Creating payment with data:', paymentData) // Add for debugging
 
-        // Store order data
+        const paymentResponse = await createPayment(paymentData)
+
+        // Update registration status and payment method
+        await updateRegistrationStatus(registrationData.id, 'pending', 'paynow')
+
+        // Store in sessionStorage for dashboard
         const orderData = {
           ...registrationData,
-          paymentMethod: selectedPaymentMethod,
+          paymentId: paymentResponse.doc.id,
+          transactionId: paymentResponse.doc.transactionId,
+          paymentMethod: 'paynow',
           amount: amount,
           status: 'pending',
-          pollUrl: data.pollUrl,
+          orderId: registrationData.orderId || 'ORD-' + Date.now(),
+          createdAt: new Date().toISOString(),
         }
 
         sessionStorage.setItem('pendingOrder', JSON.stringify(orderData))
         sessionStorage.removeItem('registrationData')
 
-        // Redirect to Paynow
-        window.location.href = data.redirectUrl
-      } else {
-        toast.error(data.error || 'Payment initiation failed')
+        toast.success('Payment initiated! Your registration is pending approval.')
+
+        // Redirect to dashboard
+        setTimeout(() => {
+          window.location.href = '/dashboard'
+        }, 1500)
       }
-    } else {
-      // Handle other payment methods (card, mobile, bank)
-      const paymentData = {
-        registration: registrationData.id,
-        order_id: registrationData.orderId, // CRITICAL FIX: Add this line!
-        amount: amount,
-        currency: 'USD',
-        paymentMethod: selectedPaymentMethod,
-        status: 'pending',
-      }
-
-      console.log('Creating payment with data:', paymentData) // Add for debugging
-      
-      const paymentResponse = await createPayment(paymentData)
-
-      // Update registration status and payment method
-      await updateRegistrationStatus(registrationData.id, 'pending', selectedPaymentMethod)
-
-      // Store in sessionStorage for dashboard
-      const orderData = {
-        ...registrationData,
-        paymentId: paymentResponse.doc.id,
-        transactionId: paymentResponse.doc.transactionId,
-        paymentMethod: selectedPaymentMethod,
-        amount: amount,
-        status: 'pending',
-        orderId: registrationData.orderId || 'ORD-' + Date.now(),
-        createdAt: new Date().toISOString(),
-      }
-
-      sessionStorage.setItem('pendingOrder', JSON.stringify(orderData))
-      sessionStorage.removeItem('registrationData')
-
-      toast.success('Payment initiated! Your registration is pending approval.')
-
-      // Redirect to dashboard
-      setTimeout(() => {
-        window.location.href = '/dashboard'
-      }, 1500)
+    } catch (error) {
+      console.error('Payment error:', error)
+      toast.error('Failed to process payment. Please try again.')
+    } finally {
+      setIsProcessing(false)
     }
-  } catch (error) {
-    console.error('Payment error:', error)
-    toast.error('Failed to process payment. Please try again.')
-  } finally {
-    setIsProcessing(false)
   }
-}
 
   // Define payment methods only once
   const paymentMethods = [
-    {
-      id: 'card',
-      name: 'Credit/Debit Card',
-      icon: CreditCard,
-      description: 'Pay with Visa, Mastercard, or American Express',
-      color: 'from-blue-500 to-purple-600',
-      badge: 'Most Popular',
-    },
-    {
-      id: 'mobile',
-      name: 'Mobile Money',
-      icon: Smartphone,
-      description: 'EcoCash, OneMoney, or Telecash',
-      color: 'from-emerald-500 to-teal-600',
-      badge: 'Fast & Secure',
-    },
-    {
-      id: 'bank',
-      name: 'Bank Transfer',
-      icon: Building2,
-      description: 'Direct bank deposit or transfer',
-      color: 'from-amber-500 to-orange-600',
-      badge: 'Corporate',
-    },
+    // {
+    //   id: 'card',
+    //   name: 'Credit/Debit Card',
+    //   icon: CreditCard,
+    //   description: 'Pay with Visa, Mastercard, or American Express',
+    //   color: 'from-blue-500 to-purple-600',
+    //   badge: 'Most Popular',
+    // },
+    // {
+    //   id: 'mobile',
+    //   name: 'Mobile Money',
+    //   icon: Smartphone,
+    //   description: 'EcoCash, OneMoney, or Telecash',
+    //   color: 'from-emerald-500 to-teal-600',
+    //   badge: 'Fast & Secure',
+    // },
+    // {
+    //   id: 'bank',
+    //   name: 'Bank Transfer',
+    //   icon: Building2,
+    //   description: 'Direct bank deposit or transfer',
+    //   color: 'from-amber-500 to-orange-600',
+    //   badge: 'Corporate',
+    // },
     {
       id: 'paynow',
       name: 'Paynow',

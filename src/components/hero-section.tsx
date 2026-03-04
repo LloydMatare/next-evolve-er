@@ -77,7 +77,7 @@ function HeroSection() {
               className="bg-transparent hover:bg-white/10 text-white border-white/30"
               asChild
             >
-              <Link href="/gallery">
+              <Link href="/gallery" className="text-white">
                 Watch Highlights
                 <Play className="w-5 h-5 ml-2" />
               </Link>
