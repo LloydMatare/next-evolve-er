@@ -78,8 +78,8 @@ function HeroSection() {
               asChild
             >
               <Link href="/gallery" className="text-white">
-                Watch Highlights
-                <Play className="w-5 h-5 ml-2" />
+                <p className={ 'text-white'}>Watch Highlights</p>
+                <Play className="w-5 h-5 ml-2 text-white" />
               </Link>
             </Button>
           </div>

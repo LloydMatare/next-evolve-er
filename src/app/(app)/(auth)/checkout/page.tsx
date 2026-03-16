@@ -25,6 +25,8 @@ export default function CheckoutPage() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('')
   const [isProcessing, setIsProcessing] = useState(false)
 
+  const FULL_BOARD_AMOUNT = 12000
+
   useEffect(() => {
     // Get registration data from sessionStorage
     const data = sessionStorage.getItem('registrationData')
@@ -62,6 +64,11 @@ export default function CheckoutPage() {
     }
   }
 
+  const getPayableAmount = () => {
+    if (selectedPaymentMethod === 'full-board') return FULL_BOARD_AMOUNT
+    return getAmount()
+  }
+
   const handlePayment = async () => {
     if (!selectedPaymentMethod || !registrationData?.id) {
       toast.error('Please select a payment method')
@@ -71,7 +78,7 @@ export default function CheckoutPage() {
     setIsProcessing(true)
 
     try {
-      const amount = getAmount()
+      const amount = getPayableAmount()
 
       if (selectedPaymentMethod === 'paynow') {
         const testModeEmail = 'digitalpayments@compulink.co.zw' // Replace with your Paynow test email
@@ -123,13 +130,13 @@ export default function CheckoutPage() {
           toast.error(data.error || 'Payment initiation failed')
         }
       } else {
-        // Handle other payment methods (card, mobile, bank)
+        // Handle other payment methods (card, mobile, bank, full board)
         const paymentData = {
           registration: registrationData.id,
           order_id: registrationData.orderId, // CRITICAL FIX: Add this line!
           amount: amount,
           currency: 'USD',
-          paymentMethod: 'paynow',
+          paymentMethod: selectedPaymentMethod,
           status: 'pending',
         }
 
@@ -138,14 +145,14 @@ export default function CheckoutPage() {
         const paymentResponse = await createPayment(paymentData)
 
         // Update registration status and payment method
-        await updateRegistrationStatus(registrationData.id, 'pending', 'paynow')
+        await updateRegistrationStatus(registrationData.id, 'pending', selectedPaymentMethod)
 
         // Store in sessionStorage for dashboard
         const orderData = {
           ...registrationData,
           paymentId: paymentResponse.doc.id,
           transactionId: paymentResponse.doc.transactionId,
-          paymentMethod: 'paynow',
+          paymentMethod: selectedPaymentMethod,
           amount: amount,
           status: 'pending',
           orderId: registrationData.orderId || 'ORD-' + Date.now(),
@@ -204,6 +211,19 @@ export default function CheckoutPage() {
       color: 'from-green-500 to-emerald-600',
       badge: 'Instant Payment',
     },
+    ...(registrationData &&
+    (registrationData.type === 'sponsor' || registrationData.type === 'exhibitor')
+      ? [
+          {
+            id: 'full-board',
+            name: 'Full Board',
+            icon: Building2,
+            description: 'Pay the full board package for sponsors and exhibitors',
+            color: 'from-amber-500 to-orange-600',
+            badge: 'Package',
+          },
+        ]
+      : []),
   ]
 
   if (!registrationData) {
@@ -352,7 +372,9 @@ export default function CheckoutPage() {
                         <p className="text-sm text-gray-600">Total Amount</p>
                         <p className="text-lg font-bold text-gray-900">Including all fees</p>
                       </div>
-                      <p className="text-lg md:text-4xl font-bold text-[#ffcc00]">${getAmount()}</p>
+                      <p className="text-lg md:text-4xl font-bold text-[#ffcc00]">
+                        ${getPayableAmount()}
+                      </p>
                     </div>
                   </motion.div>
                 </div>
@@ -566,6 +588,28 @@ export default function CheckoutPage() {
                           </div>
                         </div>
                       )}
+
+                      {selectedPaymentMethod === 'full-board' && (
+                        <div className="space-y-4">
+                          <p className="text-gray-700">
+                            This option applies the full board package for sponsors and exhibitors.
+                          </p>
+                          <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-5 border border-amber-200">
+                            <div className="flex items-center justify-between">
+                              <span className="text-sm text-gray-700">Full Board Amount</span>
+                              <span className="text-2xl font-bold text-gray-900">
+                                ${FULL_BOARD_AMOUNT}
+                              </span>
+                            </div>
+                            <p className="text-sm text-gray-600 mt-3">
+                              Reference:{' '}
+                              <span className="font-bold font-mono bg-white px-3 py-1 rounded-lg">
+                                {registrationData.orderId || 'ORDER'}
+                              </span>
+                            </p>
+                          </div>
+                        </div>
+                      )}
                     </motion.div>
                   )}
 
@@ -606,7 +650,7 @@ export default function CheckoutPage() {
                           <>
                             {selectedPaymentMethod === 'paynow'
                               ? 'Pay with Paynow'
-                              : `Pay $${getAmount()}`}
+                              : `Pay $${getPayableAmount()}`}
                             <Lock className="w-5 h-5 ml-2" />
                           </>
                         )}

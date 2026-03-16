@@ -90,6 +90,8 @@ type AttendeeFormData = z.infer<typeof attendeeSchema>
 type SponsorFormData = z.infer<typeof sponsorSchema>
 type ExhibitorFormData = z.infer<typeof exhibitorSchema>
 
+const FULL_BOARD_AMOUNT = 12000
+
 // Helper functions
 function calculateAttendeeAmount(ticketType: string): number {
   // Always return the regular price regardless of ticket type
@@ -115,6 +117,19 @@ function calculateExhibitorAmount(boothSize: string): number {
   // Always return the large booth price
   return PRICES.EXHIBITOR.LARGE
 }
+
+const fullBoardSchema = z.object({
+  companyName: z.string().min(2, 'Company name is required'),
+  contactPerson: z.string().min(2, 'Contact person name is required'),
+  email: z.string().email('Invalid email address'),
+  phone: z.string().min(10, 'Phone number must be at least 10 digits'),
+  website: z.string().url('Invalid website URL').optional().or(z.literal('')),
+  numberOfTeamMembers: z.string().min(1, 'Number of team members is required'),
+  teamMembers: z.string().min(10, 'Please provide team member names (comma-separated)'),
+  specialRequirements: z.string().optional(),
+})
+
+type FullBoardFormData = z.infer<typeof fullBoardSchema>
 
 export default function RegisterPage() {
   const [activeTab, setActiveTab] = useState('attendee')
@@ -175,7 +190,7 @@ export default function RegisterPage() {
             className="w-full"
           >
             <div className="flex justify-center mb-8">
-              <TabsList className="bg-gray-100 h-auto p-1 grid md:grid-cols-3 gap-4 md:gap-0 w-full max-w-4xl rounded-2xl border border-gray-200">
+              <TabsList className="bg-gray-100 h-auto p-1 grid md:grid-cols-4 gap-4 md:gap-0 w-full max-w-5xl rounded-2xl border border-gray-200">
                 <TabsTrigger
                   value="attendee"
                   className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#ffcc00] data-[state=active]:to-amber-500 data-[state=active]:text-white flex items-center justify-center gap-3 px-8 py-4 rounded-xl transition-all"
@@ -206,6 +221,16 @@ export default function RegisterPage() {
                     <div className="text-xs opacity-80">Showcase Your Tech</div>
                   </div>
                 </TabsTrigger>
+                <TabsTrigger
+                  value="full-board"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-400 data-[state=active]:text-white flex items-center justify-center gap-3 px-8 py-4 rounded-xl transition-all"
+                >
+                  <Building2 className="w-5 h-5" />
+                  <div className="text-left">
+                    <div className="font-bold">Full Boarding</div>
+                    <div className="text-xs opacity-80">Complete Package</div>
+                  </div>
+                </TabsTrigger>
               </TabsList>
             </div>
 
@@ -221,6 +246,10 @@ export default function RegisterPage() {
 
               <TabsContent value="exhibitor">
                 <ExhibitorForm />
+              </TabsContent>
+
+              <TabsContent value="full-board">
+                <FullBoardForm />
               </TabsContent>
             </div>
           </Tabs>
@@ -1075,7 +1104,7 @@ function ExhibitorForm() {
       </div>
 
       <div className="p-8">
-        {/* Booth Selection */}
+          {/* Booth Selection */}
         <div className="mb-8">
           <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
             <Store className="w-5 h-5 text-emerald-500" />
@@ -1375,6 +1404,286 @@ function ExhibitorForm() {
               type="submit"
               disabled={isSubmitting}
               className="w-full mt-6 bg-gradient-to-r from-emerald-500 to-teal-400 text-white  hover:shadow-lg hover:shadow-emerald-500/25 transition-shadow"
+            >
+              {isSubmitting ? (
+                'Processing...'
+              ) : (
+                <>
+                  Apply
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </>
+              )}
+            </Button>
+          </div>
+        </form>
+      </div>
+    </div>
+  )
+}
+
+// Full Boarding Registration Form
+function FullBoardForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FullBoardFormData>({
+    resolver: zodResolver(fullBoardSchema),
+  })
+
+  const onSubmit = async (data: FullBoardFormData) => {
+    try {
+      // Prepare registration data for Payload
+      const registrationData = {
+        type: 'full-board',
+        email: data.email,
+        status: 'pending',
+        amount: FULL_BOARD_AMOUNT,
+        paymentMethod: 'pending',
+        fullBoardDetails: {
+          companyName: data.companyName,
+          contactPerson: data.contactPerson,
+          phone: data.phone,
+          website: data.website || '',
+          numberOfTeamMembers: parseInt(data.numberOfTeamMembers),
+          teamMembers: data.teamMembers,
+          specialRequirements: data.specialRequirements || '',
+        },
+      }
+
+      // Save to Payload CMS
+      const response = await createRegistration(registrationData)
+
+      // Store in sessionStorage for checkout
+      sessionStorage.setItem(
+        'registrationData',
+        JSON.stringify({
+          id: response.doc.id,
+          orderId: response.doc.orderId,
+          type: 'full-board',
+          email: data.email,
+          companyName: data.companyName,
+          contactPerson: data.contactPerson,
+          amount: FULL_BOARD_AMOUNT,
+        }),
+      )
+
+      toast.success('Full boarding application submitted! Proceeding to checkout...')
+
+      // Redirect to checkout
+      setTimeout(() => {
+        window.location.href = '/checkout'
+      }, 1000)
+    } catch (error) {
+      console.error('Full boarding registration error:', error)
+      toast.error('Failed to submit full boarding application. Please try again.')
+    }
+  }
+
+  return (
+    <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
+      {/* Form Header */}
+      <div className="bg-gradient-to-r from-amber-500 to-orange-400 p-8 text-white">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-lg md:text-3xl font-bold mb-2">Full Boarding Package</h2>
+            <p className="opacity-90">Complete package for sponsors and exhibitors</p>
+          </div>
+          <div className="text-right">
+            <div className="text-lg md:text-4xl font-bold">
+              ${FULL_BOARD_AMOUNT.toLocaleString()}
+            </div>
+            <div className="text-sm opacity-80">Full Board</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="p-8">
+        <div className="mb-8 bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200">
+          <h3 className="text-lg font-bold text-gray-900 mb-3">Package Highlights</h3>
+          <ul className="grid md:grid-cols-2 gap-3 text-sm text-gray-700">
+            <li>• Premium branding and visibility</li>
+            <li>• Speaking opportunity</li>
+            <li>• VIP access and hospitality</li>
+            <li>• Exhibition space included</li>
+            <li>• Delegates included</li>
+            <li>• Priority placement</li>
+          </ul>
+        </div>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+          {/* Company Information */}
+          <div>
+            <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
+              <Building2 className="w-5 h-5 text-amber-500" />
+              Company Information
+            </h3>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <Label className="block text-sm font-medium text-gray-600 mb-2">
+                  Company Name *
+                </Label>
+                <Input
+                  {...register('companyName')}
+                  type="text"
+                  className="w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition text-slate-600"
+                  placeholder="Your Company"
+                />
+                {errors.companyName && (
+                  <p className="mt-1 text-sm text-red-600">{errors.companyName.message}</p>
+                )}
+              </div>
+
+              <div>
+                <Label className="block text-sm font-medium text-gray-600 mb-2">
+                  Contact Person *
+                </Label>
+                <Input
+                  {...register('contactPerson')}
+                  type="text"
+                  className="w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition text-slate-600"
+                  placeholder="Full Name"
+                />
+                {errors.contactPerson && (
+                  <p className="mt-1 text-sm text-red-600">{errors.contactPerson.message}</p>
+                )}
+              </div>
+
+              <div>
+                <Label className="block text-sm font-medium text-gray-600 mb-2">Email *</Label>
+                <Input
+                  {...register('email')}
+                  type="email"
+                  className="w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition text-slate-600"
+                  placeholder="contact@example.com"
+                />
+                {errors.email && (
+                  <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+                )}
+              </div>
+
+              <div>
+                <Label className="block text-sm font-medium text-gray-600 mb-2">Phone *</Label>
+                <Input
+                  {...register('phone')}
+                  type="tel"
+                  className="w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition text-slate-600"
+                  placeholder="+263 XXX XXX XXX"
+                />
+                {errors.phone && (
+                  <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
+                )}
+              </div>
+
+              <div>
+                <Label className="block text-sm font-medium text-gray-600 mb-2">
+                  Website (Optional)
+                </Label>
+                <Input
+                  {...register('website')}
+                  type="url"
+                  className="w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition text-slate-600"
+                  placeholder="https://example.com"
+                />
+                {errors.website && (
+                  <p className="mt-1 text-sm text-red-600">{errors.website.message}</p>
+                )}
+              </div>
+
+              <div>
+                <Label className="block text-sm font-medium text-gray-600 mb-2">
+                  Number of Team Members *
+                </Label>
+                <Input
+                  {...register('numberOfTeamMembers')}
+                  type="number"
+                  min="1"
+                  className="w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition text-slate-600"
+                  placeholder="5"
+                />
+                {errors.numberOfTeamMembers && (
+                  <p className="mt-1 text-sm text-red-600">{errors.numberOfTeamMembers.message}</p>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Team Members */}
+          <div>
+            <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <Users className="w-5 h-5 text-amber-500" />
+              Team Members
+            </h3>
+            <div>
+              <Label className="block text-sm font-medium text-gray-600 mb-2">
+                Team Member Names *
+              </Label>
+              <Textarea
+                {...register('teamMembers')}
+                rows={3}
+                className="w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition text-slate-600 resize-none"
+                placeholder="List team members who will attend (comma-separated)"
+              />
+              {errors.teamMembers && (
+                <p className="mt-1 text-sm text-red-600">{errors.teamMembers.message}</p>
+              )}
+            </div>
+          </div>
+
+          {/* Special Requirements */}
+          <div>
+            <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <Zap className="w-5 h-5 text-amber-500" />
+              Special Requirements
+            </h3>
+            <div>
+              <Label className="block text-sm font-medium text-gray-600 mb-2">
+                Any special requirements?
+              </Label>
+              <Textarea
+                {...register('specialRequirements')}
+                rows={3}
+                className="w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition text-slate-600 resize-none"
+                placeholder="Additional requirements or notes"
+              />
+            </div>
+          </div>
+
+          {/* Summary & Submit */}
+          <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+              <div>
+                <h4 className="font-bold text-gray-900 mb-2">Full Boarding Summary</h4>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-600">Package</span>
+                    <span className="font-medium">Full Boarding</span>
+                  </div>
+                  <div className="flex items-center justify-between border-t border-amber-200 pt-2">
+                    <span className="font-bold text-gray-900">Total Amount</span>
+                    <span className="text-2xl font-bold text-gray-900">
+                      ${FULL_BOARD_AMOUNT.toLocaleString()}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <Shield className="w-4 h-4 text-amber-500" />
+                  <span>All benefits included in package</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <CreditCard className="w-4 h-4 text-amber-500" />
+                  <span>Flexible payment terms available</span>
+                </div>
+              </div>
+            </div>
+
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full mt-6 bg-gradient-to-r from-amber-500 to-orange-400 text-white hover:shadow-lg hover:shadow-amber-500/25 transition-shadow"
             >
               {isSubmitting ? (
                 'Processing...'
