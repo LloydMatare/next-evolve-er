@@ -184,7 +184,7 @@ export default function RegisterPage() {
             value={activeTab}
             onValueChange={(val) => {
               setActiveTab(val)
-              // ensure sponsor tab has a sensible default tier when opened
+              // ensure that the sponsor tab has a sensible default tier when opened
               if (val === 'sponsor') setSelectedSponsorTier((t) => t || 'bronze')
             }}
             className="w-full"
