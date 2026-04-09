@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
-import { Menu } from 'lucide-react'
+import { CalendarDays, Menu, Sparkles } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Image from 'next/image'
@@ -41,82 +41,86 @@ export function Navbar() {
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-[#170d43]/95 backdrop-blur-md shadow-md py-3'
-          : 'bg-[#170d43]/80 backdrop-blur-sm py-4'
+          ? 'bg-[#071022]/82 backdrop-blur-xl shadow-[0_10px_40px_rgba(3,8,20,0.35)] py-3'
+          : 'bg-transparent py-4'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center">
-          {/* Logo */}
-          <div className="flex items-center">
-            <Link href="/" className="text-xl font-bold tracking-tight flex items-center gap-2">
-              <Image src={'/logo.png'} alt="logo" width={90} height={80} />
+      <div className="container-custom px-4 sm:px-6 lg:px-8">
+        <div
+          className={`flex items-center justify-between rounded-full border px-4 transition-all duration-300 ${
+            scrolled ? 'border-white/10 bg-white/6 py-2' : 'border-white/8 bg-white/4 py-3'
+          }`}
+        >
+          <div className="flex items-center gap-3">
+            <Link href="/" className="flex items-center gap-3">
+              <Image src={'/logo-white.png'} alt="logo" width={88} height={52} className="h-auto" />
+              <div className="hidden sm:block">
+                <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/70">
+                  Evolve
+                </div>
+                <div className="text-sm font-semibold text-white">ICT Summit 2026</div>
+              </div>
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-1">
+          <div className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => {
               const active = isActive(link.href)
               return (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`font-medium text-xs px-4 py-2 rounded-sm transition-all duration-200 relative ${
+                  className={`relative rounded-full px-4 py-2 text-xs font-medium transition-all duration-200 ${
                     active
-                      ? 'text-[#ffcc00]'
-                      : scrolled
-                        ? 'text-white hover:text-[#ffcc00]'
-                        : 'text-white/90 hover:text-[#ffcc00]'
+                      ? 'bg-white/10 text-[var(--brand-gold)]'
+                      : 'text-white hover:bg-white/6 hover:text-white'
                   }`}
                 >
                   {link.name}
                   {active && (
-                    <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-4 h-0.5 bg-[#ffcc00] rounded-full"></span>
+                    <span className="absolute inset-x-4 bottom-1 h-px rounded-full bg-[var(--brand-gold)]"></span>
                   )}
                 </Link>
               )
             })}
             <Button
-              className={`font-semibold px-6 py-2 rounded-sm ml-4 transition-all duration-200 text-xs ${
-                scrolled
-                  ? 'bg-[#ffcc00] hover:bg-[#ec7211] text-white'
-                  : 'bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white border border-white/20 '
-              }`}
+              className="ml-3 rounded-full bg-[var(--brand-gold)] px-6 py-2 text-xs font-semibold text-slate-950 hover:bg-[#ffe36b]"
               asChild
             >
               <Link href="/register">Register now</Link>
             </Button>
           </div>
 
-          {/* Mobile Navigation */}
           <div className="lg:hidden">
             <Sheet>
               <SheetTrigger asChild>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className={
-                    scrolled ? 'text-white hover:bg-white/10' : 'text-white/90 hover:bg-white/10'
-                  }
+                  className="rounded-full text-white hover:bg-white/10"
                 >
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
               <SheetContent
                 side="right"
-                className="bg-[#170d43] text-white border-l border-gray-700 p-4"
+                className="border-l border-white/10 bg-[#071022] p-4 text-white"
               >
-                {/* Add SheetTitle for accessibility - hidden visually but available for screen readers */}
                 <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
 
                 <div className="flex flex-col space-y-4 mt-8">
-                  <div className="mb-4">
-                    <Link href="/" className="text-sm md:text-xl font-bold tracking-tight">
-                      <span className="text-[#ffcc00]">EVOLVE</span>
-                      <span className="text-white"> ICT SUMMIT</span>
-                      <span className="text-[#ffcc00] ml-2">2026</span>
+                  <div className="mb-4 rounded-[1.5rem] border border-white/10 bg-white/5 p-4">
+                    <div className="mb-3 flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-white/60">
+                      <Sparkles className="h-4 w-4 text-[var(--brand-gold)]" />
+                      Event Navigation
+                    </div>
+                    <Link href="/" className="text-sm font-bold tracking-tight text-white">
+                      EVOLVE ICT SUMMIT 2026
                     </Link>
+                    <div className="mt-2 flex items-center gap-2 text-sm text-white/70">
+                      <CalendarDays className="h-4 w-4 text-[var(--brand-gold)]" />
+                      <span>11-12 June, Harare</span>
+                    </div>
                   </div>
 
                   {navLinks.map((link) => {
@@ -125,10 +129,10 @@ export function Navbar() {
                       <Link
                         key={link.name}
                         href={link.href}
-                        className={`font-medium  py-2 transition-colors duration-200 flex items-center text-xs${
+                        className={`flex items-center rounded-full py-3 pl-4 text-sm font-medium transition-colors duration-200 ${
                           active
-                            ? 'text-[#ffcc00] pl-2 border-l-4 border-[#ffcc00]'
-                            : 'text-white hover:text-[#ffcc00] pl-2 border-l-4 border-transparent'
+                            ? 'bg-white/8 text-[var(--brand-gold)]'
+                            : 'text-white hover:bg-white/6 hover:text-white'
                         }`}
                       >
                         {link.name}
@@ -136,7 +140,7 @@ export function Navbar() {
                     )
                   })}
                   <Button
-                    className="bg-[#ffcc00] hover:bg-[#ec7211] text-white  font-semibold mt-4 text-xs"
+                    className="mt-4 rounded-full bg-[var(--brand-gold)] text-sm font-semibold text-slate-950 hover:bg-[#ffe36b]"
                     asChild
                   >
                     <Link href="/register">Register now</Link>

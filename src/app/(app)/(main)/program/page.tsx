@@ -1,5 +1,8 @@
 'use client'
 
+import { FadeIn } from '@/components/fade-in'
+import { PageHero } from '@/components/page-hero'
+import { SectionHeading } from '@/components/section-heading'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -21,7 +24,6 @@ import {
   Search,
   Loader2,
 } from 'lucide-react'
-import Image from 'next/image'
 import { useState, useEffect } from 'react'
 
 // Types
@@ -259,10 +261,14 @@ export default function ProgramPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-blue-950">
-        <div className="pt-32 flex items-center justify-center">
-          <Loader2 className="h-8 w-8 animate-spin text-[#ffcc00]" />
-          <span className="ml-2 text-[#ffcc00]">Loading program schedule...</span>
+      <div className="min-h-screen">
+        <div className="container-custom px-4 pt-32 sm:px-6 lg:px-8">
+          <div className="event-panel-dark mx-auto flex max-w-xl items-center justify-center gap-3 rounded-[2rem] p-6 text-white">
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--brand-gold)]" />
+            <span className="text-sm font-semibold tracking-wide text-white/85">
+              Loading program schedule…
+            </span>
+          </div>
         </div>
       </div>
     )
@@ -270,177 +276,203 @@ export default function ProgramPage() {
 
   if (error && sessions.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="pt-32 flex flex-col items-center justify-center">
-          <div className="text-red-500 mb-4">Error: {error}</div>
-          <Button onClick={fetchPrograms} className="bg-[#ffcc00] hover:bg-[#ec7211]">
-            Retry
-          </Button>
+      <div className="min-h-screen">
+        <div className="container-custom px-4 pt-32 sm:px-6 lg:px-8">
+          <div className="event-surface mx-auto max-w-2xl rounded-[2rem] p-8 text-center">
+            <div className="text-sm font-semibold uppercase tracking-[0.22em] text-[var(--destructive)]">
+              Couldn&apos;t load schedule
+            </div>
+            <h1 className="mt-4 text-3xl font-semibold text-slate-950">Please try again.</h1>
+            <p className="mt-3 text-slate-600">{error}</p>
+            <div className="mt-6 flex justify-center">
+              <Button
+                onClick={fetchPrograms}
+                className="rounded-full bg-slate-950 text-white hover:bg-slate-800"
+              >
+                Retry
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 relative overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0 w-full h-full">
-          <Image
-            src="/bg-2.jpg" // Replace with your actual image path
-            alt="Event Program Background"
-            fill
-            className="object-cover"
-            priority
-            quality={100}
-          />
-          {/* Dark overlay for better text readability */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#170d43]/90 via-[#161e2e]/90 to-[#0f1419]/90" />
-        </div>
+    <div className="min-h-screen">
+      <PageHero
+        eyebrow="Summit Program"
+        title="Plan your two-day"
+        accent="summit journey"
+        description="Explore keynotes, panels, workshops, and networking sessions. Filter by day, track, and session type to build the schedule you want."
+        primaryCta={{ href: '/brochure', label: 'Download Brochure' }}
+        secondaryCta={{ href: '/register', label: 'Register Now' }}
+        image="/bg-2.jpg"
+        imageAlt="Event program background"
+        compact
+      />
 
-        <div className="max-w-7xl mx-auto text-center relative z-10">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-            Event <span className="text-[#ffcc00]">Program</span>
-          </h1>
-          <p className="text-xl text-blue-100 mx-auto mb-8">
-            Explore the complete schedule for EVOLVE ICT SUMMIT 2026. Plan your two days of
-            learning, networking, and innovation.
-          </p>
-
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
-            <div className="flex items-center text-white">
-              <Calendar className="h-5 w-5 mr-2 text-[#ffcc00]" />
-              <span>June 11-12, 2026</span>
-            </div>
-            <div className="flex items-center text-white">
-              <Clock className="h-5 w-5 mr-2 text-[#ffcc00]" />
-              <span>8:00 AM - 9:00 PM Daily</span>
-            </div>
-            <div className="flex items-center text-white">
-              <MapPin className="h-5 w-5 mr-2 text-[#ffcc00]" />
-              <span>Harare International Conference Centre</span>
+      <section className="relative -mt-10 px-4 pb-8 sm:px-6 lg:px-8">
+        <FadeIn>
+          <div className="container-custom event-panel-dark rounded-[2rem] p-6 md:p-8">
+            <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
+              <div>
+                <div className="inline-flex rounded-full border border-white/10 bg-white/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/70">
+                  Schedule Tools
+                </div>
+                <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
+                  Download and share the program.
+                </h2>
+                <p className="mt-3 max-w-2xl text-slate-300">
+                  Add sessions to your plan, download an ICS schedule, or share the program with
+                  your team.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <Button
+                  onClick={downloadSchedule}
+                  className="rounded-full bg-[var(--brand-gold)] text-slate-950 hover:bg-[#ffe36b]"
+                >
+                  <Download className="mr-2 h-5 w-5" />
+                  Download ICS
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="rounded-full border-white/16 bg-white/6 text-white hover:bg-white/12"
+                  onClick={() => {
+                    try {
+                      navigator.clipboard.writeText(window.location.href)
+                    } catch {
+                      // no-op
+                    }
+                  }}
+                >
+                  <Share2 className="mr-2 h-5 w-5" />
+                  Copy Link
+                </Button>
+              </div>
             </div>
           </div>
-
-          <div className="flex flex-wrap gap-4 justify-center">
-            <Button
-              onClick={downloadSchedule}
-              className="bg-[#ffcc00] hover:bg-[#ec7211] text-white"
-            >
-              <Download className="h-5 w-5 mr-2" />
-              Download Schedule
-            </Button>
-            <Button variant="outline" className="border-white text-black hover:bg-white/20">
-              <Share2 className="h-5 w-5 mr-2 text-black" />
-              Share Program
-            </Button>
-          </div>
-        </div>
+        </FadeIn>
       </section>
 
       {/* Program Navigation */}
-      <section className="py-8 px-4 bg-white border-b">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+      <section className="px-4 pb-10 sm:px-6 lg:px-8">
+        <div className="container-custom">
+          <FadeIn>
+            <div className="event-surface rounded-[2rem] p-6 md:p-8">
+              <SectionHeading
+                eyebrow="Browse The Agenda"
+                title="Filter by day, track, and session type."
+                description="A faster way to build your personal schedule and find the sessions that matter most."
+              />
+
+              <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
             {/* Day Selector */}
-            <div className="flex gap-2">
-              {eventDays.map((day) => (
-                <Button
-                  key={day.id}
-                  onClick={() => setSelectedDay(day.value as 'day-1' | 'day-2')}
-                  className={`transition-all duration-300 ${
-                    selectedDay === day.value
-                      ? `bg-gradient-to-r ${day.color} text-white shadow-lg`
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  {day.day}
-                </Button>
-              ))}
-            </div>
+                <div className="flex flex-wrap gap-2">
+                  {eventDays.map((day) => (
+                    <Button
+                      key={day.id}
+                      onClick={() => setSelectedDay(day.value as 'day-1' | 'day-2')}
+                      variant="outline"
+                      className={`rounded-full border-slate-200 bg-white/80 text-slate-700 hover:bg-slate-50 ${
+                        selectedDay === day.value
+                          ? 'border-[rgba(57,214,255,0.55)] text-slate-950'
+                          : ''
+                      }`}
+                    >
+                      <Calendar className="mr-2 h-4 w-4 text-[var(--brand-blue)]" />
+                      {day.day}
+                    </Button>
+                  ))}
+                </div>
 
             {/* Search */}
-            <div className="relative lg:w-96">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-              <Input
-                type="text"
-                placeholder="Search sessions, speakers, topics..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ffcc00] focus:border-transparent"
-              />
-            </div>
-          </div>
+                <div className="relative lg:w-[26rem]">
+                  <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
+                  <Input
+                    type="text"
+                    placeholder="Search sessions, speakers, topics…"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="h-12 w-full rounded-full border border-slate-200/80 bg-white pl-12 pr-4 text-slate-900 shadow-sm outline-none transition focus:border-[rgba(57,214,255,0.5)] focus:ring-4 focus:ring-[rgba(57,214,255,0.14)]"
+                  />
+                </div>
+              </div>
 
           {/* Filters */}
-          <div className="mt-8">
-            <div className="flex flex-wrap gap-4 mb-4">
-              <div className="flex items-center gap-2">
-                <Filter className="h-4 w-4 text-gray-500" />
-                <span className="text-sm font-medium text-gray-700">Filter by:</span>
-              </div>
+              <div className="mt-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <div className="flex items-center gap-2 text-sm font-semibold text-slate-700">
+                    <Filter className="h-4 w-4 text-[var(--brand-blue)]" />
+                    Filters
+                  </div>
 
               {/* Track Filters */}
-              <div className="flex flex-wrap gap-2">
-                {tracks.map((track) => (
-                  <Button
-                    key={track.id}
-                    onClick={() => setSelectedTrack(track.id)}
-                    className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
-                      selectedTrack === track.id
-                        ? `${track.color.replace('100', '600')} text-white`
-                        : `${track.color} text-gray-700 hover:opacity-80`
-                    }`}
-                  >
-                    {track.name}
-                  </Button>
-                ))}
-              </div>
-            </div>
+                  <div className="flex flex-wrap gap-2">
+                    {tracks.map((track) => (
+                      <Button
+                        key={track.id}
+                        onClick={() => setSelectedTrack(track.id)}
+                        variant="outline"
+                        className={`rounded-full border-slate-200 bg-white/80 text-sm text-slate-700 hover:bg-slate-50 ${
+                          selectedTrack === track.id ? 'border-slate-900 text-slate-950' : ''
+                        }`}
+                      >
+                        {track.name}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
 
             {/* Session Type Filters */}
-            <div className="flex flex-wrap gap-2">
-              {sessionTypes.map((type) => (
-                <Button
-                  key={type.id}
-                  onClick={() => setSelectedType(type.id)}
-                  className={`flex items-center gap-2 border text-sm font-medium transition-all ${
-                    selectedType === type.id
-                      ? 'bg-[#ffcc00] text-white border-[#ffcc00]'
-                      : 'bg-white text-gray-700 border-gray-300 hover:border-[#ffcc00] hover:text-[#ffcc00]'
-                  }`}
-                >
-                  {type.icon}
-                  {type.name}
-                </Button>
-              ))}
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {sessionTypes.map((type) => (
+                    <Button
+                      key={type.id}
+                      onClick={() => setSelectedType(type.id)}
+                      variant="outline"
+                      className={`rounded-full border-slate-200 bg-white/80 text-sm text-slate-700 hover:bg-slate-50 ${
+                        selectedType === type.id
+                          ? 'border-[rgba(57,214,255,0.55)] text-slate-950'
+                          : ''
+                      }`}
+                    >
+                      <span className="mr-2 text-[var(--brand-blue)]">{type.icon}</span>
+                      {type.name}
+                    </Button>
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
+          </FadeIn>
         </div>
       </section>
 
       {/* Main Program Content */}
-      <section className="py-12 px-4">
-        <div className="max-w-7xl mx-auto">
+      <section className="section-padding px-4 sm:px-6 lg:px-8">
+        <div className="container-custom">
           {/* Selected Day Info */}
           <div className="mb-12">
             {eventDays
               .filter((day) => day.value === selectedDay)
               .map((day) => (
-                <div key={day.id} className="text-center">
-                  <div className="inline-flex items-center gap-2 mb-2">
-                    <Calendar className="h-5 w-5 text-[#ffcc00]" />
-                    <span className="text-lg font-semibold text-gray-700">{day.date}</span>
+                <FadeIn key={day.id}>
+                  <div className="event-surface rounded-[2rem] p-8 text-center md:p-10">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
+                      <Calendar className="h-4 w-4 text-[var(--brand-blue)]" />
+                      {day.date}
+                    </div>
+                    <h2 className="mt-5 text-4xl font-semibold text-slate-950 md:text-5xl">
+                      {day.day}: {day.theme}
+                    </h2>
+                    <p className="section-copy mt-4 mx-auto max-w-3xl">
+                      A day dedicated to exploring cutting-edge technologies, industry insights, and
+                      networking opportunities.
+                    </p>
                   </div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                    {day.day}: {day.theme}
-                  </h2>
-                  <p className="text-gray-600 max-w-3xl mx-auto">
-                    A day dedicated to exploring cutting-edge technologies, industry insights, and
-                    networking opportunities.
-                  </p>
-                </div>
+                </FadeIn>
               ))}
           </div>
 
@@ -558,17 +590,22 @@ export default function ProgramPage() {
           )}
 
           {/* Legend */}
-          <div className="mt-16 p-6 bg-white rounded-xl border shadow-sm">
-            <h3 className="text-xl font-bold text-gray-900 mb-4">Session Type Legend</h3>
+          <div className="mt-16">
+            <FadeIn>
+              <div className="event-surface rounded-[2rem] p-8 md:p-10">
+                <h3 className="text-2xl font-semibold text-slate-950 mb-6">Session Type Legend</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
               {sessionTypes.slice(1).map((type) => (
-                <div key={type.id} className="flex items-center gap-3 p-3 rounded-lg bg-gray-50">
-                  <div className={`p-2 rounded-lg ${getSessionTypeColor(type.id).split(' ')[0]}`}>
+                <div
+                  key={type.id}
+                  className="flex items-center gap-3 rounded-[1.25rem] border border-slate-200/70 bg-white/80 p-4"
+                >
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[rgba(67,97,238,0.12)] text-[var(--brand-blue)]">
                     {type.icon}
                   </div>
                   <div>
-                    <p className="font-medium text-gray-900">{type.name}</p>
-                    <p className="text-xs text-gray-500">
+                    <p className="font-semibold text-slate-950">{type.name}</p>
+                    <p className="text-xs text-slate-500">
                       {type.id === 'keynote' && 'Main presentations'}
                       {type.id === 'panel' && 'Group discussions'}
                       {type.id === 'workshop' && 'Hands-on sessions'}
@@ -580,31 +617,47 @@ export default function ProgramPage() {
                 </div>
               ))}
             </div>
+              </div>
+            </FadeIn>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 px-4 bg-gradient-to-r from-[#170d43] to-[#0f1419]">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Ready to Experience EVOLVE ICT SUMMIT 2026?
-          </h2>
-          <p className="text-xl text-blue-100 mb-8 text-center">
-            Join industry leaders, innovators, and tech enthusiasts for two days of transformative
-            discussions and networking.
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <Button className="bg-[#ffcc00] hover:bg-[#ec7211] text-white px-8 py-3 text-sm">
-              Register Now
-            </Button>
-            <Button
-              variant="outline"
-              className="border-white text-black hover:bg-white/10 px-8 py-3 text-sm"
-            >
-              View Speakers
-            </Button>
-          </div>
+      <section className="section-padding px-4 pb-24 sm:px-6 lg:px-8">
+        <div className="container-custom">
+          <FadeIn>
+            <div className="event-panel-dark rounded-[2.2rem] p-8 text-center md:p-12">
+              <div className="mx-auto max-w-3xl">
+                <div className="inline-flex rounded-full border border-white/10 bg-white/6 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/70">
+                  Ready to join?
+                </div>
+                <h2 className="mt-5 text-4xl font-semibold text-white md:text-5xl">
+                  Bring your team, your ambition, and your next big idea.
+                </h2>
+                <p className="mt-4 text-lg text-slate-300">
+                  Register for the summit, explore partnerships, or discover the student track.
+                </p>
+                <div className="mt-8 flex flex-wrap justify-center gap-4">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="rounded-full bg-[var(--brand-gold)] px-7 text-slate-950 hover:bg-[#ffe36b]"
+                  >
+                    <a href="/register">Register Now</a>
+                  </Button>
+                  <Button
+                    asChild
+                    size="lg"
+                    variant="outline"
+                    className="rounded-full border-white/16 bg-white/6 px-7 text-white hover:bg-white/12"
+                  >
+                    <a href="/speakers">View Speakers</a>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </FadeIn>
         </div>
       </section>
     </div>

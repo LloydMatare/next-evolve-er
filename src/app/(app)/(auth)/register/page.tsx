@@ -1,6 +1,8 @@
-//@ts-nocheck
 'use client'
 
+import { FadeIn } from '@/components/fade-in'
+import { PageHero } from '@/components/page-hero'
+import { SectionHeading } from '@/components/section-heading'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useForm } from 'react-hook-form'
@@ -138,47 +140,21 @@ export default function RegisterPage() {
   >('bronze')
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-4 overflow-hidden">
-        {/* Animated background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a051f] via-[#1a1448] to-[#0f172a]">
-          <div className="absolute top-20 left-10 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[#ffcc00]/5 rounded-full blur-3xl" />
-        </div>
-
-        <div className="container-custom relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-            <Ticket className="w-4 h-4 text-[#ffcc00]" />
-            <span className="text-sm font-medium text-white">Secure Your Spot</span>
-          </div>
-
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">Register Now</h1>
-
-          <div className="flex justify-center">
-            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8">
-              Join <span className="text-[#ffcc00] font-semibold"> innovators and leaders</span>{' '}
-              {`at Africa's premier ICT summit`}
-            </p>
-          </div>
-
-          {/* Event Details */}
-          <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-12">
-            <div className="flex items-center gap-2 text-gray-300">
-              <Calendar className="w-5 h-5 text-[#ffcc00]" />
-              <span className="font-medium">June 11-12, 2026</span>
-            </div>
-            <div className="flex items-center gap-2 text-gray-300">
-              <MapPin className="w-5 h-5 text-[#ffcc00]" />
-              <span className="font-medium">HICC, Harare, Zimbabwe</span>
-            </div>
-          </div>
-        </div>
-      </section>
+    <div className="min-h-screen">
+      <PageHero
+        eyebrow="Register"
+        title="Secure your spot for"
+        accent="Evolve 2026"
+        description="Choose the registration path that fits you — attendee, sponsor, exhibitor, or full boarding — and move smoothly into checkout."
+        primaryCta={{ href: '/program', label: 'Explore Program' }}
+        secondaryCta={{ href: '/partnerships', label: 'Partnerships' }}
+        image="/bg-1.jpg"
+        imageAlt="Event crowd and stage lights"
+        compact
+      />
 
       {/* Registration Navigation */}
-      <section className="py-8 px-4 bg-white border-b border-gray-200">
+      <section className="relative -mt-10 px-4 pb-24 sm:px-6 lg:px-8">
         <div className="container-custom">
           <Tabs
             value={activeTab}
@@ -189,112 +165,115 @@ export default function RegisterPage() {
             }}
             className="w-full"
           >
-            <div className="flex justify-center mb-8">
-              <TabsList className="bg-gray-100 h-auto p-1 grid md:grid-cols-4 gap-4 md:gap-0 w-full max-w-5xl rounded-2xl border border-gray-200">
-                <TabsTrigger
-                  value="attendee"
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#ffcc00] data-[state=active]:to-amber-500 data-[state=active]:text-white flex items-center justify-center gap-3 px-8 py-4 rounded-xl transition-all"
-                >
-                  <Users className="w-5 h-5" />
-                  <div className="text-left">
-                    <div className="font-bold">Attendee</div>
-                    <div className="text-xs opacity-80">Individual Registration</div>
-                  </div>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="sponsor"
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-cyan-400 data-[state=active]:text-white flex items-center justify-center gap-3 px-8 py-4 rounded-xl transition-all"
-                >
-                  <Building2 className="w-5 h-5" />
-                  <div className="text-left">
-                    <div className="font-bold">Sponsor</div>
-                    <div className="text-xs opacity-80">Partnership Packages</div>
-                  </div>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="exhibitor"
-                  className="data-[state=active]:bg-gradient-to-r  data-[state=active]:from-emerald-500 data-[state=active]:to-teal-400 data-[state=active]:text-white flex items-center justify-center gap-3 px-8 py-4 rounded-xl transition-all"
-                >
-                  <Store className="w-5 h-5" />
-                  <div className="text-left">
-                    <div className="font-bold">Exhibitor</div>
-                    <div className="text-xs opacity-80">Showcase Your Tech</div>
-                  </div>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="full-board"
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-400 data-[state=active]:text-white flex items-center justify-center gap-3 px-8 py-4 rounded-xl transition-all"
-                >
-                  <Building2 className="w-5 h-5" />
-                  <div className="text-left">
-                    <div className="font-bold">Full Boarding</div>
-                    <div className="text-xs opacity-80">Complete Package</div>
-                  </div>
-                </TabsTrigger>
-              </TabsList>
-            </div>
+            <FadeIn>
+              <div className="event-surface rounded-[2rem] p-6 md:p-8">
+                <SectionHeading
+                  eyebrow="Choose a path"
+                  title="Registration options designed for different goals."
+                  description="Attending, sponsoring, exhibiting, or coming as a full-board partner — pick the option that fits and continue to checkout."
+                />
+
+                <div className="flex justify-center">
+                  <TabsList className="grid h-auto w-full max-w-5xl gap-3 rounded-[1.75rem] border border-slate-200/70 bg-white/70 p-2 md:grid-cols-4">
+                    <TabsTrigger
+                      value="attendee"
+                      className="rounded-[1.35rem] px-5 py-4 data-[state=active]:bg-slate-950 data-[state=active]:text-white"
+                    >
+                      <div className="flex items-center gap-3 text-left">
+                        <Users className="h-5 w-5 text-[var(--brand-gold)]" />
+                        <div>
+                          <div className="text-sm font-semibold">Attendee</div>
+                          <div className="text-xs opacity-70">Individual</div>
+                        </div>
+                      </div>
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="sponsor"
+                      className="rounded-[1.35rem] px-5 py-4 data-[state=active]:bg-slate-950 data-[state=active]:text-white"
+                    >
+                      <div className="flex items-center gap-3 text-left">
+                        <Building2 className="h-5 w-5 text-[var(--brand-blue)]" />
+                        <div>
+                          <div className="text-sm font-semibold">Sponsor</div>
+                          <div className="text-xs opacity-70">Packages</div>
+                        </div>
+                      </div>
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="exhibitor"
+                      className="rounded-[1.35rem] px-5 py-4 data-[state=active]:bg-slate-950 data-[state=active]:text-white"
+                    >
+                      <div className="flex items-center gap-3 text-left">
+                        <Store className="h-5 w-5 text-[var(--brand-cyan)]" />
+                        <div>
+                          <div className="text-sm font-semibold">Exhibitor</div>
+                          <div className="text-xs opacity-70">Showcase</div>
+                        </div>
+                      </div>
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="full-board"
+                      className="rounded-[1.35rem] px-5 py-4 data-[state=active]:bg-slate-950 data-[state=active]:text-white"
+                    >
+                      <div className="flex items-center gap-3 text-left">
+                        <Ticket className="h-5 w-5 text-[var(--brand-rose)]" />
+                        <div>
+                          <div className="text-sm font-semibold">Full Boarding</div>
+                          <div className="text-xs opacity-70">Complete</div>
+                        </div>
+                      </div>
+                    </TabsTrigger>
+                  </TabsList>
+                </div>
 
             {/* Content */}
-            <div className="">
-              <TabsContent value="attendee">
-                <AttendeeForm />
-              </TabsContent>
+                <div className="mt-8">
+                  <TabsContent value="attendee">
+                    <AttendeeForm />
+                  </TabsContent>
 
-              <TabsContent value="sponsor">
-                <SponsorForm initialTier={selectedSponsorTier} />
-              </TabsContent>
+                  <TabsContent value="sponsor">
+                    <SponsorForm initialTier={selectedSponsorTier} />
+                  </TabsContent>
 
-              <TabsContent value="exhibitor">
-                <ExhibitorForm />
-              </TabsContent>
+                  <TabsContent value="exhibitor">
+                    <ExhibitorForm />
+                  </TabsContent>
 
-              <TabsContent value="full-board">
-                <FullBoardForm />
-              </TabsContent>
-            </div>
+                  <TabsContent value="full-board">
+                    <FullBoardForm />
+                  </TabsContent>
+                </div>
+              </div>
+            </FadeIn>
           </Tabs>
         </div>
       </section>
 
-      {/* Benefits Section */}
-      <section className="py-16 px-4 bg-gradient-to-b from-white to-gray-50">
+      <section className="section-padding bg-[linear-gradient(180deg,#ffffff,#eef4ff)] px-4 pb-24 sm:px-6 lg:px-8">
         <div className="container-custom">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full mb-4">
-              <Sparkles className="w-4 h-4 text-[#ffcc00]" />
-              <span className="text-sm font-medium text-gray-700">Registration Benefits</span>
-            </div>
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Why Register?</h2>
-            <p className="text-md md:text-xl text-gray-600 text-center">
-              {`Get exclusive access to Africa's premier tech event`}
-            </p>
-          </div>
+          <SectionHeading
+            eyebrow="Why register"
+            title="Because momentum belongs to the prepared."
+            description="Registering gives you access, visibility, and a smoother onsite experience."
+          />
 
-          <div className="grid md:grid-cols-4 gap-6">
-            <div className="bg-white rounded-2xl p-6 text-center shadow-lg">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <Globe className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="font-bold text-gray-900 mb-2">Global Networking</h3>
-            </div>
-            <div className="bg-white rounded-2xl p-6 text-center shadow-lg">
-              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-400 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <Award className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="font-bold text-gray-900 mb-2">Expert Insights</h3>
-            </div>
-            <div className="bg-white rounded-2xl p-6 text-center shadow-lg">
-              <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-orange-400 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <Zap className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="font-bold text-gray-900 mb-2">Innovation Showcase</h3>
-            </div>
-            <div className="bg-white rounded-2xl p-6 text-center shadow-lg">
-              <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-400 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <Shield className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="font-bold text-gray-900 mb-2">Secure Experience</h3>
-            </div>
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            {[
+              { title: 'Global networking', Icon: Globe },
+              { title: 'Expert insights', Icon: Award },
+              { title: 'Innovation showcase', Icon: Zap },
+              { title: 'Secure experience', Icon: Shield },
+            ].map((item, index) => (
+              <FadeIn key={item.title} delay={index * 90}>
+                <div className="event-surface event-card-hover rounded-[1.8rem] p-6 text-center">
+                  <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,var(--brand-blue),var(--brand-cyan))] text-white">
+                    <item.Icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-slate-950">{item.title}</h3>
+                </div>
+              </FadeIn>
+            ))}
           </div>
         </div>
       </section>

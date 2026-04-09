@@ -1,599 +1,373 @@
+import { FadeIn } from '@/components/fade-in'
+import { PageHero } from '@/components/page-hero'
+import { SectionHeading } from '@/components/section-heading'
 import { Button } from '@/components/ui/button'
 import {
-  Users,
-  Lightbulb,
-  Target,
-  TrendingUp,
-  Calendar,
-  MapPin,
-  ArrowRight,
-  Globe,
   Award,
-  Heart,
-  Zap,
-  Shield,
+  Calendar,
+  Globe,
+  Lightbulb,
   Network,
+  Play,
+  Shield,
   Sparkles,
-  Star,
-  Trophy,
-  Mic,
-  Briefcase,
-  Building,
-  Flag,
+  Users,
 } from 'lucide-react'
 import Link from 'next/link'
-import React from 'react'
-import Image from 'next/image'
-import HeroSection from '@/components/hero-section'
+
+const values = [
+  {
+    icon: Network,
+    title: 'Collaboration',
+    description:
+      'A summit designed to connect government, industry, academia, startups, and youth.',
+  },
+  {
+    icon: Lightbulb,
+    title: 'Innovation',
+    description:
+      'We spotlight practical ideas, prototypes, and scalable African technology stories.',
+  },
+  {
+    icon: Shield,
+    title: 'Trust',
+    description:
+      'The event creates space for credible, future-shaping conversations about infrastructure and security.',
+  },
+  {
+    icon: Sparkles,
+    title: 'Exposure',
+    description:
+      'Attendees gain visibility, opportunity, and meaningful access to partnerships and markets.',
+  },
+]
+
+const themes = [
+  'Emerging technologies and AI',
+  'Digital transformation and infrastructure',
+  'Cybersecurity and digital trust',
+  'Innovation, startups, and entrepreneurship',
+  'Data governance and regulation',
+  'Skills, employability, and future work',
+]
+
+const timeline = [
+  {
+    year: '2020',
+    title: 'The Beginning',
+    description: 'First edition launched with 500+ attendees',
+  },
+  {
+    year: '2021',
+    title: 'Virtual Growth',
+    description: 'Expanded to hybrid format reaching 30+ countries',
+  },
+  {
+    year: '2022',
+    title: 'Regional Focus',
+    description: 'Partnered with regional tech hubs across Africa',
+  },
+  {
+    year: '2023',
+    title: 'Record Attendance',
+    description: 'Over 1,500 delegates from 45 countries',
+  },
+  {
+    year: '2024',
+    title: 'Industry Recognition',
+    description: 'Named top tech summit in Southern Africa',
+  },
+  {
+    year: '2025',
+    title: 'Global Spotlight',
+    description: 'International media coverage and keynote speakers',
+  },
+]
+
+const team = [
+  { name: 'Dr. Sarah Chen', role: 'Summit Director', image: '/placeholder-team-1.jpg' },
+  { name: 'Marcus Johnson', role: 'Program Lead', image: '/placeholder-team-2.jpg' },
+  { name: 'Amara Okonkwo', role: 'Partnerships Director', image: '/placeholder-team-3.jpg' },
+  { name: 'David Mwangi', role: 'Technical Lead', image: '/placeholder-team-4.jpg' },
+]
+
+const galleryImages = [
+  'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80',
+  'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=600&q=80',
+  'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=600&q=80',
+  'https://images.unsplash.com/photo-1559223607-b4d0555ae227?w=600&q=80',
+  'https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=600&q=80',
+  'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&q=80',
+]
 
 export default function AboutPage() {
-  const stats = [
-    { label: 'Expected Attendees', value: '2,000+', icon: Users },
-    { label: 'Exhibitors', value: '100+', icon: Building },
-    { label: 'Speakers', value: '50+', icon: Mic },
-    { label: 'Countries', value: '30+', icon: Globe },
-  ]
-
-  const coreValues = [
-    {
-      icon: Network,
-      title: 'Collaboration',
-      description:
-        "Let's think about our world, Zimbabwe, Africa.Where we are today and where we would like to be tommorrow and how we can strategize together to get there.",
-      color: 'from-blue-500 to-cyan-400',
-    },
-    {
-      icon: Sparkles,
-      title: 'Exposure',
-      description:
-        "It is said you cannot do the same thing and expectt a different answer,Let's think of new ways that we can employ using ICT in order to advance the world we live in.",
-      color: 'from-purple-500 to-pink-500',
-    },
-    {
-      icon: Heart,
-      title: 'Awareness',
-      description:
-        "Let's employ our knowledge and understanding of ICT to approprietely enhance our world and enviromnet in Africa.",
-      color: 'from-red-500 to-orange-400',
-    },
-    {
-      icon: Shield,
-      title: 'Knowledge base',
-      description:
-        "A good man leaves an inheritance for his children's children. Let's impart the wealth of ICT KNOWLEDGE we have to the next generation.",
-      color: 'from-green-500 to-emerald-400',
-    },
-  ]
-
-  const keynoteThemes = [
-    'Emerging Technologies',
-    'Digital Transformation & Infrastructure',
-    'Cybersecurirty & Digital Trust',
-    'Digital Economy & Skills',
-    'Data privacy, Governance & Regulation',
-    'Innovation, Startups & Enterprenuership',
-    'Blockchain, Digital Identity & Trust',
-    'Cloud & Zero-Trust Architecures',
-  ]
-
   return (
-    <div className="min-h-screen text-black">
-      {/* Hero Section with Animated Background */}
-      <HeroSection />
+    <div className="min-h-screen">
+      <PageHero
+        eyebrow="About The Summit"
+        title="An event brand built around"
+        accent="Africa's digital leap"
+        description="Evolve ICT Summit brings together the people shaping digital transformation across policy, business, education, and innovation, then presents that story with a more modern and immersive web experience."
+        primaryCta={{ href: '/program', label: 'View Program' }}
+        secondaryCta={{ href: '/partnerships', label: 'Explore Partnerships' }}
+        image="/bg-2.jpg"
+        imageAlt="Summit audience and stage lighting"
+        stats={[
+          { value: '2 Days', label: 'of programming' },
+          { value: '30+', label: 'countries represented' },
+          { value: '50+', label: 'speakers and facilitators' },
+          { value: '100+', label: 'exhibitors and partners' },
+        ]}
+      />
 
-      {/* Event Synopsis Card */}
-      <section className="section-padding bg-white relative -mt-10">
+      <section className="section-padding px-4 sm:px-6 lg:px-8">
         <div className="container-custom">
-          <div className="bg-gradient-to-r from-[#170d43] to-[#2a1b69] rounded-2xl p-8 md:p-12 shadow-2xl">
-            <div className="grid lg:grid-cols-3 gap-8 items-center">
-              <div className="lg:col-span-2">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-[#ffcc00]/20 rounded-lg flex items-center justify-center">
-                    <Award className="w-6 h-6 text-[#ffcc00]" />
-                  </div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-white">Event Overview</h2>
-                </div>
+          <SectionHeading
+            eyebrow="Why Evolve"
+            title="A clearer story, stronger confidence, and more event energy."
+            description="The refreshed page structure puts vision, value, and event credibility up front while keeping the content easy to scan."
+          />
 
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center">
-                        <Calendar className="w-5 h-5 text-[#ffcc00]" />
-                      </div>
-                      <div>
-                        <div className="text-sm text-gray-300">Dates</div>
-                        <div className="text-lg font-semibold text-white">11-12 June 2026</div>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center">
-                        <MapPin className="w-5 h-5 text-[#ffcc00]" />
-                      </div>
-                      <div>
-                        <div className="text-sm text-gray-300">Venue</div>
-                        <div className="text-lg font-semibold text-white">
-                          Harare International Conference Centre
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center">
-                        <Globe className="w-5 h-5 text-[#ffcc00]" />
-                      </div>
-                      <div>
-                        <div className="text-sm text-gray-300">Theme</div>
-                        <div className="text-lg font-semibold text-white">
-                          {`  Empowering Africa's Digital Leap`}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center">
-                        <Briefcase className="w-5 h-5 text-[#ffcc00]" />
-                      </div>
-                      <div>
-                        <div className="text-sm text-gray-300">Organized by</div>
-                        <div className="text-lg font-semibold text-white">Evolve Africa</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="lg:text-right">
-                <div className="inline-flex flex-col items-end">
-                  <div className="text-6xl font-bold text-[#ffcc00]">2</div>
-                  <div className="text-white font-medium">Days of Innovation</div>
-                  <div className="mt-2 text-sm text-gray-300">Multiple tracks & sessions</div>
-                  <Button
-                    className="mt-6 bg-[#ffcc00] hover:bg-[#e6b800] text-black font-semibold"
-                    asChild
-                  >
-                    <Link href="/program">
-                      View Program <ArrowRight className="ml-2 w-4 h-4" />
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Core Values */}
-      <section className="section-padding bg-[#f8f9fa]">
-        <div className="container-custom">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm mb-4">
-              <Star className="w-4 h-4 text-[#ffcc00]" />
-              <span className="text-sm font-medium text-gray-700">Our Foundation</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-[#170d43] mb-4">Core Values</h2>
-            <p className="text-lg text-gray-600 text-center">
-              Guiding principles that shape every aspect of our summit
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {coreValues.map((value, index) => {
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            {values.map((value, index) => {
               const Icon = value.icon
+
               return (
-                <div
-                  key={index}
-                  className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100"
-                >
-                  <div
-                    className={`w-14 h-14 rounded-xl bg-gradient-to-br ${value.color} flex items-center justify-center mb-6`}
-                  >
-                    <Icon className="w-7 h-7 text-white" />
+                <FadeIn key={value.title} delay={index * 100}>
+                  <div className="event-surface event-card-hover rounded-[1.8rem] p-6">
+                    <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,var(--brand-blue),var(--brand-cyan))] text-white">
+                      <Icon className="h-6 w-6" />
+                    </div>
+                    <h3 className="text-2xl font-semibold text-slate-950">{value.title}</h3>
+                    <p className="mt-3 text-sm leading-7 text-slate-600">{value.description}</p>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">{value.title}</h3>
-                  <p className="text-gray-600">{value.description}</p>
-                </div>
+                </FadeIn>
               )
             })}
           </div>
         </div>
       </section>
 
-      {/* Vision & Mission */}
-      <section className="section-padding bg-white">
-        <div className="container-custom">
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Vision */}
-            <div className="relative">
-              <div className="absolute -top-4 -left-4 w-24 h-24 bg-purple-100 rounded-full blur-xl opacity-50" />
-              <div className="relative bg-gradient-to-br from-[#170d43] to-[#2a1b69] rounded-2xl p-8 text-white">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
-                    <Target className="w-6 h-6 text-[#ffcc00]" />
-                  </div>
-                  <h3 className="text-2xl font-bold">Our Vision</h3>
-                </div>
-                <p className="text-lg leading-relaxed">
-                  {`To establish Zimbabwe as Africa's premier digital transformation hub, catalyzing
-                  innovation and sustainable growth across the continent.`}
-                </p>
+      <section className="section-padding bg-[linear-gradient(180deg,#f9fbff,#ffffff)] px-4 sm:px-6 lg:px-8">
+        <div className="container-custom grid gap-8 lg:grid-cols-2">
+          <FadeIn>
+            <div className="event-panel-dark rounded-[2rem] p-8 md:p-10">
+              <div className="inline-flex rounded-full border border-white/10 bg-white/6 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/70">
+                Vision
               </div>
+              <h2 className="mt-5 text-4xl font-semibold text-white">
+                Build a trusted hub for digital leadership in Africa.
+              </h2>
+              <p className="mt-4 text-slate-300">
+                Evolve positions Zimbabwe as a meeting point for innovation, policy dialogue,
+                partnerships, and talent development across the continent.
+              </p>
             </div>
-
-            {/* Mission */}
-            <div className="relative">
-              <div className="absolute -top-4 -right-4 w-24 h-24 bg-yellow-100 rounded-full blur-xl opacity-50" />
-              <div className="relative bg-gradient-to-br from-[#ffcc00] to-[#ff9900] rounded-2xl p-8 text-gray-900">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-black/10 rounded-lg flex items-center justify-center">
-                    <Zap className="w-6 h-6 text-gray-900" />
-                  </div>
-                  <h3 className="text-2xl font-bold">Our Mission</h3>
-                </div>
-                <p className="text-lg leading-relaxed">
-                  {`  Accelerate Africa's digital transformation by fostering collaboration, showcasing
-                  innovation, and driving investment in ICT for inclusive growth.`}
-                </p>
+          </FadeIn>
+          <FadeIn delay={120}>
+            <div className="event-surface rounded-[2rem] p-8 md:p-10">
+              <div className="inline-flex rounded-full bg-slate-950 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white">
+                Mission
               </div>
+              <h2 className="mt-5 text-4xl font-semibold text-slate-950">
+                Turn conversations into action through visibility, access, and collaboration.
+              </h2>
+              <p className="section-copy mt-4">
+                From keynote stages to workshop rooms and partner lounges, the summit is built to
+                generate real outcomes for delegates, students, brands, and institutions.
+              </p>
             </div>
-          </div>
+          </FadeIn>
         </div>
       </section>
 
-      {/* Key Themes */}
-      <section className="section-padding bg-gradient-to-b from-[#f8f9fa] to-white">
+      <section className="section-padding px-4 pb-24 sm:px-6 lg:px-8">
         <div className="container-custom">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm mb-4">
-              <Sparkles className="w-4 h-4 text-[#ffcc00]" />
-              <span className="text-sm font-medium text-gray-700">Focus Areas</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-[#170d43] mb-4">
-              Key Discussion Themes
-            </h2>
-            <p className="text-lg text-gray-600 text-center">
-              Exploring the frontiers of digital transformation in Africa
-            </p>
-          </div>
+          <SectionHeading
+            eyebrow="Discussion Themes"
+            title="The topics driving the 2026 conversation."
+            description="The redesign also lets the content breathe, so major themes feel more premium and easier to navigate."
+          />
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {keynoteThemes.map((theme, index) => (
-              <div
-                key={index}
-                className="group bg-white rounded-xl p-6 border border-gray-200 hover:border-[#ffcc00] transition-all duration-300 hover:shadow-lg"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-[#ffcc00]/10 rounded-lg flex items-center justify-center group-hover:bg-[#ffcc00]/20 transition-colors">
-                    <span className="text-lg font-bold text-[#170d43]">{index + 1}</span>
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {themes.map((theme, index) => (
+              <FadeIn key={theme} delay={index * 80}>
+                <div className="event-surface rounded-[1.6rem] p-5">
+                  <div className="flex items-start gap-3">
+                    <Award className="mt-1 h-5 w-5 flex-none text-[var(--brand-gold)]" />
+                    <p className="text-slate-700">{theme}</p>
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 group-hover:text-[#170d43] transition-colors">
-                    {theme}
-                  </h3>
                 </div>
-                {/* <div className="mt-4 pt-4 border-t border-gray-100">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500">Multiple sessions</span>
-                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-[#ffcc00] transition-colors" />
-                  </div>
-                </div> */}
-              </div>
+              </FadeIn>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Timeline Preview */}
-      <section className="section-padding bg-white">
-        <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#170d43] mb-4">Summit Timeline</h2>
-            <p className="text-lg text-gray-600">Two days packed with insights and innovation</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Day 1 */}
-            <div className="bg-gradient-to-br from-[#170d43] to-[#2a1b69] rounded-2xl p-8 text-white">
-              <div className="flex items-center justify-between mb-8">
-                <div>
-                  <div className="text-sm text-gray-300">Day 1</div>
-                  <h3 className="text-2xl font-bold">Opening & Keynotes</h3>
+      <section className="relative h-[450px] overflow-hidden px-4 sm:px-6 lg:px-8">
+        <div className="absolute inset-0">
+          <video className="h-full w-full object-cover" autoPlay loop muted playsInline>
+            <source
+              src="https://cdn.coverr.co/videos/coverr-abstract-connection-background-15837/1080p.mp4"
+              type="video/mp4"
+            />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/85 to-slate-900/60" />
+        </div>
+        <div className="relative flex h-full items-center">
+          <div className="container-custom">
+            <FadeIn>
+              <div className="max-w-2xl">
+                <div className="mb-4 inline-flex rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/70">
+                  Experience The Energy
                 </div>
-                <div className="text-3xl font-bold text-[#ffcc00]">11</div>
-              </div>
-
-              <div className="space-y-4">
-                {[
-                  { time: '08:00', title: 'Registration & Networking', desc: 'Welcome breakfast' },
-                  { time: '10:00', title: 'Opening Ceremony', desc: 'Official launch' },
-                  { time: '11:30', title: 'Keynote Address', desc: "Africa's Digital Future" },
-                  { time: '14:00', title: 'Panel Discussions', desc: 'Multiple tracks' },
-                ].map((session, idx) => (
-                  <div key={idx} className="flex items-start gap-4 p-4 bg-white/10 rounded-xl">
-                    <div className="font-bold text-[#ffcc00] min-w-[60px]">{session.time}</div>
-                    <div>
-                      <div className="font-semibold">{session.title}</div>
-                      <div className="text-sm text-gray-300">{session.desc}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Day 2 */}
-            <div className="bg-gradient-to-br from-[#ffcc00] to-[#ff9900] rounded-2xl p-8 text-gray-900">
-              <div className="flex items-center justify-between mb-8">
-                <div>
-                  <div className="text-sm text-gray-700">Day 2</div>
-                  <h3 className="text-2xl font-bold">Workshops & Closing</h3>
-                </div>
-                <div className="text-3xl font-bold text-gray-900">12</div>
-              </div>
-
-              <div className="space-y-4">
-                {[
-                  { time: '09:00', title: 'Expert Workshops', desc: 'Hands-on sessions' },
-                  { time: '11:00', title: 'Startup Pitch', desc: 'Innovation showcase' },
-                  { time: '14:00', title: 'Networking Lunch', desc: 'Business connections' },
-                  { time: '16:00', title: 'Closing Ceremony', desc: 'Awards & commitments' },
-                ].map((session, idx) => (
-                  <div key={idx} className="flex items-start gap-4 p-4 bg-black/10 rounded-xl">
-                    <div className="font-bold text-gray-900 min-w-[60px]">{session.time}</div>
-                    <div>
-                      <div className="font-semibold">{session.title}</div>
-                      <div className="text-sm text-gray-700">{session.desc}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Target Audience */}
-      <section className="section-padding bg-[#f8f9fa]">
-        <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#170d43] mb-4">
-              Who Should Attend
-            </h2>
-            <p className="text-lg text-gray-600 text-center">
-              {`Join Africa's most influential digital transformation community`}
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                icon: Briefcase,
-                title: 'Business Leaders',
-                desc: 'CEOs, CTOs, Digital Transformation Heads',
-              },
-              {
-                icon: Building,
-                title: 'Government Officials',
-                desc: 'Policy makers & Regulatory bodies',
-              },
-              {
-                icon: Users,
-                title: 'Tech Innovators',
-                desc: 'Startups, Developers, Entrepreneurs',
-              },
-              { icon: Flag, title: 'Investors', desc: 'VCs, Angels, Development Partners' },
-            ].map((audience, index) => {
-              const Icon = audience.icon
-              return (
-                <div
-                  key={index}
-                  className="bg-white rounded-2xl p-6 text-center shadow-lg hover:shadow-xl transition-all duration-300"
-                >
-                  <div className="w-16 h-16 bg-[#ffcc00]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Icon className="w-8 h-8 text-[#ffcc00]" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{audience.title}</h3>
-                  <p className="text-gray-600 text-sm">{audience.desc}</p>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Attend */}
-      <section className="section-padding bg-white">
-        <div className="container-custom">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <h2 className="text-3xl font-bold mb-4">Why Attend</h2>
-              <p className="text-lg text-gray-600 mb-4">
-                Join peers, leaders and innovators to gain practical knowledge, expand your network,
-                and discover opportunities to grow your business or career.
-              </p>
-              <ul className="list-disc pl-5 text-gray-600 space-y-2">
-                <li>Learn from Africa's top tech leaders and practitioners</li>
-                <li>Hands-on workshops and practical sessions</li>
-                <li>Networking with investors, partners and peers</li>
-                <li>Discover market and product opportunities across the continent</li>
-              </ul>
-            </div>
-            <div className="flex justify-center">
-              <Image
-                src="/images/about-why-attend.svg"
-                alt="Why attend"
-                width={520}
-                height={360}
-                className="rounded-xl"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Expected Outcomes */}
-      <section className="section-padding bg-[#f8f9fa]">
-        <div className="container-custom">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold mb-4">Expected Outcomes</h2>
-            <p className="text-lg text-gray-600 text-center">What participants will take away</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-2xl p-6 text-center shadow-sm">
-              <Image src="/images/expected-outcome.svg" alt="Insights" width={140} height={120} />
-              <h3 className="text-lg font-semibold mt-4">Actionable Insights</h3>
-              <p className="text-sm text-gray-600 mt-2">
-                Practical knowledge you can apply immediately.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-2xl p-6 text-center shadow-sm">
-              <Image
-                src="/images/expected-outcome.svg"
-                alt="Partnerships"
-                width={140}
-                height={120}
-              />
-              <h3 className="text-lg font-semibold mt-4">New Partnerships</h3>
-              <p className="text-sm text-gray-600 mt-2">
-                Connect with stakeholders and collaborators.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-2xl p-6 text-center shadow-sm">
-              <Image
-                src="/images/expected-outcome.svg"
-                alt="Opportunities"
-                width={140}
-                height={120}
-              />
-              <h3 className="text-lg font-semibold mt-4">Market Opportunities</h3>
-              <p className="text-sm text-gray-600 mt-2">
-                Discover new markets and funding avenues.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Partner With Us */}
-      <section className="section-padding bg-white">
-        <div className="container-custom">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="order-2 md:order-1">
-              <h2 className="text-3xl font-bold mb-4">Why Partner With Us</h2>
-              <p className="text-lg text-gray-600 mb-4">
-                Partnering with Evolve places your brand at the center of Africa's digital
-                transformation agenda. Enjoy targeted visibility, curated meetings, and access to
-                decision-makers.
-              </p>
-              <div className="mt-4">
+                <h2 className="text-4xl font-semibold text-white md:text-5xl">
+                  Where Africa's digital future takes shape
+                </h2>
+                <p className="mt-4 text-lg text-slate-300">
+                  Join industry leaders, innovators, and visionaries for two days of inspiring
+                  keynotes, hands-on workshops, and meaningful connections.
+                </p>
                 <Button
-                  className="bg-[#ffcc00] hover:bg-[#e6b800] text-black font-semibold"
                   asChild
+                  className="mt-6 rounded-full bg-white text-slate-900 hover:bg-white/90"
                 >
-                  <Link href="/partnerships">Partner With Us</Link>
+                  <Link href="/gallery">
+                    <Play className="mr-2 h-4 w-4" /> Watch Highlights
+                  </Link>
+                </Button>
+              </div>
+            </FadeIn>
+          </div>
+        </div>
+      </section>
+
+      <section className="section-padding px-4 sm:px-6 lg:px-8">
+        <div className="container-custom">
+          <SectionHeading
+            eyebrow="Our Journey"
+            title="Six years of shaping Africa's tech landscape."
+            description="From a small gathering to a continental event, see how we've grown together."
+          />
+
+          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+            {timeline.map((item, index) => (
+              <FadeIn key={item.year} delay={index * 100}>
+                <div className="event-surface rounded-[1.5rem] p-5 text-center">
+                  <div className="mb-3 text-3xl font-bold text-[var(--brand-blue)]">
+                    {item.year}
+                  </div>
+                  <h4 className="font-semibold text-slate-950">{item.title}</h4>
+                  <p className="mt-2 text-sm text-slate-600">{item.description}</p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-padding bg-[linear-gradient(180deg,#f8fafc,#eef4ff)] px-4 sm:px-6 lg:px-8">
+        <div className="container-custom">
+          <SectionHeading
+            eyebrow="Our Team"
+            title="The people behind the summit."
+            description="Meet the dedicated team working to bring you this transformative event."
+          />
+
+          <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {team.map((member, index) => (
+              <FadeIn key={member.name} delay={index * 100}>
+                <div className="group relative overflow-hidden rounded-[1.8rem]">
+                  <div className="aspect-[3/4] w-full overflow-hidden bg-gradient-to-br from-slate-200 to-slate-300">
+                    <div className="absolute inset-0 flex items-center justify-center bg-slate-800/10">
+                      <div className="text-center">
+                        <Users className="mx-auto h-12 w-12 text-slate-400" />
+                        <p className="mt-2 text-sm text-slate-500">Team Member</p>
+                      </div>
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 p-5">
+                    <h4 className="text-lg font-semibold text-white">{member.name}</h4>
+                    <p className="text-sm text-white/80">{member.role}</p>
+                  </div>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-padding px-4 sm:px-6 lg:px-8">
+        <div className="container-custom">
+          <SectionHeading
+            eyebrow="Gallery"
+            title="Moments from past summits."
+            description="A visual journey through the highlights and memories we've created together."
+          />
+
+          <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
+            {galleryImages.map((src, index) => (
+              <FadeIn key={index} delay={index * 50}>
+                <div className="group relative aspect-square overflow-hidden rounded-[1.25rem] bg-slate-200">
+                  <img
+                    src={src}
+                    alt={`Summit moment ${index + 1}`}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/20" />
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+
+          <div className="mt-10 flex justify-center">
+            <Button
+              asChild
+              variant="outline"
+              className="rounded-full border-2 border-slate-300 px-6"
+            >
+              <Link href="/gallery">
+                View Full Gallery
+                <Sparkles className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <section className="section-padding px-4 sm:px-6 lg:px-8">
+        <FadeIn>
+          <div className="container-custom overflow-hidden rounded-[2.2rem] bg-gradient-to-r from-[var(--brand-blue)] to-[var(--brand-cyan)] p-8 md:p-12">
+            <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
+              <div>
+                <h2 className="text-3xl font-semibold text-white md:text-4xl">
+                  Join us in making history
+                </h2>
+                <p className="mt-4 text-lg text-white/80">
+                  Be part of Africa's largest tech gathering. Whether you're a startup, enterprise,
+                  or student, there's a place for you at Evolve 2026.
+                </p>
+              </div>
+              <div className="flex flex-wrap justify-center gap-4">
+                <Button className="rounded-full bg-white px-6 text-[var(--brand-blue)] hover:bg-white/90">
+                  <Calendar className="mr-2 h-4 w-4" />
+                  Register Now
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  className="rounded-full border-2 border-white/30 bg-white/10 px-6 text-white hover:bg-white/20"
+                >
+                  <Link href="/partnerships">
+                    <Globe className="mr-2 h-4 w-4" />
+                    Become a Partner
+                  </Link>
                 </Button>
               </div>
             </div>
-
-            <div className="order-1 md:order-2 flex justify-center">
-              <Image
-                src="/images/partner.svg"
-                alt="Partner"
-                width={520}
-                height={360}
-                className="rounded-xl"
-              />
-            </div>
           </div>
-        </div>
-      </section>
-
-      {/* Lively preview (animated svg) */}
-      <section className="section-padding bg-white">
-        <div className="container-custom text-center">
-          <h2 className="text-3xl font-bold mb-4">Experience the Energy</h2>
-          <p className="text-gray-600 mb-6">A short glimpse of what the summit feels like.</p>
-          <div className="mx-auto max-w-md">
-            <img src="/images/lively.svg" alt="Lively preview" className="w-full rounded-xl" />
-          </div>
-        </div>
-      </section>
-
-      {/* Conclusion */}
-      <section className="section-padding bg-gradient-to-b from-[#f8f9fa] to-white">
-        <div className="container-custom text-center">
-          <h2 className="text-3xl font-bold mb-4">Join Us</h2>
-          <p className="text-md md:text-lg text-gray-600 text-center">
-            Be part of Africa's digital story—learn, collaborate and grow with a vibrant community
-            of innovators and leaders.
-          </p>
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="relative overflow-hidden">
-        {/* Background pattern */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#170d43] via-[#2a1b69] to-[#170d43]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,204,0,0.1)_0%,transparent_50%)]" />
-
-        <div className="section-padding relative z-10">
-          <div className="container-custom max-w-4xl text-center">
-            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-              <Trophy className="w-4 h-4 text-[#ffcc00]" />
-              <span className="text-sm font-medium text-white">Limited Spots Available</span>
-            </div>
-
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              {` Be Part of Africa's Digital Revolution`}
-            </h2>
-
-            <p className="text-xl text-gray-300 mb-8 text-center">
-              Join visionary leaders, innovators, and change-makers shaping the future of technology
-              in Africa.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 mt-4 justify-center items-center">
-              <Button
-                size="lg"
-                className="bg-[#ffcc00] hover:bg-[#e6b800] text-black font-bold  shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
-                asChild
-              >
-                <Link href="/register">
-                  Secure Your Spot <ArrowRight className="ml-2 w-5 h-5" />
-                </Link>
-              </Button>
-
-              <Button
-                size="lg"
-                variant="outline"
-                className="bg-transparent hover:bg-white/10 text-white border-white/30 font-semibold "
-                asChild
-              >
-                <Link href="/register">Become a Sponsor</Link>
-              </Button>
-            </div>
-
-            <div className="mt-12 pt-8 border-t border-white/20">
-              <div className="flex flex-wrap justify-center items-center gap-8 text-white/80">
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-5 h-5 text-[#ffcc00]" />
-                  <span>11-12 June 2026</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-5 h-5 text-[#ffcc00]" />
-                  <span>HICC, Harare</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Globe className="w-5 h-5 text-[#ffcc00]" />
-                  <span>Hybrid Event Available</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        </FadeIn>
       </section>
     </div>
   )

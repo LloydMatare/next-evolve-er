@@ -1,4 +1,3 @@
-//@ts-nocheck
 'use client'
 
 import { Button } from '@/components/ui/button'
@@ -19,6 +18,8 @@ import { toast } from 'sonner'
 import { createPayment, updateRegistrationStatus } from '@/lib/api'
 import { motion } from 'framer-motion'
 import { PRICES } from '@/lib/prices'
+import { FadeIn } from '@/components/fade-in'
+import { PageHero } from '@/components/page-hero'
 
 export default function CheckoutPage() {
   const [registrationData, setRegistrationData] = useState<any>(null)
@@ -228,60 +229,41 @@ export default function CheckoutPage() {
 
   if (!registrationData) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0f172a] to-[#1e293b]">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-[#ffcc00] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-white text-lg">Loading your order...</p>
+      <div className="min-h-screen">
+        <div className="container-custom px-4 pt-32 sm:px-6 lg:px-8">
+          <div className="event-panel-dark mx-auto max-w-xl rounded-[2rem] p-8 text-center text-white">
+            <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-2 border-white/20 border-t-[var(--brand-gold)]" />
+            <p className="text-sm font-semibold text-white/85">Loading your order…</p>
+          </div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
-      {/* Hero Section with Animated Background */}
-      <section className="relative pt-32 pb-20 px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a051f] via-[#1a1448] to-[#0f172a]">
-          <div className="absolute top-20 left-10 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[#ffcc00]/5 rounded-full blur-3xl" />
-        </div>
-
-        <div className="container-custom relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-              <Lock className="w-4 h-4 text-[#ffcc00]" />
-              <span className="text-sm font-medium text-white">Secure Checkout</span>
-            </div>
-
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">Complete Payment</h1>
-
-            <p className="text-xl md:text-2xl text-gray-300 text-center mb-8">
-              Almost there! Complete your payment to secure your spot
-            </p>
-          </motion.div>
-        </div>
-      </section>
+    <div className="min-h-screen">
+      <PageHero
+        eyebrow="Secure Checkout"
+        title="Complete your"
+        accent="payment"
+        description="Choose a payment method and finalize your registration. Your order will move into verification immediately after payment."
+        primaryCta={{ href: '/register', label: 'Back to Registration' }}
+        secondaryCta={{ href: '/faq', label: 'Help Center' }}
+        image="/bg-1.jpg"
+        imageAlt="Checkout background"
+        compact
+      />
 
       {/* Main Content */}
-      <section className="py-12 px-2 md:px-4">
+      <section className="relative -mt-10 px-4 pb-24 sm:px-6 lg:px-8">
         <div className="container-custom max-w-2xl md:max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Order Summary - Left Sidebar */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="lg:col-span-1"
-            >
-              <div className="bg-gradient-to-br from-white to-gray-50 rounded-3xl shadow-2xl p-8 border border-gray-100 sticky top-24">
+            <FadeIn className="lg:col-span-1">
+              <div className="event-surface sticky top-24 rounded-[2rem] p-8">
                 <div className="flex items-center justify-between mb-8">
                   <h2 className="text-2xl font-bold text-gray-900">Order Summary</h2>
-                  <BadgeCheck className="w-8 h-8 text-[#ffcc00]" />
+                  <BadgeCheck className="w-8 h-8 text-[var(--brand-gold)]" />
                 </div>
 
                 <div className="space-y-6">
@@ -361,22 +343,17 @@ export default function CheckoutPage() {
                   </div>
 
                   {/* Total Amount */}
-                  <motion.div
-                    initial={{ scale: 0.95 }}
-                    animate={{ scale: 1 }}
-                    transition={{ duration: 0.3 }}
-                    className="bg-gradient-to-r from-[#ffcc00]/10 to-amber-500/10 rounded-2xl p-6 border border-[#ffcc00]/20"
-                  >
+                  <div className="rounded-[1.75rem] border border-[rgba(255,204,0,0.22)] bg-[rgba(255,204,0,0.10)] p-6">
                     <div className="flex justify-between items-center">
                       <div>
                         <p className="text-sm text-gray-600">Total Amount</p>
                         <p className="text-lg font-bold text-gray-900">Including all fees</p>
                       </div>
-                      <p className="text-lg md:text-4xl font-bold text-[#ffcc00]">
+                      <p className="text-lg md:text-4xl font-bold text-[var(--brand-gold)]">
                         ${getPayableAmount()}
                       </p>
                     </div>
-                  </motion.div>
+                  </div>
                 </div>
 
                 {/* Security Badge */}
@@ -390,20 +367,15 @@ export default function CheckoutPage() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </FadeIn>
 
             {/* Payment Method Selection - Main Content */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="lg:col-span-2"
-            >
-              <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
+            <FadeIn className="lg:col-span-2">
+              <div className="event-surface overflow-hidden rounded-[2rem] p-0">
                 {/* Form Header */}
-                <div className="bg-gradient-to-r from-blue-500 to-cyan-400 p-8 text-white">
-                  <h2 className="text-3xl font-bold mb-2">Select Payment Method</h2>
-                  <p className="opacity-90">{`Choose how you'd like to complete your payment`}</p>
+                <div className="event-panel-dark p-8 text-white">
+                  <h2 className="text-3xl font-semibold mb-2">Select payment method</h2>
+                  <p className="text-slate-300">{`Choose how you'd like to complete your payment.`}</p>
                 </div>
 
                 <div className="p-8">
@@ -422,25 +394,23 @@ export default function CheckoutPage() {
                               onClick={() => setSelectedPaymentMethod(method.id)}
                               className={`relative w-full text-left p-6 rounded-2xl border-2 transition-all ${
                                 selectedPaymentMethod === method.id
-                                  ? 'border-blue-500 bg-gradient-to-br from-blue-50 to-cyan-50 shadow-lg shadow-blue-500/20'
-                                  : 'border-gray-200 hover:border-blue-300 hover:shadow-lg'
+                                  ? 'border-[rgba(57,214,255,0.55)] bg-[rgba(57,214,255,0.08)] shadow-lg'
+                                  : 'border-slate-200/80 hover:border-slate-300 hover:shadow-lg'
                               }`}
                             >
                               <div className="flex items-start gap-4">
-                                <div
-                                  className={`w-12 h-12 rounded-xl bg-gradient-to-br ${method.color} flex items-center justify-center flex-shrink-0`}
-                                >
-                                  <Icon className="w-6 h-6 text-white" />
+                                <div className="flex h-12 w-12 flex-none items-center justify-center rounded-2xl bg-[linear-gradient(135deg,var(--brand-blue),var(--brand-cyan))] text-white">
+                                  <Icon className="h-6 w-6" />
                                 </div>
                                 <div className="flex-1">
                                   <div className="flex items-center justify-between mb-2">
                                     <h3 className="font-bold text-gray-900">{method.name}</h3>
-                                    {selectedPaymentMethod === method.id && (
-                                      <CheckCircle className="w-5 h-5 text-blue-500" />
-                                    )}
+                                    {selectedPaymentMethod === method.id ? (
+                                      <CheckCircle className="w-5 h-5 text-[var(--brand-blue)]" />
+                                    ) : null}
                                   </div>
                                   <p className="text-sm text-gray-600 mb-3">{method.description}</p>
-                                  <span className="inline-block bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 text-xs font-medium px-3 py-1 rounded-full">
+                                  <span className="inline-block rounded-full border border-slate-200/70 bg-white/80 px-3 py-1 text-xs font-semibold text-slate-700">
                                     {method.badge}
                                   </span>
                                 </div>
@@ -660,7 +630,7 @@ export default function CheckoutPage() {
                     <Button
                       onClick={() => window.history.back()}
                       variant="outline"
-                      className="w-full border-gray-300 text-gray-700 hover:bg-gray-50 py-4 rounded-xl transition-all"
+                      className="w-full rounded-full border-slate-200 bg-white/80 text-slate-700 hover:bg-slate-50"
                     >
                       <ArrowLeft className="w-4 h-4 mr-2" />
                       Back to Registration
@@ -668,7 +638,7 @@ export default function CheckoutPage() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </FadeIn>
           </div>
         </div>
       </section>
