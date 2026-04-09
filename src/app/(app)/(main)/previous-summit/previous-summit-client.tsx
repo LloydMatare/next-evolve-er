@@ -17,14 +17,17 @@ import {
   Maximize2,
   Film,
   Camera,
+  Users,
 } from 'lucide-react'
 import React, { useState } from 'react'
 import Link from 'next/link'
-import SubHero from '@/components/sub-hero'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import type { MediaItem, SummitData } from './page'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
+import { PageHero } from '@/components/page-hero'
+import { FadeIn } from '@/components/fade-in'
+import { SectionHeading } from '@/components/section-heading'
 
 interface PreviousSummitClientProps {
   summitsData: SummitData[]
@@ -54,256 +57,251 @@ export default function PreviousSummitClient({ summitsData }: PreviousSummitClie
 
   if (!summitsData.length) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">No Previous Summits Available</h2>
-          <p className="text-gray-600">Check back later for summit information</p>
+      <div className="min-h-screen">
+        <div className="container-custom px-4 pt-32 sm:px-6 lg:px-8">
+          <div className="event-surface mx-auto max-w-2xl rounded-[2rem] p-10 text-center">
+            <h2 className="text-3xl font-semibold text-slate-950">No previous summits available</h2>
+            <p className="mt-3 text-slate-600">Check back later for summit information.</p>
+            <div className="mt-6 flex justify-center">
+              <Button asChild className="rounded-full bg-slate-950 text-white hover:bg-slate-800">
+                <Link href="/">Back to home</Link>
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-4 overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0 w-full h-full">
-          <Image
-            src="/bg-1.jpg" // Replace with your actual image path
-            alt="Past Summits Background"
-            fill
-            className="object-cover"
-            priority
-            quality={100}
-          />
-          {/* Gradient overlay to maintain the original color scheme */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#0a051f]/80 via-[#1a1448]/80 to-[#0f1419]/80" />
+    <div className="min-h-screen">
+      <PageHero
+        eyebrow="Our Legacy"
+        title="Past summits, lasting"
+        accent="event momentum"
+        description="Relive the memorable moments, insights, and innovations from previous editions — and see how the summit keeps growing year after year."
+        primaryCta={{ href: '/register', label: 'Register for 2026' }}
+        secondaryCta={{ href: '/gallery', label: 'View Gallery' }}
+        image="/bg-1.jpg"
+        imageAlt="Past summit background"
+        compact
+      />
+
+      {/* Video Hero Section */}
+      <section className="relative h-[400px] overflow-hidden px-4 sm:px-6 lg:px-8">
+        <div className="absolute inset-0">
+          <video className="h-full w-full object-cover" autoPlay loop muted playsInline>
+            <source
+              src="https://cdn.coverr.co/videos/coverr-crowd-at-conference-1-2642/1080p.mp4"
+              type="video/mp4"
+            />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 to-slate-900/50" />
         </div>
-
-        {/* Optional animated blur elements - you can keep these for visual interest */}
-        <div className="absolute top-20 left-1/4 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl mix-blend-overlay" />
-        <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl mix-blend-overlay" />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[#ffcc00]/20 rounded-full blur-3xl mix-blend-overlay" />
-
-        <div className="container-custom relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-            <Trophy className="w-4 h-4 text-[#ffcc00]" />
-            <span className="text-sm font-medium text-white">Our Legacy</span>
+        <div className="relative flex h-full items-center">
+          <div className="container-custom">
+            <FadeIn>
+              <div className="max-w-2xl">
+                <div className="mb-4 inline-flex rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/70">
+                  <Film className="mr-2 h-4 w-4" />
+                  Relive The Magic
+                </div>
+                <h2 className="text-4xl font-semibold text-white md:text-5xl">
+                  Every moment captured
+                </h2>
+                <p className="mt-4 text-lg text-slate-300">
+                  Watch highlights from previous summits and see why Evolve is Africa's premier tech
+                  gathering.
+                </p>
+              </div>
+            </FadeIn>
           </div>
-
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">Past Summits</h1>
-
-          <div className="flex justify-center">
-            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8">
-              Relive the{' '}
-              <span className="text-[#ffcc00] font-semibold">
-                memorable moments, insights, and innovations
-              </span>{' '}
-              from our previous events
-            </p>
-          </div>
-
-          <SubHero />
         </div>
       </section>
 
       {/* Timeline Navigation */}
-      <section className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200">
-        <div className="container-custom">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 py-6">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900">Our Summit Journey</h2>
-              <p className="text-gray-600 mt-1">Explore our evolution through the years</p>
+      <section className="sticky top-0 z-40 border-b border-white/10 bg-white/82 backdrop-blur-xl">
+        <div className="container-custom px-4 py-6 sm:px-6 lg:px-8">
+          <FadeIn>
+            <div className="event-surface rounded-[2rem] p-6">
+              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <div className="text-sm font-semibold uppercase tracking-[0.22em] text-slate-500">
+                    Summit Journey
+                  </div>
+                  <div className="mt-2 text-2xl font-semibold text-slate-950">
+                    Choose an edition
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {summitsData.map((summit) => (
+                    <Button
+                      key={summit.year}
+                      type="button"
+                      variant="outline"
+                      onClick={() => setActiveYear(summit.year)}
+                      className={`rounded-full border-slate-200 bg-white/80 text-slate-700 hover:bg-slate-50 ${
+                        activeYear === summit.year ? 'border-slate-900 text-slate-950' : ''
+                      }`}
+                    >
+                      Summit {summit.year}
+                    </Button>
+                  ))}
+                </div>
+              </div>
             </div>
-
-            <div className="flex gap-4 flex-wrap">
-              {summitsData.map((summit) => (
-                <Button
-                  key={summit.year}
-                  onClick={() => setActiveYear(summit.year)}
-                  className={`transition-all ${
-                    activeYear === summit.year
-                      ? `bg-gradient-to-r ${summit.color} text-white shadow-lg`
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  Summit {summit.year}
-                </Button>
-              ))}
-            </div>
-          </div>
+          </FadeIn>
         </div>
       </section>
 
       {/* Summit Overview */}
-      <section className="py-16 px-4">
+      <section className="section-padding px-4 sm:px-6 lg:px-8">
         <div className="container-custom">
           {/* Summit Theme Card */}
-          <div
-            className={`relative rounded-3xl overflow-hidden ${activeSummit.gradient} p-8 md:p-12 mb-16 text-white`}
-          >
-            <div className="absolute top-6 right-6">
-              <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium">
-                Year {activeYear}
-              </div>
-            </div>
+          <FadeIn>
+            <div className="event-panel-dark rounded-[2.2rem] p-8 md:p-12">
+              <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+                <div className="max-w-3xl">
+                  <div className="inline-flex rounded-full border border-white/10 bg-white/6 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/70">
+                    Summit {activeYear}
+                  </div>
+                  <h2 className="mt-5 text-4xl font-semibold text-white md:text-5xl">
+                    {activeSummit.title}
+                  </h2>
+                  <p className="mt-4 text-lg text-slate-300">{activeSummit.theme}</p>
+                </div>
 
-            <div className="max-w-3xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center">
-                  <Target className="w-7 h-7" />
-                </div>
-                <div>
-                  <h2 className="text-4xl md:text-5xl font-bold mb-2">{activeSummit.title}</h2>
-                  <p className="text-xl opacity-90">{activeSummit.theme}</p>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
-                <div className="text-center">
-                  <div className="text-3xl md:text-4xl font-bold mb-1">
-                    {activeSummit.stats.delegates}
-                  </div>
-                  <div className="text-sm opacity-80">Delegates</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl md:text-4xl font-bold mb-1">
-                    {activeSummit.stats.speakers}
-                  </div>
-                  <div className="text-sm opacity-80">Speakers</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl md:text-4xl font-bold mb-1">
-                    {activeSummit.stats.exhibitors}
-                  </div>
-                  <div className="text-sm opacity-80">Exhibitors</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl md:text-4xl font-bold mb-1">
-                    {activeSummit.stats.countries}
-                  </div>
-                  <div className="text-sm opacity-80">Countries</div>
+                <div className="grid w-full gap-3 sm:grid-cols-2 lg:max-w-md">
+                  {[
+                    { value: activeSummit.stats.delegates, label: 'Delegates' },
+                    { value: activeSummit.stats.speakers, label: 'Speakers' },
+                    { value: activeSummit.stats.exhibitors, label: 'Exhibitors' },
+                    { value: activeSummit.stats.countries, label: 'Countries' },
+                  ].map((stat) => (
+                    <div
+                      key={stat.label}
+                      className="rounded-[1.75rem] border border-white/10 bg-white/6 p-5 text-center"
+                    >
+                      <div className="text-3xl font-semibold text-white">{stat.value}</div>
+                      <div className="mt-2 text-xs font-bold uppercase tracking-[0.24em] text-slate-300">
+                        {stat.label}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
-          </div>
+          </FadeIn>
 
           {/* Key Highlights */}
-          <div className="grid lg:grid-cols-2 gap-12">
+          <div className="mt-10 grid gap-6 lg:grid-cols-2">
             {/* Summit Themes */}
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-12 h-12 bg-gradient-to-r from-[#ffcc00] to-amber-500 rounded-xl flex items-center justify-center">
-                  <BookOpen className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900">Key Themes</h3>
-                  <p className="text-gray-600">Focus areas of Summit {activeYear}</p>
-                </div>
-              </div>
+            <FadeIn>
+              <div className="event-surface rounded-[2rem] p-8 md:p-10">
+                <SectionHeading
+                  eyebrow="Key Themes"
+                  title={`Focus areas for Summit ${activeYear}`}
+                  description="A snapshot of the headline topics that defined the edition."
+                  align="left"
+                />
 
-              <div className="space-y-4">
-                {activeSummit.themes.map((theme, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <span className="text-gray-600 font-bold">{index + 1}</span>
+                <div className="space-y-3">
+                  {activeSummit.themes.map((theme, index) => (
+                    <div
+                      key={theme}
+                      className="rounded-[1.25rem] border border-slate-200/70 bg-white/80 p-4 text-slate-700"
+                    >
+                      {theme}
                     </div>
-                    <span className="text-gray-700">{theme}</span>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
+            </FadeIn>
 
             {/* Summit Highlights */}
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-400 rounded-xl flex items-center justify-center">
-                  <Zap className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900">Event Highlights</h3>
-                  <p className="text-gray-600">Memorable moments from Summit {activeYear}</p>
-                </div>
-              </div>
+            <FadeIn delay={120}>
+              <div className="event-surface rounded-[2rem] p-8 md:p-10">
+                <SectionHeading
+                  eyebrow="Highlights"
+                  title={`Memorable moments from Summit ${activeYear}`}
+                  description="The moments that shaped the edition and created momentum."
+                  align="left"
+                />
 
-              <div className="space-y-4">
-                {activeSummit.highlights.map((highlight, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-gradient-to-r from-[#ffcc00] to-amber-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Star className="w-4 h-4 text-white" />
+                <div className="space-y-3">
+                  {activeSummit.highlights.map((highlight, index) => (
+                    <div
+                      key={highlight}
+                      className="flex items-start gap-3 rounded-[1.25rem] border border-slate-200/70 bg-white/80 p-4 text-slate-700"
+                    >
+                      <Star className="mt-1 h-5 w-5 flex-none text-[var(--brand-gold)]" />
+                      <span>{highlight}</span>
                     </div>
-                    <span className="text-gray-700">{highlight}</span>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
+            </FadeIn>
           </div>
         </div>
       </section>
 
       {/* Gallery Section */}
-      <section className="py-16 px-4 bg-gradient-to-b from-white to-gray-50">
+      <section className="section-padding bg-[linear-gradient(180deg,#ffffff,#eef4ff)] px-4 sm:px-6 lg:px-8">
         <div className="container-custom">
           {/* Photos */}
           {activeImages.length > 0 && (
             <div className="mb-16">
-              <div className="flex items-center justify-between mb-8">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gradient-to-r from-[#ffcc00] to-amber-500 rounded-xl flex items-center justify-center">
-                    <Camera className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-3xl font-bold text-gray-900">Photo Gallery</h3>
-                    <p className="text-gray-600">Captured moments from Summit {activeYear}</p>
-                  </div>
-                </div>
-                <span className="text-gray-500">{activeImages.length} photos</span>
-              </div>
+              <SectionHeading
+                eyebrow="Photo Gallery"
+                title="Captured moments worth revisiting."
+                description={`Browse highlights from Summit ${activeYear}.`}
+                align="left"
+              />
 
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {activeImages.map((image) => (
-                  <div
-                    key={image.id}
-                    onClick={() => openMedia(image)}
-                    className="group relative cursor-pointer overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
-                  >
-                    {/* Image Container */}
-                    <div className="aspect-square relative overflow-hidden">
-                      <Image src={image.url} alt={image.title} fill className="object-cover" />
+                  <FadeIn key={image.id}>
+                    <div
+                      onClick={() => openMedia(image)}
+                      className="event-surface event-card-hover group relative cursor-pointer overflow-hidden rounded-[2rem] border border-slate-200/60 bg-white p-0"
+                    >
+                      <div className="relative aspect-square overflow-hidden">
+                        <Image src={image.url} alt={image.title} fill className="object-cover" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#050814] via-transparent to-transparent opacity-85" />
 
-                      {/* Hover Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="absolute left-5 right-5 top-5 flex items-center justify-between gap-3">
+                          <div className="rounded-full border border-white/10 bg-black/35 px-3 py-1.5 text-xs font-semibold text-white/85 backdrop-blur">
+                            {image.category}
+                          </div>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              toggleLike(image.id)
+                            }}
+                            className="rounded-full border-white/16 bg-white/10 text-white hover:bg-white/16"
+                          >
+                            <Heart
+                              className={`h-4 w-4 ${
+                                likedItems.includes(image.id)
+                                  ? 'fill-red-500 text-red-500'
+                                  : 'text-white'
+                              }`}
+                            />
+                          </Button>
+                        </div>
+
                         <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                          <h4 className="font-bold mb-1">{image.title}</h4>
-                          <p className="text-sm text-gray-300">{image.category}</p>
+                          <h4 className="text-lg font-semibold">{image.title}</h4>
+                          <div className="mt-3 flex items-center gap-2 text-sm text-white/80">
+                            <Maximize2 className="h-4 w-4" />
+                            <span className="font-semibold">Quick view</span>
+                          </div>
                         </div>
                       </div>
-
-                      {/* Quick View Button */}
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                        <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/30">
-                          <Maximize2
-                            className="w-6 h-6 text-wh
-                          ite"
-                          />
-                        </div>
-                      </div>
-
-                      {/* Like Button */}
-                      <Button
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          toggleLike(image.id)
-                        }}
-                        className="absolute top-4 right-4 w-10 h-10 bg-black/40 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black/60 transition-colors"
-                      >
-                        <Heart
-                          className={`w-5 h-5 ${likedItems.includes(image.id) ? 'fill-red-500 text-red-500' : 'text-white'}`}
-                        />
-                      </Button>
                     </div>
-                  </div>
+                  </FadeIn>
                 ))}
               </div>
             </div>
@@ -411,6 +409,63 @@ export default function PreviousSummitClient({ summitsData }: PreviousSummitClie
                   </div>
                 </div>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="section-padding px-4 sm:px-6 lg:px-8">
+        <div className="container-custom">
+          <SectionHeading
+            eyebrow="Attendee Voices"
+            title="What participants say."
+            description="Hear from delegates who experienced our summits firsthand."
+          />
+
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {[
+              {
+                name: 'Dr. James Wilson',
+                company: 'TechCorp Africa',
+                quote:
+                  'The summit connected us with partners we never thought possible. Incredible networking.',
+              },
+              {
+                name: 'Sarah Chen',
+                company: 'Innovate Hub',
+                quote:
+                  "Best tech event I've attended in Africa. The quality of speakers was exceptional.",
+              },
+              {
+                name: 'Marcus Johnson',
+                company: 'Startup Kenya',
+                quote:
+                  'We found three investors and two strategic partners. Absolutely worth attending.',
+              },
+            ].map((testimonial, index) => (
+              <FadeIn key={testimonial.name} delay={index * 100}>
+                <div className="event-surface rounded-[1.8rem] p-6">
+                  <div className="mb-4 flex gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className="h-5 w-5 fill-[var(--brand-gold)] text-[var(--brand-gold)]"
+                      />
+                    ))}
+                  </div>
+                  <p className="text-lg leading-relaxed text-slate-700">"{testimonial.quote}"</p>
+                  <div className="mt-6 flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--brand-blue)] text-white">
+                      {testimonial.name.charAt(0)}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-slate-950">{testimonial.name}</p>
+                      <p className="text-sm text-slate-500">{testimonial.company}</p>
+                    </div>
+                  </div>
+                </div>
+              </FadeIn>
             ))}
           </div>
         </div>

@@ -1,6 +1,5 @@
 'use client'
 
-import { Navbar } from '@/components/navbar'
 import {
   Image as ImageIcon,
   Play,
@@ -15,11 +14,12 @@ import {
 } from 'lucide-react'
 import React, { useState } from 'react'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
-import SubHero from '@/components/sub-hero'
 import Image from 'next/image'
 import type { MediaItem } from './page'
 import { Button } from '@/components/ui/button'
-import HeroSection from '@/components/hero-section'
+import { PageHero } from '@/components/page-hero'
+import { FadeIn } from '@/components/fade-in'
+import { SectionHeading } from '@/components/section-heading'
 
 interface GalleryClientProps {
   images: MediaItem[]
@@ -60,304 +60,334 @@ export default function GalleryClient({ images, videos, categories, years }: Gal
   })
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#f8f9fa] to-white">
-      <Navbar />
+    <div className="min-h-screen">
+      <PageHero
+        eyebrow="Summit Gallery"
+        title="Photos, film, and replay-worthy"
+        accent="event moments"
+        description="The gallery now sits inside the same modern event shell, so the visual storytelling feels cohesive from the homepage through to media highlights."
+        primaryCta={{ href: '/register', label: 'Join The Event' }}
+        secondaryCta={{ href: '/previous-summit', label: 'View Past Editions' }}
+        image="/bg-1.jpg"
+        imageAlt="Audience and stage lights"
+        compact
+      />
 
-      {/* Hero Section */}
-      <HeroSection />
-
-      {/* Filter Controls */}
-      <section className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200">
-        <div className="container-custom py-6">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div className="flex items-center gap-2">
-              <Filter className="w-5 h-5 text-[#ffcc00]" />
-              <span className="font-medium text-gray-700">Filter by:</span>
-            </div>
-
-            <div className="flex flex-wrap gap-2">
-              {/* Category Filters */}
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-500">Category:</span>
-                <div className="flex flex-wrap gap-2">
-                  {categories.map((category) => (
-                    <Button
-                      key={category}
-                      onClick={() => setActiveCategory(category)}
-                      className={`px-3 py-1.5 text-sm rounded-full transition-all ${
-                        activeCategory === category
-                          ? 'bg-[#ffcc00] text-gray-900 font-medium'
-                          : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                      }`}
-                    >
-                      {category}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Year Filters */}
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-500">Year:</span>
-                <div className="flex gap-2">
-                  {years.map((year) => (
-                    <Button
-                      key={year}
-                      onClick={() => setActiveYear(year)}
-                      className={`px-3 py-1.5 text-sm rounded-full transition-all ${
-                        activeYear === year
-                          ? 'bg-[#170d43] text-white font-medium'
-                          : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                      }`}
-                    >
-                      {year}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* View Toggle */}
-            <div className="flex items-center gap-2">
-              <Button
-                onClick={() => setViewMode('grid')}
-                className={`p-2 rounded-lg ${viewMode === 'grid' ? 'bg-[#ffcc00]/10 text-[#ffcc00]' : 'text-gray-400 hover:text-gray-600'}`}
-              >
-                <Grid className="w-5 h-5" />
-              </Button>
-              <Button
-                onClick={() => setViewMode('masonry')}
-                className={`p-2 rounded-lg ${viewMode === 'masonry' ? 'bg-[#ffcc00]/10 text-[#ffcc00]' : 'text-gray-400 hover:text-gray-600'}`}
-              >
-                <div className="flex flex-col gap-0.5">
-                  <div className="flex gap-0.5">
-                    <div className="w-1.5 h-1.5 bg-current rounded" />
-                    <div className="w-1.5 h-1.5 bg-current rounded" />
+      <section className="sticky top-0 z-40 border-b border-white/10 bg-white/82 backdrop-blur-xl">
+        <div className="container-custom px-4 py-6 sm:px-6 lg:px-8">
+          <FadeIn>
+            <div className="event-surface rounded-[2rem] p-5 md:p-6">
+              <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-center">
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center gap-2 text-sm font-semibold text-slate-700">
+                    <Filter className="h-4 w-4 text-[var(--brand-blue)]" />
+                    Filters
                   </div>
-                  <div className="flex gap-0.5">
-                    <div className="w-1.5 h-1.5 bg-current rounded" />
-                    <div className="w-1.5 h-1.5 bg-current rounded" />
+
+                  <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-sm text-slate-500">Category</span>
+                      <div className="flex flex-wrap gap-2">
+                        {categories.map((category) => (
+                          <Button
+                            key={category}
+                            type="button"
+                            variant="outline"
+                            onClick={() => setActiveCategory(category)}
+                            className={`rounded-full border-slate-200 bg-white/80 text-sm text-slate-700 hover:bg-slate-50 ${
+                              activeCategory === category
+                                ? 'border-[rgba(57,214,255,0.55)] text-slate-950'
+                                : ''
+                            }`}
+                          >
+                            {category}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-sm text-slate-500">Year</span>
+                      <div className="flex flex-wrap gap-2">
+                        {years.map((year) => (
+                          <Button
+                            key={year}
+                            type="button"
+                            variant="outline"
+                            onClick={() => setActiveYear(year)}
+                            className={`rounded-full border-slate-200 bg-white/80 text-sm text-slate-700 hover:bg-slate-50 ${
+                              activeYear === year ? 'border-slate-900 text-slate-950' : ''
+                            }`}
+                          >
+                            {year}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </Button>
+
+                <div className="flex items-center gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setViewMode('grid')}
+                    className={`rounded-full border-slate-200 bg-white/80 ${
+                      viewMode === 'grid'
+                        ? 'border-[rgba(57,214,255,0.55)] text-slate-950'
+                        : 'text-slate-600'
+                    }`}
+                  >
+                    <Grid className="h-4 w-4" />
+                    <span className="ml-2 text-sm font-semibold">Grid</span>
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setViewMode('masonry')}
+                    className={`rounded-full border-slate-200 bg-white/80 ${
+                      viewMode === 'masonry'
+                        ? 'border-[rgba(57,214,255,0.55)] text-slate-950'
+                        : 'text-slate-600'
+                    }`}
+                  >
+                    <span className="flex h-4 w-4 flex-col justify-center gap-0.5">
+                      <span className="flex gap-0.5">
+                        <span className="h-1.5 w-1.5 rounded bg-current" />
+                        <span className="h-1.5 w-1.5 rounded bg-current" />
+                      </span>
+                      <span className="flex gap-0.5">
+                        <span className="h-1.5 w-1.5 rounded bg-current" />
+                        <span className="h-1.5 w-1.5 rounded bg-current" />
+                      </span>
+                    </span>
+                    <span className="ml-2 text-sm font-semibold">Masonry</span>
+                  </Button>
+                </div>
+              </div>
             </div>
-          </div>
+          </FadeIn>
         </div>
       </section>
 
-      {/* Photos Section */}
-      <section className="py-16 px-4">
+      <section className="section-padding px-4 sm:px-6 lg:px-8">
         <div className="container-custom">
-          <div className="flex items-center justify-between mb-12">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-[#ffcc00]/10 rounded-xl flex items-center justify-center">
-                <ImageIcon className="w-6 h-6 text-[#ffcc00]" />
-              </div>
-              <div>
-                <h2 className="text-4xl md:text-5xl font-bold text-[#170d43]">Photos</h2>
-                <p className="text-gray-600 mt-1">{filteredImages.length} moments captured</p>
-              </div>
-            </div>
-            <div className="text-sm text-gray-500">
-              Showing {filteredImages.length} of {images.length} photos
-            </div>
-          </div>
+          <SectionHeading
+            eyebrow="Photo Highlights"
+            title="A gallery that feels like the event."
+            description="Browse curated moments with the same premium surfaces, hover motion, and visual storytelling as the rest of the site."
+          />
 
           <div
             className={`grid ${viewMode === 'grid' ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4' : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'} gap-6`}
           >
             {filteredImages.map((image) => (
-              <div
-                key={image.id}
-                onClick={() => openMedia(image)}
-                className="group relative cursor-pointer overflow-hidden rounded-2xl bg-gray-100 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
-              >
-                {/* Image Container */}
-                <div className="aspect-[4/3] relative overflow-hidden">
-                  {image.url ? (
-                    <Image
-                      src={image.url}
-                      alt={image.title}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400" />
-                  )}
-
-                  {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                      <h3 className="font-bold text-lg mb-2">{image.title}</h3>
-                      <p className="text-sm text-gray-300 line-clamp-2">{image.description}</p>
-                    </div>
-                  </div>
-
-                  {/* Top Right Badge */}
-                  <div className="absolute top-4 right-4">
-                    <div className="bg-black/50 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full">
-                      {image.category}
-                    </div>
-                  </div>
-
-                  {/* Bottom Left Info */}
-                  <div className="absolute bottom-4 left-4 flex items-center gap-4">
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        toggleLike(image.id)
-                      }}
-                      className="flex items-center gap-1.5 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full hover:bg-white/30 transition-colors"
-                    >
-                      <Heart
-                        className={`w-4 h-4 ${likedItems.includes(image.id) ? 'fill-red-500 text-red-500' : 'text-white'}`}
+              <FadeIn key={image.id} className="h-full">
+                <div
+                  onClick={() => openMedia(image)}
+                  className="event-surface event-card-hover group relative h-full cursor-pointer overflow-hidden rounded-[2rem] border border-slate-200/60 bg-white p-0"
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    {image.url ? (
+                      <Image
+                        src={image.url}
+                        alt={image.title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                       />
-                      <span className="text-white text-sm">
-                        {image.likes + (likedItems.includes(image.id) ? 1 : 0)}
-                      </span>
-                    </Button>
-                    <div className="text-white/80 text-sm bg-black/30 px-3 py-1.5 rounded-full">
-                      {image.year}
+                    ) : (
+                      <div className="h-full w-full bg-[linear-gradient(135deg,rgba(67,97,238,0.18),rgba(57,214,255,0.16))]" />
+                    )}
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050814] via-transparent to-transparent opacity-85" />
+
+                    <div className="absolute left-5 right-5 top-5 flex items-center justify-between gap-3">
+                      <div className="rounded-full border border-white/10 bg-black/35 px-3 py-1.5 text-xs font-semibold text-white/85 backdrop-blur">
+                        {image.category}
+                      </div>
+                      <div className="rounded-full border border-white/10 bg-black/35 px-3 py-1.5 text-xs font-semibold text-white/80 backdrop-blur">
+                        {image.year}
+                      </div>
+                    </div>
+
+                    <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                      <h3 className="text-lg font-semibold">{image.title}</h3>
+                      <p className="mt-2 line-clamp-2 text-sm text-slate-200/90">
+                        {image.description}
+                      </p>
+
+                      <div className="mt-4 flex items-center justify-between">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            toggleLike(image.id)
+                          }}
+                          className="rounded-full border-white/16 bg-white/10 text-white hover:bg-white/16"
+                        >
+                          <Heart
+                            className={`h-4 w-4 ${
+                              likedItems.includes(image.id)
+                                ? 'fill-red-500 text-red-500'
+                                : 'text-white'
+                            }`}
+                          />
+                          <span className="ml-2 text-sm font-semibold">
+                            {image.likes + (likedItems.includes(image.id) ? 1 : 0)}
+                          </span>
+                        </Button>
+                        <div className="flex items-center gap-2 text-sm text-white/80">
+                          <Maximize2 className="h-4 w-4" />
+                          <span className="font-semibold">Quick view</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-
-                {/* Quick View Button */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/30">
-                    <Maximize2 className="w-6 h-6 text-white" />
-                  </div>
-                </div>
-              </div>
+              </FadeIn>
             ))}
           </div>
 
           {filteredImages.length === 0 && (
-            <div className="text-center py-20">
-              <ImageIcon className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-xl font-medium text-gray-500">No photos found</h3>
-              <p className="text-gray-400 mt-2">Try changing your filters</p>
-            </div>
+            <FadeIn>
+              <div className="event-surface mt-10 rounded-[2rem] p-10 text-center">
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[rgba(67,97,238,0.12)] text-[var(--brand-blue)]">
+                  <ImageIcon className="h-8 w-8" />
+                </div>
+                <h3 className="mt-6 text-2xl font-semibold text-slate-950">No photos found</h3>
+                <p className="mt-3 text-slate-600">Try changing your filters.</p>
+              </div>
+            </FadeIn>
           )}
         </div>
       </section>
 
-      {/* Videos Section */}
-      <section className="py-16 px-4 bg-gradient-to-b from-white to-gray-50">
+      <section className="section-padding bg-[linear-gradient(180deg,#ffffff,#eef4ff)] px-4 sm:px-6 lg:px-8">
         <div className="container-custom">
-          <div className="flex items-center justify-between mb-12">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-[#ffcc00]/10 rounded-xl flex items-center justify-center">
-                <Video className="w-6 h-6 text-[#ffcc00]" />
-              </div>
-              <div>
-                <h2 className="text-4xl md:text-5xl font-bold text-[#170d43]">Videos</h2>
-                <p className="text-gray-600 mt-1">{filteredVideos.length} featured videos</p>
-              </div>
-            </div>
-            <div className="text-sm text-gray-500">
-              Total views:{' '}
-              {filteredVideos.reduce((sum, video) => sum + (video.views || 0), 0).toLocaleString()}
-            </div>
-          </div>
+          <SectionHeading
+            eyebrow="Video Replays"
+            title="Watch keynote moments and highlight reels."
+            description="A cleaner, more cinematic video grid that still feels part of the same event website."
+          />
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredVideos.map((video) => (
-              <div key={video.id} className="group cursor-pointer">
-                {/* Video Card */}
+              <FadeIn key={video.id}>
                 <div
                   onClick={() => openMedia(video)}
-                  className="relative aspect-video overflow-hidden rounded-2xl bg-gray-900 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
+                  className="event-surface event-card-hover group relative cursor-pointer overflow-hidden rounded-[2rem] border border-slate-200/60 bg-white p-0"
                 >
-                  {/* Video Thumbnail */}
-                  {video.thumbnail && video.thumbnail !== '/placeholder.png' ? (
-                    <Image
-                      src={video.thumbnail}
-                      alt={video.title}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900" />
-                  )}
+                  <div className="relative aspect-video overflow-hidden bg-[#050814]">
+                    {video.thumbnail && video.thumbnail !== '/placeholder.png' ? (
+                      <Image
+                        src={video.thumbnail}
+                        alt={video.title}
+                        fill
+                        className="object-cover opacity-95"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                    ) : (
+                      <div className="h-full w-full bg-[radial-gradient(circle_at_top,rgba(57,214,255,0.18),transparent_55%)]" />
+                    )}
 
-                  {/* Play Button Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent flex items-center justify-center">
-                    <div className="w-20 h-20 bg-[#ffcc00] group-hover:bg-amber-500 rounded-full flex items-center justify-center transform group-hover:scale-110 transition-all duration-300 shadow-2xl">
-                      <Play className="w-8 h-8 text-white ml-1" />
-                    </div>
-                  </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050814] via-transparent to-transparent" />
 
-                  {/* Video Info Overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white bg-gradient-to-t from-black/80 to-transparent">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium bg-[#ffcc00] text-gray-900 px-3 py-1 rounded-full">
+                    <div className="absolute left-5 right-5 top-5 flex items-center justify-between gap-3">
+                      <div className="rounded-full border border-white/10 bg-black/35 px-3 py-1.5 text-xs font-semibold text-white/85 backdrop-blur">
                         {video.category}
-                      </span>
-                      <span className="text-sm opacity-75">{video.year}</span>
+                      </div>
+                      <div className="rounded-full border border-white/10 bg-black/35 px-3 py-1.5 text-xs font-semibold text-white/80 backdrop-blur">
+                        {video.year}
+                      </div>
                     </div>
-                    <h3 className="font-bold text-lg mb-2 line-clamp-1">{video.title}</h3>
-                    <p className="text-sm text-gray-300 line-clamp-2 mb-3">{video.description}</p>
-                    <div className="flex items-center justify-between text-sm">
-                      <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-1">
-                          <Play className="w-4 h-4" />
-                          <span>{video.views?.toLocaleString() || '0'}</span>
+
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[var(--brand-gold)] text-slate-950 shadow-2xl transition-transform duration-300 group-hover:scale-110">
+                        <Play className="h-7 w-7 translate-x-px" />
+                      </div>
+                    </div>
+
+                    <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                      <h3 className="text-lg font-semibold">{video.title}</h3>
+                      <p className="mt-2 line-clamp-2 text-sm text-slate-200/90">
+                        {video.description}
+                      </p>
+
+                      <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm text-white/80">
+                        <div className="flex items-center gap-2">
+                          <Video className="h-4 w-4" />
+                          <span className="font-semibold">{video.views?.toLocaleString() || '0'}</span>
+                          <span>views</span>
                         </div>
+
                         <Button
+                          type="button"
+                          variant="outline"
                           onClick={(e) => {
                             e.stopPropagation()
                             toggleLike(video.id)
                           }}
-                          className="flex items-center gap-1 hover:text-[#ffcc00] transition-colors"
+                          className="rounded-full border-white/16 bg-white/10 text-white hover:bg-white/16"
                         >
                           <Heart
-                            className={`w-4 h-4 ${likedItems.includes(video.id) ? 'fill-red-500 text-red-500' : ''}`}
+                            className={`h-4 w-4 ${
+                              likedItems.includes(video.id)
+                                ? 'fill-red-500 text-red-500'
+                                : 'text-white'
+                            }`}
                           />
-                          <span>{video.likes + (likedItems.includes(video.id) ? 1 : 0)}</span>
+                          <span className="ml-2 font-semibold">
+                            {video.likes + (likedItems.includes(video.id) ? 1 : 0)}
+                          </span>
                         </Button>
                       </div>
-                      <div className="opacity-75">Watch now →</div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </FadeIn>
             ))}
           </div>
 
           {filteredVideos.length === 0 && (
-            <div className="text-center py-20">
-              <Video className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-xl font-medium text-gray-500">No videos found</h3>
-              <p className="text-gray-400 mt-2">Try changing your filters</p>
-            </div>
+            <FadeIn>
+              <div className="event-surface mt-10 rounded-[2rem] p-10 text-center">
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[rgba(67,97,238,0.12)] text-[var(--brand-blue)]">
+                  <Video className="h-8 w-8" />
+                </div>
+                <h3 className="mt-6 text-2xl font-semibold text-slate-950">No videos found</h3>
+                <p className="mt-3 text-slate-600">Try changing your filters.</p>
+              </div>
+            </FadeIn>
           )}
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-16 px-4 bg-gradient-to-r from-[#170d43] to-[#2a1b69]">
+      <section className="section-padding px-4 pb-24 sm:px-6 lg:px-8">
         <div className="container-custom">
-          <div className="grid md:grid-cols-4 gap-8 text-center">
-            <div className="text-white">
-              <div className="text-4xl md:text-5xl font-bold mb-2">{images.length}</div>
-              <div className="text-gray-300">Photos</div>
+          <FadeIn>
+            <div className="event-panel-dark rounded-[2.2rem] p-8 md:p-12">
+              <div className="grid gap-6 text-center md:grid-cols-4">
+                {[
+                  { value: images.length, label: 'Photos' },
+                  { value: videos.length, label: 'Videos' },
+                  { value: Math.max(categories.length - 1, 0), label: 'Categories' },
+                  { value: Math.max(years.length - 1, 0), label: 'Years' },
+                ].map((stat) => (
+                  <div
+                    key={stat.label}
+                    className="rounded-[1.75rem] border border-white/10 bg-white/6 p-6"
+                  >
+                    <div className="text-4xl font-semibold text-white md:text-5xl">{stat.value}</div>
+                    <div className="mt-2 text-xs font-bold uppercase tracking-[0.24em] text-slate-300">
+                      {stat.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="text-white">
-              <div className="text-4xl md:text-5xl font-bold mb-2">{videos.length}</div>
-              <div className="text-gray-300">Videos</div>
-            </div>
-            <div className="text-white">
-              <div className="text-4xl md:text-5xl font-bold mb-2">{categories.length - 1}</div>
-              <div className="text-gray-300">Categories</div>
-            </div>
-            <div className="text-white">
-              <div className="text-4xl md:text-5xl font-bold mb-2">{years.length - 1}</div>
-              <div className="text-gray-300">Years of Content</div>
-            </div>
-          </div>
+          </FadeIn>
         </div>
       </section>
 

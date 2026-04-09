@@ -54,16 +54,14 @@ export function CountdownTimer() {
 
 function TimeBox({ value, label }: { value: number; label: string }) {
   return (
-    <div className="bg-gradient-to-br from-white to-[#f3f3f3] border-2 border-[#ffcc00]/40 rounded-lg p-6 md:p-8 text-center hover:shadow-xl hover:border-[#ffcc00] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
-      {/* Decorative corner */}
-      <div className="absolute top-0 right-0 w-16 h-16 bg-[#ffcc00]/5 rounded-bl-full"></div>
-      {/* Animated pulse effect */}
-      <div className="absolute inset-0 bg-[#ffcc00]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    <div className="group relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/8 p-6 text-center backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-white/20 md:p-8">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,204,0,0.18),transparent_40%)] opacity-70" />
+      <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[linear-gradient(135deg,rgba(57,214,255,0.12),transparent,rgba(255,204,0,0.12))]" />
       <div className="relative z-10">
-        <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#ffcc00] mb-2 drop-shadow-sm">
+        <div className="mb-2 text-4xl font-bold text-white md:text-5xl lg:text-6xl">
           {value.toString().padStart(2, '0')}
         </div>
-        <div className="text-xs md:text-sm text-[#170d43] uppercase tracking-wider font-bold">
+        <div className="text-xs font-bold uppercase tracking-[0.24em] text-slate-300 md:text-sm">
           {label}
         </div>
       </div>
