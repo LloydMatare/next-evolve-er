@@ -1,172 +1,131 @@
-import React from 'react'
+import { FadeIn } from '@/components/fade-in'
+import { PageHero } from '@/components/page-hero'
+import { SectionHeading } from '@/components/section-heading'
+import { Award, Briefcase, Globe, Users } from 'lucide-react'
 import Link from 'next/link'
-import { Users, Briefcase, Globe, Award, ArrowRight } from 'lucide-react'
-import { Button } from '../../../../components/ui/button'
+import { Button } from '@/components/ui/button'
 
-function Partnerships() {
+const benefits = [
+  {
+    icon: Users,
+    title: 'Talent Pipeline',
+    description: 'Meet students, graduates, founders, and digital professionals ready to build.',
+  },
+  {
+    icon: Briefcase,
+    title: 'Brand Visibility',
+    description: 'Place your brand inside a premium summit experience with stronger visual storytelling.',
+  },
+  {
+    icon: Globe,
+    title: 'Regional Reach',
+    description: 'Connect with a multi-sector African audience spanning policy, education, and business.',
+  },
+  {
+    icon: Award,
+    title: 'Recognition',
+    description: 'Show up as a visible supporter of innovation, inclusion, and digital growth.',
+  },
+]
+
+const tiers = [
+  { name: 'Bronze', price: '$2,500', items: ['Website logo placement', '1 booth space', 'Access to talent engagement'] },
+  { name: 'Silver', price: '$7,500', items: ['Prominent logo visibility', '2 booth spaces', 'Speaking or showcase slot'] },
+  { name: 'Gold', price: '$15,000', items: ['Title-level visibility', 'Keynote presence', 'Custom partnership activation'] },
+]
+
+export default function Partnerships() {
   return (
-    <div className="min-h-screen bg-white text-black">
-      <section className="relative bg-gradient-to-br from-[#0a051f] via-[#1a1448] to-[#0f172a] text-white py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-12">
-          <div className="w-1/2">
-            <h1 className="text-4xl lg:text-5xl font-bold mb-4">Partner With Evolve</h1>
-            <p className="text-lg text-purple-100 mb-6">
-              Join our network of organisations investing in youth skills, innovation, and
-              opportunity across Africa. Reach students, showcase solutions, and hire talent.
-            </p>
-            <div className="flex gap-4">
-              <Button asChild>
-                <Link href="/register" className="">
-                  Register Interest <ArrowRight className="w-4 h-4 inline-block ml-2" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                className="bg-purple-600 text-white hover:bg-purple-700 text-white"
-              >
-                <Link href="/contact">Contact Us</Link>
-              </Button>
-            </div>
-          </div>
+    <div className="min-h-screen">
+      <PageHero
+        eyebrow="Partner With Evolve"
+        title="Turn your brand into part of the"
+        accent="summit experience"
+        description="The redesigned partnerships page now feels more like a premium sponsor prospectus, with stronger hierarchy, clearer tiers, and a more conversion-ready event atmosphere."
+        primaryCta={{ href: '/contact', label: 'Contact Partnerships' }}
+        secondaryCta={{ href: '/register', label: 'Register Interest' }}
+        image="/images/partnerships-hero.svg"
+        imageAlt="Partnership and collaboration illustration"
+      />
 
-          <div className="w-1/2">
-            <div className="rounded-2xl overflow-hidden shadow-lg bg-black/20">
-              <img
-                src="/images/partnerships-hero.svg"
-                alt="Partnerships"
-                className="w-full h-56 object-cover"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+      <section className="section-padding px-4 sm:px-6 lg:px-8">
+        <div className="container-custom">
+          <SectionHeading
+            eyebrow="Partner Benefits"
+            title="Built for visibility, recruitment, influence, and impact."
+            description="Every partnership level is now framed around concrete event outcomes rather than just a list of features."
+          />
 
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900">Why Partner With Us</h2>
-            <p className="text-gray-600 mt-2">
-              Access talented students, build brand affinity, and co-create impact.
-            </p>
-          </div>
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            {benefits.map((benefit, index) => {
+              const Icon = benefit.icon
 
-          <div className="grid md:grid-cols-4 gap-6">
-            <div className="bg-white p-6 rounded-xl shadow-sm">
-              <div className="w-10 h-10 bg-purple-50 rounded-md flex items-center justify-center mb-4">
-                <Users className="w-5 h-5 text-purple-600" />
-              </div>
-              <h3 className="font-semibold mb-2">Talent Pipeline</h3>
-              <p className="text-sm text-gray-600">
-                Connect with emerging tech talent across universities and colleges.
-              </p>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl shadow-sm">
-              <div className="w-10 h-10 bg-purple-50 rounded-md flex items-center justify-center mb-4">
-                <Briefcase className="w-5 h-5 text-purple-600" />
-              </div>
-              <h3 className="font-semibold mb-2">Brand Visibility</h3>
-              <p className="text-sm text-gray-600">
-                Showcase your solutions to students, educators, and partners.
-              </p>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl shadow-sm">
-              <div className="w-10 h-10 bg-purple-50 rounded-md flex items-center justify-center mb-4">
-                <Globe className="w-5 h-5 text-purple-600" />
-              </div>
-              <h3 className="font-semibold mb-2">Community Impact</h3>
-              <p className="text-sm text-gray-600">
-                Collaborate on programs that advance digital skills and inclusion.
-              </p>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl shadow-sm">
-              <div className="w-10 h-10 bg-purple-50 rounded-md flex items-center justify-center mb-4">
-                <Award className="w-5 h-5 text-purple-600" />
-              </div>
-              <h3 className="font-semibold mb-2">Recognition</h3>
-              <p className="text-sm text-gray-600">
-                Be recognised as a key supporter of youth tech ecosystems.
-              </p>
-            </div>
+              return (
+                <FadeIn key={benefit.title} delay={index * 90}>
+                  <div className="event-surface event-card-hover rounded-[1.8rem] p-6">
+                    <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,var(--brand-blue),var(--brand-cyan))] text-white">
+                      <Icon className="h-6 w-6" />
+                    </div>
+                    <h3 className="text-2xl font-semibold text-slate-950">{benefit.title}</h3>
+                    <p className="mt-3 text-sm leading-7 text-slate-600">{benefit.description}</p>
+                  </div>
+                </FadeIn>
+              )
+            })}
           </div>
         </div>
       </section>
 
-      <section className="py-16 bg-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold">Sponsorship Tiers</h2>
-            <p className="text-gray-600 mt-2">Flexible packages for companies of all sizes.</p>
-          </div>
+      <section className="section-padding bg-[linear-gradient(180deg,#eef4ff,#ffffff)] px-4 pb-24 sm:px-6 lg:px-8">
+        <div className="container-custom">
+          <SectionHeading
+            eyebrow="Sponsorship Tiers"
+            title="Flexible packages with a more modern presentation."
+            description="The tier cards now read like premium event offers instead of plain pricing tables."
+          />
 
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="border rounded-xl p-6 text-center">
-              <h3 className="text-xl font-semibold mb-2">Bronze</h3>
-              <div className="text-3xl font-bold text-gray-900 mb-4">$2,500</div>
-              <ul className="text-sm text-gray-600 space-y-2 mb-6">
-                <li>Logo on website</li>
-                <li>1x booth space</li>
-                <li>Access to student CVs</li>
-              </ul>
-              <Button asChild className="bg-purple-600 text-white hover:bg-purple-700 text-white">
-                <Link href="/contact">Enquire</Link>
-              </Button>
-            </div>
-
-            <div className="border-2 border-purple-600 rounded-xl p-6 text-center bg-purple-50">
-              <h3 className="text-xl font-semibold mb-2">Silver</h3>
-              <div className="text-3xl font-bold text-gray-900 mb-4">$7,500</div>
-              <ul className="text-sm text-gray-600 space-y-2 mb-6">
-                <li>Prominent logo placement</li>
-                <li>2x booth spaces + speaking slot</li>
-                <li>Targeted recruitment session</li>
-              </ul>
-              <Button asChild className="bg-purple-600 text-white hover:bg-purple-700 text-white">
-                <Link href="/contact">Enquire</Link>
-              </Button>
-            </div>
-
-            <div className="border rounded-xl p-6 text-center">
-              <h3 className="text-xl font-semibold mb-2">Gold</h3>
-              <div className="text-3xl font-bold text-gray-900 mb-4">$15,000</div>
-              <ul className="text-sm text-gray-600 space-y-2 mb-6">
-                <li>Title sponsor</li>
-                <li>Keynote slot + large booth</li>
-                <li>Custom program partnership</li>
-              </ul>
-              <Button asChild className="bg-purple-600 text-white hover:bg-purple-700 text-white">
-                <Link href="/contact">Enquire</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16 bg-gradient-to-br from-[#0a051f] via-[#1a1448] to-[#0f172a] text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to partner?</h2>
-          <p className="text-purple-100 mb-8">
-            Get in touch to design a package that meets your goals.
-          </p>
-          <div className="flex justify-center gap-4">
-            <Button asChild>
-              <Link href="/contact">Contact Our Team</Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              className="bg-purple-600 text-white hover:bg-purple-700 text-white"
-            >
-              <Link href="/register">Register Interest</Link>
-            </Button>
+          <div className="grid gap-6 md:grid-cols-3">
+            {tiers.map((tier, index) => (
+              <FadeIn key={tier.name} delay={index * 90}>
+                <div
+                  className={`${index === 1 ? 'event-panel-dark text-white' : 'event-surface'} rounded-[2rem] p-7`}
+                >
+                  <div className="text-sm uppercase tracking-[0.22em] text-slate-400">
+                    {tier.name}
+                  </div>
+                  <div className={`mt-4 text-5xl font-semibold ${index === 1 ? 'text-white' : 'text-slate-950'}`}>
+                    {tier.price}
+                  </div>
+                  <div className="mt-6 space-y-3">
+                    {tier.items.map((item) => (
+                      <div
+                        key={item}
+                        className={`rounded-[1.1rem] border p-4 text-sm ${
+                          index === 1
+                            ? 'border-white/10 bg-white/6 text-slate-200'
+                            : 'border-slate-200 bg-white/80 text-slate-700'
+                        }`}
+                      >
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                  <Button
+                    asChild
+                    className={`mt-6 w-full rounded-full ${
+                      index === 1
+                        ? 'bg-[var(--brand-gold)] text-slate-950 hover:bg-[#ffe36b]'
+                        : 'bg-slate-950 text-white hover:bg-slate-800'
+                    }`}
+                  >
+                    <Link href="/contact">Enquire Now</Link>
+                  </Button>
+                </div>
+              </FadeIn>
+            ))}
           </div>
         </div>
       </section>
     </div>
   )
 }
-
-export default Partnerships

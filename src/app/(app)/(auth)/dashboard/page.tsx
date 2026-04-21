@@ -1,7 +1,5 @@
-//@ts-nocheck
 'use client'
 
-import { Navbar } from '@/components/navbar'
 import { Button } from '@/components/ui/button'
 import {
   CheckCircle,
@@ -31,6 +29,7 @@ import Link from 'next/link'
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { toast } from 'sonner'
+import { FadeIn } from '@/components/fade-in'
 
 export default function DashboardPage() {
   const [orderData, setOrderData] = useState<any>(null)
@@ -62,8 +61,6 @@ export default function DashboardPage() {
       if (order.paymentMethod === 'paynow' && order.status === 'pending') {
         checkPaymentStatus(order.orderId)
       }
-    } else {
-      window.location.href = '/login'
     }
   }, [])
 
@@ -76,11 +73,22 @@ export default function DashboardPage() {
 
   if (!orderData) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0f172a] to-[#1e293b]">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-[#ffcc00] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-white text-lg">Loading your dashboard...</p>
-        </div>
+      <div className="min-h-screen">
+        <section className="relative px-4 pb-10 pt-32 sm:px-6 lg:px-8">
+          <div className="container-custom">
+            <div className="event-panel-dark rounded-[2.2rem] p-8 md:p-12 text-center">
+              <h1 className="text-3xl font-semibold text-white mb-4">Welcome to your Dashboard</h1>
+              <p className="text-slate-300 mb-8">You don't have any active registrations yet.</p>
+              <Link
+                href="/register"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-[#ffcc00] to-amber-500 text-white px-6 py-3 rounded-full font-semibold hover:opacity-90 transition-opacity"
+              >
+                Register for the Summit
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </div>
+          </div>
+        </section>
       </div>
     )
   }
@@ -129,31 +137,25 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Animated Hero Section */}
-      <section className="relative pt-32 pb-20 px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a051f] via-[#1a1448] to-[#0f172a]">
-          <div className="absolute top-20 left-10 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
-        </div>
-
-        <div className="container-custom relative z-10">
+    <div className="min-h-screen">
+      <section className="relative px-4 pb-10 pt-32 sm:px-6 lg:px-8">
+        <div className="container-custom">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-center"
+            transition={{ duration: 0.45 }}
           >
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-              <Badge className="w-4 h-4 text-[#ffcc00]" />
-              <span className="text-sm font-medium text-white">My Dashboard</span>
+            <div className="event-panel-dark rounded-[2.2rem] p-8 md:p-12">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/6 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/70">
+                <Badge className="h-4 w-4 text-[var(--brand-gold)]" />
+                My Dashboard
+              </div>
+              <h1 className="mt-5 text-4xl font-semibold text-white md:text-5xl">Welcome back.</h1>
+              <p className="mt-3 max-w-2xl text-slate-300">
+                Track your registration status, view event details, and access your digital pass
+                once approved.
+              </p>
             </div>
-
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">Welcome back!</h1>
-
-            <p className="text-xl text-center md:text-2xl text-gray-300">
-              Track your registration and access event details
-            </p>
           </motion.div>
         </div>
       </section>
