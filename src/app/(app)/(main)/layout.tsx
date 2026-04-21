@@ -4,9 +4,9 @@ import React from 'react'
 
 function MainLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div>
+    <div className="site-shell relative z-0">
       <Navbar />
-      <main className="">{children}</main>
+      <main className="relative z-10">{children}</main>
       <Footer />
     </div>
   )

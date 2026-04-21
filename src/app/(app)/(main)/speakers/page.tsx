@@ -24,6 +24,13 @@ import {
 } from 'lucide-react'
 import React, { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog'
 import Link from 'next/link'
 
 type Speaker = {
@@ -56,13 +63,14 @@ export default function Speakers() {
   const [allSpeakers, setAllSpeakers] = useState<Speaker[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [selectedSpeaker, setSelectedSpeaker] = useState<Speaker | null>(null)
 
   // Fetch speakers from Payload API
   useEffect(() => {
     const fetchSpeakers = async () => {
       try {
         setLoading(true)
-        const response = await fetch(`/api/speakers?limit=1000&sort=-createdAt`)
+        const response = await fetch(`/api/speakers?limit=100&sort=-order`)
 
         if (!response.ok) {
           throw new Error('Failed to fetch speakers')
@@ -448,7 +456,8 @@ export default function Speakers() {
               {filteredSpeakers.map((speaker) => (
                 <div
                   key={speaker.id}
-                  className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
+                  className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
+                  onClick={() => setSelectedSpeaker(speaker)}
                 >
                   {/* Speaker Card */}
                   <div className="relative p-6">
@@ -464,9 +473,20 @@ export default function Speakers() {
                     {/* Speaker Avatar */}
                     <div className="flex flex-col items-center mb-6">
                       <div className="relative mb-4">
-                        <div className="w-24 h-24 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 border-4 border-gray-100" />
+                        {speaker.image ? (
+                          <img
+                            src={speaker.image}
+                            alt={speaker.name}
+                            className="w-24 h-24 rounded-full border-4 border-gray-100 object-cover"
+                          />
+                        ) : (
+                          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 border-4 border-gray-100" />
+                        )}
                         <Button
-                          onClick={() => toggleLike(speaker.id)}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            toggleLike(speaker.id)
+                          }}
                           className="absolute -bottom-2 -right-2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors"
                         >
                           <Heart
@@ -661,6 +681,79 @@ export default function Speakers() {
           </div>
         </div>
       </section>
+
+      <Dialog open={!!selectedSpeaker} onOpenChange={() => setSelectedSpeaker(null)}>
+        <DialogContent className="max-w-lg rounded-2xl bg-white p-6">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-gray-900">
+              {selectedSpeaker?.name}
+            </DialogTitle>
+            <DialogDescription className="text-lg font-medium text-[#ffcc00]">
+              {selectedSpeaker?.title} at {selectedSpeaker?.company}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="mt-4">
+            {selectedSpeaker?.image && (
+              <img
+                src={selectedSpeaker.image}
+                alt={selectedSpeaker.name}
+                className="w-full max-h-64 object-cover rounded-xl mb-4"
+              />
+            )}
+            <p className="text-gray-600 mb-4">{selectedSpeaker?.bio}</p>
+            {selectedSpeaker?.topics.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-4">
+                {selectedSpeaker.topics.map((topic, i) => (
+                  <span
+                    key={i}
+                    className="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full"
+                  >
+                    {topic}
+                  </span>
+                ))}
+              </div>
+            )}
+            <div className="space-y-2 border-t border-gray-100 pt-4">
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-gray-500">Session:</span>
+                <span className="font-medium text-gray-900">{selectedSpeaker?.session.title}</span>
+              </div>
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-gray-500">Time:</span>
+                <span className="font-medium text-gray-900">{selectedSpeaker?.session.time}</span>
+              </div>
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-gray-500">Location:</span>
+                <span className="font-medium text-gray-900">
+                  {selectedSpeaker?.session.location}
+                </span>
+              </div>
+            </div>
+            <div className="mt-4 flex gap-4">
+              {selectedSpeaker?.social.twitter && (
+                <a
+                  href={`https://twitter.com/${selectedSpeaker.social.twitter}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-blue-500 hover:underline"
+                >
+                  <Twitter className="w-4 h-4" /> Twitter
+                </a>
+              )}
+              {selectedSpeaker?.social.linkedin && (
+                <a
+                  href={`https://linkedin.com/in/${selectedSpeaker.social.linkedin}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-blue-700 hover:underline"
+                >
+                  <Linkedin className="w-4 h-4" /> LinkedIn
+                </a>
+              )}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

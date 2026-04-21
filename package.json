@@ -18,6 +18,7 @@
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^3.0.52",
     "@hookform/resolvers": "^5.2.2",
     "@payloadcms/db-postgres": "^3.75.0",
     "@payloadcms/email-nodemailer": "^3.75.0",
@@ -55,6 +56,7 @@
     "@radix-ui/react-toggle-group": "^1.1.11",
     "@radix-ui/react-tooltip": "^1.2.8",
     "@tailwindcss/postcss": "^4.1.16",
+    "ai": "^6.0.153",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
@@ -68,6 +70,7 @@
     "lucide-react": "^0.548.0",
     "next": "15.4.10",
     "next-themes": "^0.4.6",
+    "openai": "^6.33.0",
     "payload": "^3.75.0",
     "paynow": "^2.2.2",
     "postcss": "^8.5.6",

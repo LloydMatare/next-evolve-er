@@ -22,7 +22,6 @@ import {
   LayoutList,
 } from 'lucide-react'
 import React, { useState, useEffect } from 'react'
-import SubHero from '@/components/sub-hero'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { format } from 'date-fns'
@@ -35,7 +34,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import HeroSection from '@/components/hero-section'
+import { PageHero } from '@/components/page-hero'
+import { FadeIn } from '@/components/fade-in'
+import { SectionHeading } from '@/components/section-heading'
 
 // Types
 interface BlogPost {
@@ -252,8 +253,8 @@ export default function BlogsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-blue-950 to-white">
-        <div className="pt-32 flex flex-col items-center justify-center">
+      <div className="min-h-screen">
+        <div className="container-custom px-4 pt-32 sm:px-6 lg:px-8">
           <div className="relative">
             <div className="w-16 h-16 border-4 border-[#ffcc00]/20 rounded-full"></div>
             <div className="absolute top-0 left-0 w-16 h-16 border-4 border-[#ffcc00] border-t-transparent rounded-full animate-spin"></div>
@@ -265,134 +266,123 @@ export default function BlogsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
-      {/* Hero Section */}
-      <HeroSection />
+    <div className="min-h-screen">
+      <PageHero
+        eyebrow="Summit Insights"
+        title="News, analysis, and"
+        accent="event updates"
+        description="Explore stories shaping Africa’s digital ecosystem — from emerging tech to policy, startups, and summit announcements."
+        primaryCta={{ href: '/register', label: 'Register Now' }}
+        secondaryCta={{ href: '/program', label: 'View Program' }}
+        image="/bg-1.jpg"
+        imageAlt="Audience and stage lights"
+        compact
+      />
 
       {/* Stats Bar */}
-      <section className="py-8 px-4 bg-gradient-to-r from-[#170d43] to-[#2a1b69]">
+      <section className="relative -mt-10 px-4 pb-8 sm:px-6 lg:px-8">
         <div className="container-custom">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {[
-              { label: 'Total Articles', value: blogs.length, icon: '📝' },
-              {
-                label: 'Featured Posts',
-                value: blogs.filter((b) => b.featured).length,
-                icon: '⭐',
-              },
-              {
-                label: 'Total Views',
-                value: `${Math.round(blogs.reduce((sum, b) => sum + (b.views || 0), 0) / 1000)}K+`,
-                icon: '👁️',
-              },
-              {
-                label: 'Avg. Read Time',
-                value: `${Math.round(blogs.reduce((sum, b) => sum + b.readTime, 0) / (blogs.length || 1) || 5)} min`,
-                icon: '⏱️',
-              },
-            ].map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-2xl mb-1">{stat.icon}</div>
-                <div className="text-3xl font-bold text-white">{stat.value}</div>
-                <div className="text-sm text-gray-300">{stat.label}</div>
+          <FadeIn>
+            <div className="event-panel-dark rounded-[2rem] p-6 md:p-8">
+              <div className="grid grid-cols-2 gap-4 text-center md:grid-cols-4">
+                {[
+                  { label: 'Total Articles', value: blogs.length },
+                  { label: 'Featured Posts', value: blogs.filter((b) => b.featured).length },
+                  {
+                    label: 'Total Views',
+                    value: `${Math.round(blogs.reduce((sum, b) => sum + (b.views || 0), 0) / 1000)}K+`,
+                  },
+                  {
+                    label: 'Avg. Read Time',
+                    value: `${Math.round(blogs.reduce((sum, b) => sum + b.readTime, 0) / (blogs.length || 1) || 5)} min`,
+                  },
+                ].map((stat) => (
+                  <div
+                    key={stat.label}
+                    className="rounded-[1.75rem] border border-white/10 bg-white/6 p-5"
+                  >
+                    <div className="text-3xl font-semibold text-white md:text-4xl">{stat.value}</div>
+                    <div className="mt-2 text-xs font-bold uppercase tracking-[0.24em] text-slate-300">
+                      {stat.label}
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
       {/* Search & Filters */}
-      <section className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200">
-        <div className="container-custom py-6">
-          <div className="flex flex-col md:flex-row gap-6">
-            {/* Search */}
-            <div className="flex-1">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <Input
-                  type="text"
-                  placeholder="Search insights, topics, or authors..."
-                  className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#ffcc00]/50 focus:border-transparent"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
+      <section className="sticky top-0 z-40 border-b border-white/10 bg-white/82 backdrop-blur-xl">
+        <div className="container-custom px-4 py-6 sm:px-6 lg:px-8">
+          <FadeIn>
+            <div className="event-surface rounded-[2rem] p-5 md:p-6">
+              <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-center">
+                <div className="relative">
+                  <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
+                  <Input
+                    type="text"
+                    placeholder="Search insights, topics, or authors…"
+                    className="h-12 w-full rounded-full border border-slate-200/80 bg-white pl-12 pr-4 text-slate-900 shadow-sm outline-none transition focus:border-[rgba(57,214,255,0.5)] focus:ring-4 focus:ring-[rgba(57,214,255,0.14)]"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+
+                <div className="flex flex-wrap items-center gap-3">
+                  <Select value={selectedCategory} onValueChange={(value) => setSelectedCategory(value)}>
+                    <SelectTrigger className="h-12 rounded-full border-slate-200 bg-white/80 px-5">
+                      <SelectValue placeholder="Select category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories.map((category) => (
+                        <SelectItem key={category.id} value={category.id}>
+                          {category.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+
+                  <Select value={sortBy} onValueChange={setSortBy}>
+                    <SelectTrigger className="h-12 rounded-full border-slate-200 bg-white/80 px-5">
+                      <SelectValue placeholder="Sort by" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="newest">Newest First</SelectItem>
+                      <SelectItem value="popular">Most Popular</SelectItem>
+                      <SelectItem value="trending">Trending Now</SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  <div className="flex items-center gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => setViewMode('grid')}
+                      className={`rounded-full border-slate-200 bg-white/80 ${
+                        viewMode === 'grid' ? 'border-[rgba(57,214,255,0.55)] text-slate-950' : 'text-slate-600'
+                      }`}
+                    >
+                      <LayoutGrid className="h-4 w-4" />
+                      <span className="ml-2 text-sm font-semibold">Grid</span>
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => setViewMode('list')}
+                      className={`rounded-full border-slate-200 bg-white/80 ${
+                        viewMode === 'list' ? 'border-[rgba(57,214,255,0.55)] text-slate-950' : 'text-slate-600'
+                      }`}
+                    >
+                      <LayoutList className="h-4 w-4" />
+                      <span className="ml-2 text-sm font-semibold">List</span>
+                    </Button>
+                  </div>
+                </div>
               </div>
             </div>
-
-            {/* Filters */}
-            <div className="flex flex-wrap gap-3">
-              {/* Category Dropdown */}
-              <div className="relative">
-                <Select
-                  value={selectedCategory}
-                  onValueChange={(value) => setSelectedCategory(value)}
-                >
-                  <SelectTrigger className="bg-gray-50 border text-gray-800 placeholder:text-gray-800 border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#ffcc00]/50">
-                    <SelectValue placeholder="Select category" />
-                  </SelectTrigger>
-
-                  <SelectContent>
-                    {categories.map((category) => (
-                      <SelectItem key={category.id} value={category.id}>
-                        {category.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Sort Dropdown */}
-              <div className="relative">
-                <Select value={sortBy} onValueChange={setSortBy}>
-                  <SelectTrigger className="bg-gray-50 border text-gray-800 border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#ffcc00]/50">
-                    <SelectValue placeholder="Sort by" />
-                  </SelectTrigger>
-
-                  <SelectContent>
-                    <SelectItem value="newest">Newest First</SelectItem>
-                    <SelectItem value="popular">Most Popular</SelectItem>
-                    <SelectItem value="trending">Trending Now</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* View Toggle */}
-              <div className="flex gap-2">
-                <Button
-                  onClick={() => setViewMode('grid')}
-                  className={`rounded-lg ${viewMode === 'grid' ? 'bg-white shadow-sm' : ''}`}
-                >
-                  <LayoutGrid className="w-5 h-5 text-black hover:text-white" />
-                </Button>
-                <Button
-                  onClick={() => setViewMode('list')}
-                  className={`p-2 rounded-lg ${viewMode === 'list' ? 'bg-white shadow-sm' : ''}`}
-                >
-                  <LayoutList className="w-5 h-5" />
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          {/* Quick Category Filters */}
-          <div className="mt-6 overflow-x-auto">
-            <div className="flex gap-2 pb-2">
-              {categories.map((category) => (
-                <Button
-                  key={category.id}
-                  onClick={() => setSelectedCategory(category.id)}
-                  className={`flex items-center gap-2 whitespace-nowrap transition-all ${
-                    selectedCategory === category.id
-                      ? `${category.color} text-white shadow-lg`
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  <span>{category.icon}</span>
-                  <span className="text-sm font-medium">{category.name}</span>
-                </Button>
-              ))}
-            </div>
-          </div>
+          </FadeIn>
         </div>
       </section>
 
@@ -734,40 +724,41 @@ export default function BlogsPage() {
       </section>
 
       {/* Newsletter CTA */}
-      <section className="py-20 px-4 bg-gradient-to-br from-[#170d43] via-[#1a1448] to-[#0f1419]">
+      <section className="section-padding px-4 pb-24 sm:px-6 lg:px-8">
         <div className="container-custom max-w-4xl text-center">
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-            <span className="text-lg">📧</span>
-            <span className="text-sm font-medium text-white">Stay Informed</span>
-          </div>
+          <FadeIn>
+            <div className="event-panel-dark rounded-[2.2rem] p-8 md:p-12">
+              <div className="mx-auto max-w-3xl">
+                <div className="inline-flex rounded-full border border-white/10 bg-white/6 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/70">
+                  Stay informed
+                </div>
+                <h2 className="mt-5 text-4xl font-semibold text-white md:text-5xl">Never miss an insight</h2>
+                <p className="mt-4 text-lg text-slate-300">
+                  Get event updates, speaker announcements, and curated analysis in your inbox.
+                </p>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Never Miss an Insight</h2>
-
-          <p className="text-xl text-gray-300 mb-8 text-white">
-            Join 50,000+ professionals who receive our weekly digest of the most important tech
-            news, analysis, and insights from across Africa.
-          </p>
-
-          <div className="max-w-lg mx-auto">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1">
-                <Input
-                  type="email"
-                  placeholder="Enter your work email"
-                  className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#ffcc00] focus:border-transparent"
-                />
+                <div className="mx-auto mt-8 max-w-xl">
+                  <div className="flex flex-col gap-3 sm:flex-row">
+                    <Input
+                      type="email"
+                      placeholder="Enter your email"
+                      className="h-12 rounded-full border-white/16 bg-white/6 text-white placeholder:text-slate-400 focus-visible:ring-[var(--brand-gold)]"
+                    />
+                    <Button className="h-12 rounded-full bg-[var(--brand-gold)] px-7 text-slate-950 hover:bg-[#ffe36b]">
+                      Subscribe
+                    </Button>
+                  </div>
+                  <p className="mt-4 text-sm text-slate-400">
+                    No spam. Unsubscribe anytime. Read our{' '}
+                    <Link href="/privacy" className="text-[var(--brand-gold)] hover:underline">
+                      privacy policy
+                    </Link>
+                    .
+                  </p>
+                </div>
               </div>
-              <Button className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-white font-semibold hover:shadow-lg hover:shadow-amber-500/25 transition-shadow">
-                Subscribe
-              </Button>
             </div>
-            <p className="text-sm text-gray-400 mt-4">
-              No spam, ever. Unsubscribe anytime. Read our{' '}
-              <a href="#" className="text-[#ffcc00] hover:text-amber-400">
-                Privacy Policy
-              </a>
-            </p>
-          </div>
+          </FadeIn>
         </div>
       </section>
     </div>

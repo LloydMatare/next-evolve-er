@@ -2,6 +2,7 @@ import React from 'react'
 import './styles.css'
 import { Toaster } from 'sonner'
 import { Footer } from '@/components/footer'
+import { ChatWidget } from '@/components/chat-widget'
 
 export const metadata = {
   title: "Evolve ICT Summit 2026 | Empowering Africa's Digital Leap",
@@ -24,6 +25,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     <html lang="en">
       <body>
         <main>{children}</main>
+        <ChatWidget />
         <Toaster />
       </body>
     </html>
