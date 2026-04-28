@@ -338,11 +338,29 @@ export const Registrations: CollectionConfig = {
       if (req.user) {
         return true
       }
-      // Public read access (with limitations)
+      // Public read access for exhibitors with paid status
       return {
-        status: {
-          equals: 'approved',
-        },
+        or: [
+          {
+            status: {
+              equals: 'approved',
+            },
+          },
+          {
+            and: [
+              {
+                type: {
+                  equals: 'exhibitor',
+                },
+              },
+              {
+                status: {
+                  equals: 'paid',
+                },
+              },
+            ],
+          },
+        ],
       }
     },
     create: () => true, // Everyone can create registrations
