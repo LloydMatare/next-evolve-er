@@ -30,6 +30,7 @@ import {
   TrendingUp,
 } from 'lucide-react'
 import React, { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import {
   Select,
   SelectContent,
@@ -134,7 +135,9 @@ const fullBoardSchema = z.object({
 type FullBoardFormData = z.infer<typeof fullBoardSchema>
 
 export default function RegisterPage() {
-  const [activeTab, setActiveTab] = useState('attendee')
+  const searchParams = useSearchParams()
+  const initialTab = searchParams.get('type') || 'attendee'
+  const [activeTab, setActiveTab] = useState(initialTab)
   const [selectedSponsorTier, setSelectedSponsorTier] = useState<
     'platinum' | 'gold' | 'silver' | 'bronze'
   >('bronze')
@@ -1255,8 +1258,11 @@ function ExhibitorForm() {
                   {...register('boothNumber')}
                   type="text"
                   className="w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition text-slate-600"
-                  placeholder="e.g., A12, B05"
+                  placeholder="e.g., G1, G12, G25"
                 />
+                <p className="text-xs text-gray-500 mt-1">
+                  Booth numbers range from G1 to G63. Leave blank for automatic assignment.
+                </p>
               </div>
 
               <div>

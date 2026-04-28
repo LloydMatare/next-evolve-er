@@ -49,6 +49,8 @@ const themes = [
   'Innovation, startups, and entrepreneurship',
   'Data governance and regulation',
   'Skills, employability, and future work',
+  'Blockchain, Digital Identity & Trust',
+  'Cloud & Zero-Trust Architecures',
 ]
 
 const timeline = [

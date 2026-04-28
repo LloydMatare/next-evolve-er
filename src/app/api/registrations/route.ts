@@ -79,3 +79,78 @@ export async function GET(request: NextRequest) {
     )
   }
 }
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const payload = await getPayload({ config: configPromise })
+    const url = new URL(request.url)
+
+    // Handle bulk delete for admin - parse individual ID parameters
+    const ids: string[] = []
+    for (const [key, value] of url.searchParams.entries()) {
+      if (key.startsWith('where[and][0][id][in][') && key.endsWith(']')) {
+        ids.push(value)
+      }
+    }
+
+    if (ids.length === 0) {
+      return NextResponse.json(
+        { success: false, error: 'No IDs provided for deletion' },
+        { status: 400 }
+      )
+    }
+
+    // Delete related payments first to avoid foreign key constraint issues
+    const paymentDeletePromises = ids.map(async (id) => {
+      try {
+        // Find payments for this registration
+        const payments = await payload.find({
+          collection: 'payments',
+          where: {
+            registration: {
+              equals: parseInt(id)
+            }
+          },
+          limit: 100
+        })
+
+        // Delete each payment
+        const deletePromises = payments.docs.map(payment =>
+          payload.delete({
+            collection: 'payments',
+            id: payment.id
+          })
+        )
+
+        await Promise.all(deletePromises)
+      } catch (error) {
+        console.error(`Error deleting payments for registration ${id}:`, error)
+        // Continue with other deletions even if this fails
+      }
+    })
+
+    await Promise.all(paymentDeletePromises)
+
+    // Now delete the registrations
+    const deletePromises = ids.map(id => payload.delete({
+      collection: 'registrations',
+      id: parseInt(id)
+    }))
+
+    await Promise.all(deletePromises)
+
+    const response = NextResponse.json({
+      success: true,
+      message: `Successfully deleted ${ids.length} registration(s)`
+    })
+
+    return withCors(response)
+  } catch (error: any) {
+    console.error('Error deleting registrations:', error)
+    const response = NextResponse.json(
+      { success: false, error: error.message || 'Failed to delete registrations' },
+      { status: 500 }
+    )
+    return withCors(response)
+  }
+}

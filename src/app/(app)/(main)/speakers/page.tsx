@@ -683,7 +683,7 @@ export default function Speakers() {
       </section>
 
       <Dialog open={!!selectedSpeaker} onOpenChange={() => setSelectedSpeaker(null)}>
-        <DialogContent className="max-w-lg rounded-2xl bg-white p-6">
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto rounded-2xl bg-white p-6">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-gray-900">
               {selectedSpeaker?.name}
@@ -697,7 +697,7 @@ export default function Speakers() {
               <img
                 src={selectedSpeaker.image}
                 alt={selectedSpeaker.name}
-                className="w-full max-h-64 object-cover rounded-xl mb-4"
+                className="w-full max-h-96 object-contain rounded-xl mb-4"
               />
             )}
             <p className="text-gray-600 mb-4">{selectedSpeaker?.bio}</p>
