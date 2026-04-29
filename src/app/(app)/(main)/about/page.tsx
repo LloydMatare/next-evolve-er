@@ -14,6 +14,9 @@ import {
   Users,
 } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
+import { getPayload } from 'payload'
+import config from '@payload-config'
 
 const values = [
   {
@@ -68,23 +71,86 @@ const timeline = [
   },
 ]
 
-const team = [
-  { name: 'Dr. Sarah Chen', role: 'Summit Director', image: '/placeholder-team-1.jpg' },
-  { name: 'Marcus Johnson', role: 'Program Lead', image: '/placeholder-team-2.jpg' },
-  { name: 'Amara Okonkwo', role: 'Partnerships Director', image: '/placeholder-team-3.jpg' },
-  { name: 'David Mwangi', role: 'Technical Lead', image: '/placeholder-team-4.jpg' },
-]
+const team = [{}]
 
-const galleryImages = [
-  'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80',
-  'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=600&q=80',
-  'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=600&q=80',
-  'https://images.unsplash.com/photo-1559223607-b4d0555ae227?w=600&q=80',
-  'https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=600&q=80',
-  'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&q=80',
-]
+export default async function AboutPage() {
+  const payload = await getPayload({ config })
 
-export default function AboutPage() {
+  // Fetch gallery items for the about page (limit to 6 for the showcase)
+  const galleryData = await payload.find({
+    collection: 'gallery',
+    where: {
+      status: {
+        equals: 'published',
+      },
+      type: {
+        equals: 'image',
+      },
+    },
+    limit: 6,
+    sort: 'order',
+  })
+
+  // Fetch team data (limit to 6 for the showcase)
+  const teamData = await payload.find({
+    collection: 'users',
+    limit: 6,
+  })
+
+  const values = [
+    {
+      icon: Network,
+      title: 'Collaboration',
+      description:
+        'A summit designed to connect government, industry, academia, startups, and youth.',
+    },
+    {
+      icon: Lightbulb,
+      title: 'Innovation',
+      description:
+        'We spotlight practical ideas, prototypes, and scalable African technology stories.',
+    },
+    {
+      icon: Shield,
+      title: 'Trust',
+      description:
+        'The event creates space for credible, future-shaping conversations about infrastructure and security.',
+    },
+    {
+      icon: Sparkles,
+      title: 'Exposure',
+      description:
+        'Attendees gain visibility, opportunity, and meaningful access to partnerships and markets.',
+    },
+  ]
+
+  const themes = [
+    'Emerging technologies and AI',
+    'Digital transformation and infrastructure',
+    'Cybersecurity and digital trust',
+    'Innovation, startups, and entrepreneurship',
+    'Data governance and regulation',
+    'Skills, employability, and future work',
+    'Blockchain, Digital Identity & Trust',
+    'Cloud & Zero-Trust Architecures',
+  ]
+
+  const timeline = [
+    {
+      year: '2024',
+      title: 'Lead With Vision',
+      description:
+        'The 2024 Evolve ICT Summit, themed *Lead with Vision*, empowered professionals to embrace bold leadership in the digital age. The event featured inspiring keynote speakers, forward-thinking panel discussions, and practical insights on innovation, strategy, and transformation. Attendees gained clarity, confidence, and actionable tools to lead impactful change within their organizations and communities.',
+    },
+    {
+      year: '2025',
+      title: 'Sustainable ICT Solutions For The Future',
+      description:
+        'The 2025 Evolve ICT Summit, themed *Sustainable ICT Solutions for the Future*, brought together industry leaders, innovators, and young professionals to explore eco-friendly technologies, digital transformation, and responsible innovation. Key highlights included expert-led discussions, practical insights on green IT, collaborative networking sessions, and actionable strategies for building a resilient, sustainable digital future.',
+    },
+  ]
+
+  const team = teamData.docs
   return (
     <div className="min-h-screen">
       <PageHero
@@ -259,25 +325,31 @@ export default function AboutPage() {
           />
 
           <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {team.map((member, index) => (
-              <FadeIn key={member.name} delay={index * 100}>
-                <div className="group relative overflow-hidden rounded-[1.8rem]">
-                  <div className="aspect-[3/4] w-full overflow-hidden bg-gradient-to-br from-slate-200 to-slate-300">
-                    <div className="absolute inset-0 flex items-center justify-center bg-slate-800/10">
-                      <div className="text-center">
-                        <Users className="mx-auto h-12 w-12 text-slate-400" />
-                        <p className="mt-2 text-sm text-slate-500">Team Member</p>
+            {team.map((member, index) => {
+              // Safely access name and role properties with fallbacks
+              const memberName = (member as any).name || 'Team Member'
+              const memberRole = (member as any).role || 'Team Member'
+
+              return (
+                <FadeIn key={memberName} delay={index * 100}>
+                  <div className="group relative overflow-hidden rounded-[1.8rem]">
+                    <div className="aspect-[3/4] w-full overflow-hidden bg-gradient-to-br from-slate-200 to-slate-300">
+                      <div className="absolute inset-0 flex items-center justify-center bg-slate-800/10">
+                        <div className="text-center">
+                          <Users className="mx-auto h-12 w-12 text-slate-400" />
+                          <p className="mt-2 text-sm text-slate-500">Team Member</p>
+                        </div>
                       </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-5">
+                      <h4 className="text-lg font-semibold text-white">{memberName}</h4>
+                      <p className="text-sm text-white/80">{memberRole}</p>
+                    </div>
                   </div>
-                  <div className="absolute bottom-0 left-0 right-0 p-5">
-                    <h4 className="text-lg font-semibold text-white">{member.name}</h4>
-                    <p className="text-sm text-white/80">{member.role}</p>
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
+                </FadeIn>
+              )
+            })}
           </div>
         </div>
       </section>
@@ -291,18 +363,28 @@ export default function AboutPage() {
           />
 
           <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
-            {galleryImages.map((src, index) => (
-              <FadeIn key={index} delay={index * 50}>
-                <div className="group relative aspect-square overflow-hidden rounded-[1.25rem] bg-slate-200">
-                  <img
-                    src={src}
-                    alt={`Summit moment ${index + 1}`}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/20" />
-                </div>
-              </FadeIn>
-            ))}
+            {galleryData.docs.map((doc, index) => {
+              // Extract image URL from the upload field
+              const imageUrl =
+                doc.image && typeof doc.image === 'object' && 'url' in doc.image
+                  ? (doc.image as { url: string }).url
+                  : `/placeholder.jpg`
+
+              return (
+                <FadeIn key={doc.id} delay={index * 50}>
+                  <div className="group relative aspect-square overflow-hidden rounded-[1.25rem] bg-slate-200">
+                    <Image
+                      src={imageUrl}
+                      alt={doc.title || `Summit moment ${index + 1}`}
+                      width={100}
+                      height={100}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/20" />
+                  </div>
+                </FadeIn>
+              )
+            })}
           </div>
 
           <div className="mt-10 flex justify-center">

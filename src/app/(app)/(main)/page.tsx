@@ -102,16 +102,6 @@ const testimonials = [
     name: 'Dr W Rukanda',
     company: 'Monipac',
   },
-  {
-    quote: 'The networking opportunities were invaluable. We found three key partners here.',
-    name: 'Lisa Chen',
-    company: 'Innovate Africa',
-  },
-  {
-    quote: "Best tech event I've attended in Africa. The quality of speakers was exceptional.",
-    name: 'Robert Kimani',
-    company: 'Digital Solutions',
-  },
 ]
 
 const faqs = [
