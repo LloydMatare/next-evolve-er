@@ -47,8 +47,8 @@ function HeroSection() {
               </h1>
 
               <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-200/90 md:text-xl">
-                A cinematic, future-facing event destination for founders, students, policy
-                leaders, and digital builders shaping Africa&apos;s next leap.
+                A cinematic, future-facing event destination for founders, students, policy leaders,
+                and digital builders shaping Africa&apos;s next leap.
               </p>
 
               <div className="mt-8 flex flex-wrap items-center gap-3 text-sm text-slate-200/80">
@@ -115,10 +115,10 @@ function HeroSection() {
 
               <div className="relative mt-4 grid grid-cols-2 gap-3">
                 {[
-                  { value: '2K+', label: 'delegates' },
-                  { value: '50+', label: 'speakers' },
-                  { value: '100+', label: 'exhibitors' },
-                  { value: '30+', label: 'partners' },
+                  { value: '100+', label: 'delegates' },
+                  { value: '10+', label: 'speakers' },
+                  { value: '10+', label: 'exhibitors' },
+                  { value: '20+', label: 'partners' },
                 ].map((stat) => (
                   <div
                     key={stat.label}
