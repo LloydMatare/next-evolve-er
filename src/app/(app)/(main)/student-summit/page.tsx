@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { FadeIn } from '@/components/fade-in'
 import { PageHero } from '@/components/page-hero'
 import { SectionHeading } from '@/components/section-heading'

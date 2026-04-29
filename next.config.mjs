@@ -15,6 +15,9 @@ const nextConfig = {
       },
     ],
   },
+  // Source maps config — use correct key names for Next.js 15
+  devSourceMap: false,
+  productionBrowserSourceMaps: false,
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],

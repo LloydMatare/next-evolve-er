@@ -99,7 +99,7 @@ export default function CheckoutPage() {
 
         const data = await response.json()
 
-        if (data.success) {
+          if (data.success) {
           // Create payment record
           const paymentData = {
             registration: registrationData.id,
@@ -112,6 +112,11 @@ export default function CheckoutPage() {
 
           await createPayment(paymentData)
           await updateRegistrationStatus(registrationData.id, 'pending', 'paynow')
+
+          // Store order ID in localStorage for success page retrieval
+          if (typeof window !== 'undefined') {
+            localStorage.setItem('lastOrderId', registrationData.orderId)
+          }
 
           // Store order data
           const orderData = {

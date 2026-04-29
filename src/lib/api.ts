@@ -1,7 +1,7 @@
 // lib/api.ts
 const API_URL = process.env.NEXT_PUBLIC_API_URL || '/api'
 
-interface RegistrationData {
+export interface RegistrationData {
   type: 'attendee' | 'sponsor' | 'exhibitor'
   email: string
   status: string
@@ -96,14 +96,19 @@ export async function createPayment(data: any): Promise<any> {
   }
 }
 
-export async function updateRegistrationStatus(id: string, status: string): Promise<any> {
+export async function updateRegistrationStatus(id: string, status: string, paymentMethod?: string): Promise<any> {
   try {
+    const updateData: any = { status }
+    if (paymentMethod) {
+      updateData.paymentMethod = paymentMethod
+    }
+
     const response = await fetch(`${API_URL}/registrations/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ status }),
+      body: JSON.stringify(updateData),
     })
 
     if (!response.ok) {

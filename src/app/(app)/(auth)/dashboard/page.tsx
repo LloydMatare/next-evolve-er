@@ -26,43 +26,54 @@ import {
   Check,
 } from 'lucide-react'
 import Link from 'next/link'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { toast } from 'sonner'
 import { FadeIn } from '@/components/fade-in'
 
 export default function DashboardPage() {
-  const [orderData, setOrderData] = useState<any>(null)
+  type OrderDataType = {
+    id?: string
+    orderId?: string
+    paymentId?: string
+    transactionId?: string
+    paymentMethod?: string
+    amount?: number
+    status?: string
+    [key: string]: any
+  }
+
+  const [orderData, setOrderData] = useState<OrderDataType | null>(null)
   const [copied, setCopied] = useState(false)
   const [paymentStatus, setPaymentStatus] = useState('pending')
 
-  const checkPaymentStatus = async (orderId: string) => {
+  const checkPaymentStatus = useCallback(async (orderId: string) => {
     try {
       const response = await fetch(`/api/payment/status/${orderId}`)
       const data = await response.json()
 
       if (data.paymentStatus === 'paid') {
-        setOrderData((prev) => ({ ...prev, status: 'paid' }))
+        setOrderData((prev: OrderDataType | null) => (prev ? { ...prev, status: 'paid' } : prev))
         setPaymentStatus('paid')
         toast.success('Payment confirmed! Your registration is being processed.')
       }
     } catch (error) {
       console.error('Status check failed:', error)
     }
-  }
-
-  useEffect(() => {
-    const data = sessionStorage.getItem('pendingOrder')
-    if (data) {
-      const order = JSON.parse(data)
-      setOrderData(order)
-
-      // If payment was through Paynow and still pending, check status
-      if (order.paymentMethod === 'paynow' && order.status === 'pending') {
-        checkPaymentStatus(order.orderId)
-      }
-    }
   }, [])
+
+   useEffect(() => {
+     const data = sessionStorage.getItem('pendingOrder')
+     if (data) {
+       const order = JSON.parse(data)
+       setOrderData(order)
+
+       // If payment was through Paynow and still pending, check status
+       if (order.paymentMethod === 'paynow' && order.status === 'pending') {
+         checkPaymentStatus(order.orderId)
+       }
+     }
+   }, [checkPaymentStatus])
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text)
@@ -93,43 +104,43 @@ export default function DashboardPage() {
     )
   }
 
-  const getStatusBadge = () => {
-    if (orderData.status === 'approved') {
-      return (
-        <motion.div
-          initial={{ scale: 0.95 }}
-          animate={{ scale: 1 }}
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-400 text-white px-6 py-3 rounded-full font-semibold shadow-lg shadow-emerald-500/25"
-        >
-          <CheckCircle className="w-5 h-5" />
-          Approved & Confirmed
-        </motion.div>
-      )
-    }
-    return (
-      <motion.div
-        initial={{ scale: 0.95 }}
-        animate={{ scale: 1 }}
-        className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-400 text-white px-6 py-3 rounded-full font-semibold shadow-lg shadow-amber-500/25"
-      >
-        <Clock className="w-5 h-5" />
-        Pending Approval
-      </motion.div>
-    )
-  }
+   const getStatusBadge = () => {
+     if (orderData?.status === 'approved') {
+       return (
+         <motion.div
+           initial={{ scale: 0.95 }}
+           animate={{ scale: 1 }}
+           className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-400 text-white px-6 py-3 rounded-full font-semibold shadow-lg shadow-emerald-500/25"
+         >
+           <CheckCircle className="w-5 h-5" />
+           Approved & Confirmed
+         </motion.div>
+       )
+     }
+     return (
+       <motion.div
+         initial={{ scale: 0.95 }}
+         animate={{ scale: 1 }}
+         className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-400 text-white px-6 py-3 rounded-full font-semibold shadow-lg shadow-amber-500/25"
+       >
+         <Clock className="w-5 h-5" />
+         Pending Approval
+       </motion.div>
+     )
+   }
 
-  const getTypeIcon = () => {
-    switch (orderData.type) {
-      case 'attendee':
-        return <User className="w-5 h-5" />
-      case 'sponsor':
-        return <Award className="w-5 h-5" />
-      case 'exhibitor':
-        return <Store className="w-5 h-5" />
-      default:
-        return <Ticket className="w-5 h-5" />
-    }
-  }
+   const getTypeIcon = () => {
+     switch (orderData?.type) {
+       case 'attendee':
+         return <User className="w-5 h-5" />
+       case 'sponsor':
+         return <Award className="w-5 h-5" />
+       case 'exhibitor':
+         return <Store className="w-5 h-5" />
+       default:
+         return <Ticket className="w-5 h-5" />
+     }
+   }
 
   const downloadQRCode = () => {
     // In production, this would generate and download the actual QR code
@@ -177,30 +188,32 @@ export default function DashboardPage() {
                   <h2 className="text-2xl font-bold text-gray-900">Registration Dashboard</h2>
                 </div>
 
-                <div className="flex items-center gap-4">
-                  <div className="bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl p-4">
-                    <p className="text-sm text-gray-600">Order ID</p>
-                    <div className="flex items-center gap-2">
-                      <code className="font-mono font-bold text-gray-900 text-lg">
-                        {orderData.orderId}
-                      </code>
-                      <button
-                        onClick={() => copyToClipboard(orderData.orderId)}
-                        className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                      >
-                        {copied ? (
-                          <Check className="w-4 h-4 text-emerald-500" />
-                        ) : (
-                          <Copy className="w-4 h-4 text-gray-500" />
+                 <div className="flex items-center gap-4">
+                   <div className="bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl p-4">
+                     <p className="text-sm text-gray-600">Order ID</p>
+                     <div className="flex items-center gap-2">
+                       <code className="font-mono font-bold text-gray-900 text-lg">
+                         {orderData.orderId || 'N/A'}
+                       </code>
+                        {orderData.orderId && (
+                          <button
+                            onClick={() => copyToClipboard(orderData.orderId as string)}
+                            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                          >
+                            {copied ? (
+                              <Check className="w-4 h-4 text-emerald-500" />
+                            ) : (
+                              <Copy className="w-4 h-4 text-gray-500" />
+                            )}
+                          </button>
                         )}
-                      </button>
-                    </div>
-                  </div>
+                     </div>
+                   </div>
 
-                  <div className="bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl p-4">
-                    <p className="text-sm text-gray-600">Amount Paid</p>
-                    <p className="text-2xl font-bold text-[#ffcc00]">${orderData.amount}</p>
-                  </div>
+                   <div className="bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl p-4">
+                     <p className="text-sm text-gray-600">Amount Paid</p>
+                     <p className="text-2xl font-bold text-[#ffcc00]">${orderData.amount || '0'}</p>
+                   </div>
                 </div>
               </div>
 
@@ -431,15 +444,15 @@ export default function DashboardPage() {
                     </div>
                   )}
 
-                  <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-5 rounded-2xl border border-gray-200">
-                    <p className="text-sm text-gray-600 mb-2">Payment Method</p>
-                    <p className="font-bold text-gray-900 capitalize">{orderData.paymentMethod}</p>
-                  </div>
+                   <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-5 rounded-2xl border border-gray-200">
+                     <p className="text-sm text-gray-600 mb-2">Payment Method</p>
+                     <p className="font-bold text-gray-900 capitalize">{orderData.paymentMethod || 'N/A'}</p>
+                   </div>
 
-                  <div className="bg-gradient-to-br from-[#ffcc00]/10 to-amber-500/10 p-5 rounded-2xl border border-[#ffcc00]/20">
-                    <p className="text-sm text-amber-600 mb-2">Total Investment</p>
-                    <p className="text-2xl font-bold text-[#ffcc00]">${orderData.amount}</p>
-                  </div>
+                   <div className="bg-gradient-to-br from-[#ffcc00]/10 to-amber-500/10 p-5 rounded-2xl border border-[#ffcc00]/20">
+                     <p className="text-sm text-amber-600 mb-2">Total Investment</p>
+                     <p className="text-2xl font-bold text-[#ffcc00]">${orderData.amount || '0'}</p>
+                   </div>
                 </div>
               </div>
             </motion.div>
