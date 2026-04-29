@@ -41,7 +41,7 @@ import {
 import { Controller } from 'react-hook-form'
 
 // API utility
-import { createRegistration } from '@/lib/api'
+import { createRegistration, type RegistrationData } from '@/lib/api'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -59,18 +59,18 @@ const attendeeSchema = z.object({
   dietaryRestrictions: z.string().optional(),
 })
 
-const sponsorSchema = z.object({
-  companyName: z.string().min(2, 'Company name is required'),
-  contactPerson: z.string().min(2, 'Contact person name is required'),
-  email: z.string().email('Invalid email address'),
-  phone: z.string().min(10, 'Phone number must be at least 10 digits'),
-  website: z.string().url('Invalid website URL').optional().or(z.literal('')),
-  sponsorshipTier: z.enum(['platinum', 'gold', 'silver', 'bronze']),
-  companyDescription: z.string().min(20, 'Please provide a brief description (min 20 characters)'),
-  numberOfTeamMembers: z.string().min(1, 'Number of team members is required'),
-  teamMembers: z.string().min(10, 'Please provide team member names and roles (comma-separated)'),
-  interestedInBooth: z.boolean().default(false),
-})
+ const sponsorSchema = z.object({
+   companyName: z.string().min(2, 'Company name is required'),
+   contactPerson: z.string().min(2, 'Contact person name is required'),
+   email: z.string().email('Invalid email address'),
+   phone: z.string().min(10, 'Phone number must be at least 10 digits'),
+   website: z.string().url('Invalid website URL').optional().or(z.literal('')),
+   sponsorshipTier: z.enum(['platinum', 'gold', 'silver', 'bronze']),
+   companyDescription: z.string().min(20, 'Please provide a brief description (min 20 characters)'),
+   numberOfTeamMembers: z.string().min(1, 'Number of team members is required'),
+   teamMembers: z.string().min(10, 'Please provide team member names and roles (comma-separated)'),
+   interestedInBooth: z.boolean(),
+ })
 
 const exhibitorSchema = z.object({
   companyName: z.string().min(2, 'Company name is required'),
@@ -129,21 +129,38 @@ const fullBoardSchema = z.object({
   website: z.string().url('Invalid website URL').optional().or(z.literal('')),
   numberOfTeamMembers: z.string().min(1, 'Number of team members is required'),
   teamMembers: z.string().min(10, 'Please provide team member names (comma-separated)'),
+  boothNumber: z.string().optional(),
   specialRequirements: z.string().optional(),
 })
 
 type FullBoardFormData = z.infer<typeof fullBoardSchema>
 
 export default function RegisterPage() {
-  const searchParams = useSearchParams()
-  const initialTab = searchParams.get('type') || 'attendee'
-  const [activeTab, setActiveTab] = useState(initialTab)
+  const [activeTab, setActiveTab] = useState<'attendee' | 'sponsor' | 'exhibitor' | 'full-board'>('attendee')
   const [selectedSponsorTier, setSelectedSponsorTier] = useState<
     'platinum' | 'gold' | 'silver' | 'bronze'
   >('bronze')
 
-  return (
-    <div className="min-h-screen">
+  // Read URL query params on mount (client-side only)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search)
+      const type = params.get('type') as 'attendee' | 'sponsor' | 'exhibitor' | 'full-board' | null
+      if (type && ['attendee', 'sponsor', 'exhibitor', 'full-board'].includes(type)) {
+        setActiveTab(type)
+      }
+    }
+  }, [])
+
+  const handleTabChange = (value: string) => {
+    setActiveTab(value as 'attendee' | 'sponsor' | 'exhibitor' | 'full-board')
+    if (value === 'sponsor') {
+      setSelectedSponsorTier((t) => t || 'bronze')
+    }
+  }
+
+   return (
+     <div className="min-h-screen">
       <PageHero
         eyebrow="Register"
         title="Secure your spot for"
@@ -159,15 +176,11 @@ export default function RegisterPage() {
       {/* Registration Navigation */}
       <section className="relative -mt-10 px-4 pb-24 sm:px-6 lg:px-8">
         <div className="container-custom">
-          <Tabs
-            value={activeTab}
-            onValueChange={(val) => {
-              setActiveTab(val)
-              // ensure that the sponsor tab has a sensible default tier when opened
-              if (val === 'sponsor') setSelectedSponsorTier((t) => t || 'bronze')
-            }}
-            className="w-full"
-          >
+           <Tabs
+             value={activeTab}
+             onValueChange={handleTabChange}
+             className="w-full"
+           >
             <FadeIn>
               <div className="event-surface rounded-[2rem] p-6 md:p-8">
                 <SectionHeading
@@ -276,11 +289,11 @@ export default function RegisterPage() {
                   <h3 className="text-xl font-semibold text-slate-950">{item.title}</h3>
                 </div>
               </FadeIn>
-            ))}
+             ))}
+            </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
   )
 }
 
@@ -302,25 +315,25 @@ function AttendeeForm() {
   const selectedTicket = watch('ticketType')
   const amount = calculateAttendeeAmount(selectedTicket)
 
-  const onSubmit = async (data: AttendeeFormData) => {
-    try {
-      // Prepare registration data for Payload
-      const registrationData = {
-        type: 'attendee',
-        email: data.email,
-        status: 'pending',
-        amount: amount,
-        paymentMethod: 'pending',
-        attendeeDetails: {
-          fullName: data.fullName,
-          phone: data.phone,
-          organization: data.organization,
-          position: data.position,
-          country: data.country,
-          ticketType: data.ticketType,
-          dietaryRestrictions: data.dietaryRestrictions || '',
-        },
-      }
+   const onSubmit = async (data: AttendeeFormData) => {
+     try {
+       // Prepare registration data for Payload
+       const registrationData: RegistrationData = {
+         type: 'attendee',
+         email: data.email,
+         status: 'pending',
+         amount: amount,
+         paymentMethod: 'pending',
+         attendeeDetails: {
+           fullName: data.fullName,
+           phone: data.phone,
+           organization: data.organization,
+           position: data.position,
+           country: data.country,
+           ticketType: data.ticketType,
+           dietaryRestrictions: data.dietaryRestrictions || '',
+         },
+       }
 
       // Save to Payload CMS
       const response = await createRegistration(registrationData)
@@ -608,12 +621,13 @@ function SponsorForm({ initialTier }: { initialTier?: 'platinum' | 'gold' | 'sil
     getValues,
     formState: { errors, isSubmitting },
     watch,
-  } = useForm<SponsorFormData>({
-    resolver: zodResolver(sponsorSchema),
-    defaultValues: {
-      sponsorshipTier: initialTier || 'bronze',
-    },
-  })
+   } = useForm<SponsorFormData>({
+     resolver: zodResolver(sponsorSchema),
+     defaultValues: {
+       sponsorshipTier: initialTier || 'bronze',
+       interestedInBooth: false,
+     },
+   })
 
   // Keep form in sync when parent changes the initial tier
   useEffect(() => {
@@ -649,27 +663,27 @@ function SponsorForm({ initialTier }: { initialTier?: 'platinum' | 'gold' | 'sil
     },
   ]
 
-  const onSubmit = async (data: SponsorFormData) => {
-    try {
-      // Prepare registration data for Payload
-      const registrationData = {
-        type: 'sponsor',
-        email: data.email,
-        status: 'pending',
-        amount: amount,
-        paymentMethod: 'pending',
-        sponsorDetails: {
-          companyName: data.companyName,
-          contactPerson: data.contactPerson,
-          phone: data.phone,
-          website: data.website || '',
-          sponsorshipTier: data.sponsorshipTier,
-          companyDescription: data.companyDescription,
-          numberOfTeamMembers: parseInt(data.numberOfTeamMembers),
-          teamMembers: data.teamMembers,
-          interestedInBooth: data.interestedInBooth,
-        },
-      }
+   const onSubmit = async (data: SponsorFormData) => {
+     try {
+       // Prepare registration data for Payload
+       const registrationData: RegistrationData = {
+         type: 'sponsor',
+         email: data.email,
+         status: 'pending',
+         amount: amount,
+         paymentMethod: 'pending',
+         sponsorDetails: {
+           companyName: data.companyName,
+           contactPerson: data.contactPerson,
+           phone: data.phone,
+           website: data.website || '',
+           sponsorshipTier: data.sponsorshipTier,
+           companyDescription: data.companyDescription,
+           numberOfTeamMembers: parseInt(data.numberOfTeamMembers),
+           teamMembers: data.teamMembers,
+           interestedInBooth: data.interestedInBooth,
+         },
+       }
 
       // Save to Payload CMS
       const response = await createRegistration(registrationData)
@@ -1015,29 +1029,29 @@ function ExhibitorForm() {
     },
   ]
 
-  const onSubmit = async (data: ExhibitorFormData) => {
-    try {
-      // Prepare registration data for Payload
-      const registrationData = {
-        type: 'exhibitor',
-        email: data.email,
-        status: 'pending',
-        amount: amount,
-        paymentMethod: 'pending',
-        exhibitorDetails: {
-          companyName: data.companyName,
-          contactPerson: data.contactPerson,
-          phone: data.phone,
-          website: data.website || '',
-          industry: data.industry,
-          productsServices: data.productsServices,
-          boothSize: data.boothSize,
-          boothNumber: data.boothNumber || '',
-          numberOfTeamMembers: parseInt(data.numberOfTeamMembers),
-          teamMembers: data.teamMembers,
-          specialRequirements: data.specialRequirements || '',
-        },
-      }
+   const onSubmit = async (data: ExhibitorFormData) => {
+     try {
+       // Prepare registration data for Payload
+       const registrationData: RegistrationData = {
+         type: 'exhibitor',
+         email: data.email,
+         status: 'pending',
+         amount: amount,
+         paymentMethod: 'pending',
+         exhibitorDetails: {
+           companyName: data.companyName,
+           contactPerson: data.contactPerson,
+           phone: data.phone,
+           website: data.website || '',
+           industry: data.industry,
+           productsServices: data.productsServices,
+           boothSize: data.boothSize,
+           boothNumber: data.boothNumber || '',
+           numberOfTeamMembers: parseInt(data.numberOfTeamMembers),
+           teamMembers: data.teamMembers,
+           specialRequirements: data.specialRequirements || '',
+         },
+       }
 
       // Save to Payload CMS
       const response = await createRegistration(registrationData)
@@ -1416,42 +1430,47 @@ function FullBoardForm() {
     resolver: zodResolver(fullBoardSchema),
   })
 
-  const onSubmit = async (data: FullBoardFormData) => {
-    try {
-      // Prepare registration data for Payload
-      const registrationData = {
-        type: 'full-board',
-        email: data.email,
-        status: 'pending',
-        amount: FULL_BOARD_AMOUNT,
-        paymentMethod: 'pending',
-        fullBoardDetails: {
-          companyName: data.companyName,
-          contactPerson: data.contactPerson,
-          phone: data.phone,
-          website: data.website || '',
-          numberOfTeamMembers: parseInt(data.numberOfTeamMembers),
-          teamMembers: data.teamMembers,
-          specialRequirements: data.specialRequirements || '',
-        },
-      }
+   const onSubmit = async (data: FullBoardFormData) => {
+     try {
+       // Prepare registration data for Payload
+       const registrationData: RegistrationData = {
+         type: 'exhibitor',
+         email: data.email,
+         status: 'pending',
+         amount: FULL_BOARD_AMOUNT,
+         paymentMethod: 'pending',
+         exhibitorDetails: {
+           companyName: data.companyName,
+           contactPerson: data.contactPerson,
+           phone: data.phone,
+           website: data.website || '',
+           industry: '', // Will be filled later or default
+           productsServices: '',
+           boothSize: 'large',
+           boothNumber: data.boothNumber || '',
+           numberOfTeamMembers: parseInt(data.numberOfTeamMembers),
+           teamMembers: data.teamMembers,
+           specialRequirements: data.specialRequirements || '',
+         },
+       }
 
       // Save to Payload CMS
       const response = await createRegistration(registrationData)
 
-      // Store in sessionStorage for checkout
-      sessionStorage.setItem(
-        'registrationData',
-        JSON.stringify({
-          id: response.doc.id,
-          orderId: response.doc.orderId,
-          type: 'full-board',
-          email: data.email,
-          companyName: data.companyName,
-          contactPerson: data.contactPerson,
-          amount: FULL_BOARD_AMOUNT,
-        }),
-      )
+       // Store in sessionStorage for checkout
+       sessionStorage.setItem(
+         'registrationData',
+         JSON.stringify({
+           id: response.doc.id,
+           orderId: response.doc.orderId,
+           type: 'exhibitor',
+           email: data.email,
+           companyName: data.companyName,
+           contactPerson: data.contactPerson,
+           amount: FULL_BOARD_AMOUNT,
+           boothSize: 'large',
+         }),
+       )
 
       toast.success('Full boarding application submitted! Proceeding to checkout...')
 

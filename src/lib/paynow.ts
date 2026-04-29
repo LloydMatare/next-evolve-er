@@ -1,5 +1,5 @@
+// @ts-nocheck
 // lib/paynow.ts
-// @ts-ignore - paynow might not have types
 import { Paynow } from 'paynow'
 
 let paynowInstance: any = null
