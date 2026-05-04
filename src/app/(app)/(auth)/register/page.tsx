@@ -78,6 +78,7 @@ const exhibitorSchema = z.object({
   email: z.string().email('Invalid email address'),
   phone: z.string().min(10, 'Phone number must be at least 10 digits'),
   website: z.string().url('Invalid website URL').optional().or(z.literal('')),
+  companyLogo: z.string().url('Invalid logo URL').optional().or(z.literal('')),
   industry: z.string().min(2, 'Industry is required'),
   productsServices: z
     .string()
@@ -1032,26 +1033,27 @@ function ExhibitorForm() {
    const onSubmit = async (data: ExhibitorFormData) => {
      try {
        // Prepare registration data for Payload
-       const registrationData: RegistrationData = {
-         type: 'exhibitor',
-         email: data.email,
-         status: 'pending',
-         amount: amount,
-         paymentMethod: 'pending',
-         exhibitorDetails: {
-           companyName: data.companyName,
-           contactPerson: data.contactPerson,
-           phone: data.phone,
-           website: data.website || '',
-           industry: data.industry,
-           productsServices: data.productsServices,
-           boothSize: data.boothSize,
-           boothNumber: data.boothNumber || '',
-           numberOfTeamMembers: parseInt(data.numberOfTeamMembers),
-           teamMembers: data.teamMembers,
-           specialRequirements: data.specialRequirements || '',
-         },
-       }
+        const registrationData: RegistrationData = {
+          type: 'exhibitor',
+          email: data.email,
+          status: 'pending',
+          amount: amount,
+          paymentMethod: 'pending',
+          exhibitorDetails: {
+            companyName: data.companyName,
+            contactPerson: data.contactPerson,
+            phone: data.phone,
+            website: data.website || '',
+            companyLogo: data.companyLogo || '',
+            industry: data.industry,
+            productsServices: data.productsServices,
+            boothSize: data.boothSize,
+            boothNumber: data.boothNumber || '',
+            numberOfTeamMembers: parseInt(data.numberOfTeamMembers),
+            teamMembers: data.teamMembers,
+            specialRequirements: data.specialRequirements || '',
+          },
+        }
 
       // Save to Payload CMS
       const response = await createRegistration(registrationData)
@@ -1232,6 +1234,24 @@ function ExhibitorForm() {
                 {errors.website && (
                   <p className="mt-1 text-sm text-red-600">{errors.website.message}</p>
                 )}
+              </div>
+
+              <div>
+                <Label className="block text-sm font-medium text-gray-600 mb-2">
+                  Company Logo URL (Optional)
+                </Label>
+                <Input
+                  {...register('companyLogo')}
+                  type="url"
+                  className="w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition text-slate-600"
+                  placeholder="https://example.com/logo.png"
+                />
+                {errors.companyLogo && (
+                  <p className="mt-1 text-sm text-red-600">{errors.companyLogo.message}</p>
+                )}
+                <p className="text-xs text-gray-500 mt-1">
+                  Provide a direct URL to your company logo (PNG, JPG, or SVG)
+                </p>
               </div>
 
               <div>

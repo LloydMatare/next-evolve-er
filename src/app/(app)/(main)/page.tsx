@@ -170,6 +170,17 @@ export default function Home() {
     logo: string
     description: string
     website?: string
+    status: string
+    size?: string
+    tier?: string
+    category?: string
+    dimensions?: { width: number; depth: number }
+    amenities?: {
+      power: boolean
+      wifi: boolean
+      display: boolean
+      furniture: boolean
+    }
     position: { x: number; y: number; width: number; height: number }
   }
 
@@ -183,7 +194,9 @@ export default function Home() {
   const [dragStartX, setDragStartX] = useState(0)
   const [dragStartY, setDragStartY] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
+  const [listPage, setListPage] = useState(1)
   const boothsPerPage = 60 // 5 rows * 12 columns
+  const boothsPerListPage = 10
 
   useEffect(() => {
     const fetchFeaturedSpeakers = async () => {
@@ -210,46 +223,43 @@ export default function Home() {
 
     const fetchBooths = async () => {
       try {
-        const response = await fetch('/api/registrations?where[type][equals]=exhibitor&limit=100')
+        const response = await fetch('/api/booths?limit=100&depth=2')
         console.log('Booths response:', response.status, response.ok)
         if (response.ok) {
           const data = await response.json()
           console.log('Booths data:', data)
           const boothData = (data.docs || [])
-            .filter((reg: any) => reg.boothNumber && reg.status === 'paid')
-            .map((reg: any, index: number) => ({
-              id: reg.id,
-              number: reg.boothNumber,
-              company: reg.companyName || reg.firstName + ' ' + reg.lastName,
-              logo: reg.companyLogo?.url || '',
-              description: reg.productsServices || '',
-              website: reg.website,
-              position: {
-                x: 100 + (index % 5) * 150, // Example positions
-                y: 100 + Math.floor(index / 5) * 120,
-                width: 120,
-                height: 80,
-              },
-            }))
+            .filter((booth: any) => booth.status !== 'maintenance')
+            .map((booth: any) => {
+              const assigned = booth.assignedTo
+              const exhibitor = assigned?.exhibitorDetails || assigned
+              const isOccupied = booth.status === 'occupied'
+
+              return {
+                id: booth.id,
+                number: booth.boothNumber,
+                company: booth.company || (isOccupied
+                  ? (exhibitor?.companyName || assigned?.companyName || 'Occupied')
+                  : ''),
+                logo: booth.logo?.url || exhibitor?.companyLogo || '',
+                description: booth.description || exhibitor?.productsServices || '',
+                website: booth.website || exhibitor?.website || '',
+                status: booth.status,
+                size: booth.size,
+                tier: booth.tier,
+                category: booth.category,
+                dimensions: booth.dimensions,
+                amenities: booth.amenities,
+                position: {
+                  x: booth.position?.x ?? 0,
+                  y: booth.position?.y ?? 0,
+                  width: booth.position?.width ?? 120,
+                  height: booth.position?.height ?? 80,
+                },
+              }
+            })
           console.log('Filtered booth data:', boothData)
-          // If no booths, add some mock data for testing
-          if (boothData.length === 0) {
-            const mockBooths = []
-            for (let i = 1; i <= 63; i++) {
-              mockBooths.push({
-                id: `mock${i}`,
-                number: `G${i}`,
-                company: `Company ${i}`,
-                logo: '',
-                description: `Description for booth G${i}`,
-                website: 'https://example.com',
-                position: { x: 0, y: 0, width: 120, height: 80 }, // Position will be calculated in render
-              })
-            }
-            setBooths(mockBooths)
-          } else {
-            setBooths(boothData)
-          }
+          setBooths(boothData)
         }
       } catch (error) {
         console.error('Error fetching booths:', error)
@@ -494,28 +504,57 @@ export default function Home() {
                     const row = Math.floor(index / 8) + 1
                     const col = (index % 8) + 1
 
+                    const isOccupied = booth.status === 'occupied'
+                    const isReserved = booth.status === 'reserved'
+                    const isAvailable = booth.status === 'available'
+
                     return (
                       <div
                         key={booth.id}
-                        className={`rounded cursor-pointer flex flex-col items-center justify-center text-white font-bold text-xs transition-all duration-200 hover:scale-105 hover:shadow-lg p-2 min-h-[50px] ${
-                          booth.id.startsWith('mock')
-                            ? 'bg-gray-400 hover:bg-gray-500 border-2 border-gray-500 text-gray-900'
-                            : 'bg-red-500 hover:bg-red-600 border-2 border-red-700'
+                        className={`rounded cursor-pointer flex flex-col items-center justify-center text-xs transition-all duration-200 hover:scale-105 hover:shadow-lg p-1 min-h-[60px] overflow-hidden ${
+                          isOccupied
+                            ? 'bg-red-500 hover:bg-red-600 border-2 border-red-700 text-white'
+                            : isReserved
+                              ? 'bg-amber-400 hover:bg-amber-500 border-2 border-amber-600 text-gray-900'
+                              : 'bg-emerald-400 hover:bg-emerald-500 border-2 border-emerald-600 text-gray-900'
                         }`}
                         style={{
                           gridColumn: col,
-                          gridRow: row + 1, // +1 to account for entrance row
+                          gridRow: row + 1,
                         }}
                         onClick={() => setSelectedBooth(booth)}
-                        title={`Click to view ${booth.company} details`}
+                        title={`Booth ${booth.number}${booth.company ? ' - ' + booth.company : ''}`}
                       >
-                        <div className="text-center">
-                          <div className="text-sm font-bold leading-tight">
-                            G{index + 1 + (currentPage - 1) * boothsPerPage}
-                          </div>
-                          <div className="text-xs opacity-90 truncate max-w-full leading-tight">
-                            {booth.company}
-                          </div>
+                        <div className="w-full h-full flex flex-col items-center justify-center p-1">
+                          {booth.logo ? (
+                            <>
+                              <img
+                                src={booth.logo}
+                                alt={booth.company}
+                                className="w-12 h-12 object-contain rounded bg-white/90 p-1 mb-1"
+                                onError={(e) => {
+                                  e.currentTarget.style.display = 'none'
+                                }}
+                              />
+                              <div className="text-[10px] font-bold leading-tight truncate w-full text-center">
+                                {booth.company || booth.number}
+                              </div>
+                            </>
+                          ) : (
+                            <div className="text-center">
+                              <div className="text-sm font-bold leading-tight">{booth.number}</div>
+                              {booth.company && (
+                                <div className="text-[10px] opacity-90 truncate max-w-full leading-tight">
+                                  {booth.company}
+                                </div>
+                              )}
+                              {!booth.company && (
+                                <div className="text-[10px] opacity-80 truncate max-w-full leading-tight">
+                                  {isAvailable ? 'Available' : isReserved ? 'Reserved' : 'Occupied'}
+                                </div>
+                              )}
+                            </div>
+                          )}
                         </div>
                       </div>
                     )
@@ -525,12 +564,12 @@ export default function Home() {
                   {Array.from({ length: Math.max(0, 40 - currentBooths.length) }, (_, i) => (
                     <div
                       key={`empty-${i}`}
-                      className="bg-slate-50 border border-slate-200 rounded opacity-50 min-h-[50px]"
+                      className="bg-emerald-200 border-2 border-emerald-400 rounded opacity-70 min-h-[60px] flex items-center justify-center"
                       style={{
                         gridColumn: (i % 8) + 1,
                         gridRow: Math.floor(i / 8) + Math.ceil(currentBooths.length / 8) + 1,
                       }}
-                    />
+                    ></div>
                   ))}
                 </div>
 
@@ -538,48 +577,132 @@ export default function Home() {
                 <div className="mt-4 flex flex-wrap justify-center gap-4 text-xs">
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 bg-red-500 border border-red-700 rounded"></div>
-                    <span>Occupied Booths</span>
+                    <span>Occupied</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-red-400 border border-red-500 rounded"></div>
-                    <span>Sample Booths</span>
+                    <div className="w-3 h-3 bg-amber-400 border border-amber-600 rounded"></div>
+                    <span>Reserved</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-slate-50 border border-slate-200 rounded"></div>
-                    <span>Available Space</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-green-100 border border-green-300 rounded"></div>
-                    <span>Facilities</span>
+                    <div className="w-3 h-3 bg-emerald-400 border border-emerald-600 rounded"></div>
+                    <span>Available</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Booth List - Right Side (1/3 width) */}
+             {/* Booth List - Right Side (1/3 width) */}
             <div className="lg:col-span-1">
               <div className="bg-white rounded-xl shadow-lg p-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Booth Directory</h3>
 
                 {/* Booth List */}
                 <div className="space-y-2 max-h-[400px] overflow-y-auto mb-4">
-                  {currentBooths.map((booth, index) => (
-                    <div
-                      key={booth.id}
-                      className={`p-3 rounded-lg border cursor-pointer transition-all duration-200 hover:shadow-md ${
-                        selectedBooth?.id === booth.id
-                          ? 'bg-red-50 border-red-200'
-                          : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
-                      }`}
-                      onClick={() => setSelectedBooth(booth)}
-                    >
-                      <div className="text-sm font-semibold text-gray-900">
-                        Booth G{index + 1 + (currentPage - 1) * boothsPerPage}
+                  {booths
+                    .slice((listPage - 1) * boothsPerListPage, listPage * boothsPerListPage)
+                    .map((booth) => {
+                    const isOccupied = booth.status === 'occupied'
+                    const isReserved = booth.status === 'reserved'
+                    const isAvailable = booth.status === 'available'
+
+                    return (
+                      <div
+                        key={booth.id}
+                        className={`p-3 rounded-lg border cursor-pointer transition-all duration-200 hover:shadow-md ${
+                          selectedBooth?.id === booth.id
+                            ? 'bg-red-50 border-red-200 ring-2 ring-red-200'
+                            : isOccupied
+                              ? 'bg-gray-50 border-gray-200 hover:bg-gray-100'
+                              : isReserved
+                                ? 'bg-amber-50 border-amber-200 hover:bg-amber-100'
+                                : 'bg-emerald-50 border-emerald-200 hover:bg-emerald-100'
+                        }`}
+                        onClick={() => setSelectedBooth(booth)}
+                      >
+                        <div className="flex items-center gap-3">
+                          {booth.logo ? (
+                            <img
+                              src={booth.logo}
+                              alt={booth.company}
+                              className="w-10 h-10 object-contain rounded bg-white p-1 border border-gray-200 flex-shrink-0"
+                              onError={(e) => {
+                                e.currentTarget.style.display = 'none'
+                              }}
+                            />
+                          ) : (
+                            <div
+                              className={`w-10 h-10 rounded flex items-center justify-center flex-shrink-0 ${
+                                isOccupied
+                                  ? 'bg-red-100'
+                                  : isReserved
+                                    ? 'bg-amber-100'
+                                    : 'bg-emerald-100'
+                              }`}
+                            >
+                              <span className="text-xs font-bold text-gray-600">
+                                {booth.number}
+                              </span>
+                            </div>
+                          )}
+                          <div className="flex-1 min-w-0">
+                            <div className="text-sm font-semibold text-gray-900">
+                              {booth.company || `Booth ${booth.number}`}
+                            </div>
+                            <div className="text-xs text-gray-600 truncate">
+                              {booth.company ? `Booth ${booth.number}` : (isAvailable ? 'Available' : isReserved ? 'Reserved' : 'Occupied')}
+                            </div>
+                          </div>
+                          <div
+                            className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                              isOccupied
+                                ? 'bg-red-500'
+                                : isReserved
+                                  ? 'bg-amber-500'
+                                  : 'bg-emerald-500'
+                            }`}
+                          />
+                        </div>
                       </div>
-                      <div className="text-xs text-gray-600 truncate">{booth.company}</div>
-                    </div>
-                  ))}
+                    )
+                  })}
                 </div>
+
+                {/* List Pagination */}
+                {Math.ceil(booths.length / boothsPerListPage) > 1 && (
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-200">
+                    <button
+                      onClick={() => setListPage(Math.max(1, listPage - 1))}
+                      disabled={listPage === 1}
+                      className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed rounded"
+                    >
+                      ← Prev
+                    </button>
+
+                    <div className="flex gap-1">
+                      {Array.from({ length: Math.ceil(booths.length / boothsPerListPage) }, (_, i) => i + 1).map((page) => (
+                        <button
+                          key={page}
+                          onClick={() => setListPage(page)}
+                          className={`px-2 py-1 text-sm rounded ${
+                            listPage === page
+                              ? 'bg-red-500 text-white'
+                              : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                          }`}
+                        >
+                          {page}
+                        </button>
+                      ))}
+                    </div>
+
+                    <button
+                      onClick={() => setListPage(Math.min(Math.ceil(booths.length / boothsPerListPage), listPage + 1))}
+                      disabled={listPage === Math.ceil(booths.length / boothsPerListPage)}
+                      className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed rounded"
+                    >
+                      Next →
+                    </button>
+                  </div>
+                )}
 
                 {/* Pagination */}
                 {totalPages > 1 && (
@@ -883,38 +1006,31 @@ export default function Home() {
         </DialogContent>
       </Dialog>
 
-      <Dialog open={!!selectedBooth} onOpenChange={() => setSelectedBooth(null)}>
-        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto rounded-2xl bg-white p-6">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-gray-900">
-              Booth {selectedBooth?.number} - {selectedBooth?.company}
-            </DialogTitle>
-          </DialogHeader>
-          <div className="mt-4">
+      {selectedBooth && (
+        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center" onClick={() => setSelectedBooth(null)}>
+          <div className="bg-white rounded-2xl p-6 max-w-2xl max-h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-bold text-gray-900">
+                Booth {selectedBooth?.number}
+                {selectedBooth?.company && (
+                  <span className="text-gray-600"> - {selectedBooth.company}</span>
+                )}
+              </h2>
+              <button onClick={() => setSelectedBooth(null)} className="text-gray-500 hover:text-gray-700">
+                ✕
+              </button>
+            </div>
             {selectedBooth?.logo && (
-              <img
-                src={selectedBooth.logo}
-                alt={selectedBooth.company}
-                className="w-full max-h-48 object-contain rounded-xl mb-4"
-              />
-            )}
-            <p className="text-gray-600 mb-4">{selectedBooth?.description}</p>
-            {selectedBooth?.website && (
-              <div className="flex gap-4">
-                <a
-                  href={selectedBooth.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-blue-600 hover:underline"
-                >
-                  <Globe className="w-4 h-4" /> Visit Website
-                </a>
+              <div className="flex justify-center mb-4">
+                <img src={selectedBooth.logo} alt={selectedBooth.company} className="max-h-32 object-contain rounded-xl bg-gray-50 p-4 border" />
               </div>
             )}
+            {selectedBooth?.description && (
+              <p className="text-gray-600 mb-4">{selectedBooth.description}</p>
+            )}
           </div>
-        </DialogContent>
-      </Dialog>
-
+        </div>
+      )}
       {/* Zoomed Floor Plan Dialog */}
       <Dialog
         open={!!zoomedImage}
