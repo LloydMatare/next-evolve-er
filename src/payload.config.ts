@@ -11,6 +11,7 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Registrations } from './collections/Registrations'
+import { Booths } from './collections/Booths'
 import { Tickets } from './collections/Tickets'
 import { Payments } from './collections/Payments'
 import { Programs } from './collections/Programs'
@@ -35,6 +36,7 @@ export default buildConfig({
     Users,
     Media,
     Registrations,
+    Booths,
     Tickets,
     Payments,
     Speakers,

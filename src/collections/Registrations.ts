@@ -225,6 +225,14 @@ export const Registrations: CollectionConfig = {
           required: true,
         },
         {
+          name: 'companyLogo',
+          type: 'text',
+          label: 'Company Logo URL',
+          admin: {
+            description: 'Direct URL to company logo image',
+          },
+        },
+        {
           name: 'contactPerson',
           type: 'text',
           label: 'Contact Person',
@@ -265,9 +273,13 @@ export const Registrations: CollectionConfig = {
           ],
         },
         {
-          name: 'boothNumber',
-          type: 'text',
-          label: 'Booth Number',
+          name: 'assignedBooth',
+          type: 'relationship',
+          label: 'Assigned Booth',
+          relationTo: 'booths',
+          admin: {
+            description: 'Admin assigns a booth from the Booths collection',
+          },
         },
         {
           name: 'numberOfTeamMembers',

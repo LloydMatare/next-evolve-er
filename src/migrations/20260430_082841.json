@@ -104,14 +104,14 @@
           "name": "name",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "role": {
           "name": "role",
           "type": "enum_users_role",
           "typeSchema": "public",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "updated_at": {
           "name": "updated_at",
@@ -556,9 +556,9 @@
           "primaryKey": false,
           "notNull": false
         },
-        "exhibitor_details_booth_number": {
-          "name": "exhibitor_details_booth_number",
-          "type": "varchar",
+        "exhibitor_details_assigned_booth_id": {
+          "name": "exhibitor_details_assigned_booth_id",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false
         },
@@ -629,6 +629,21 @@
           "method": "btree",
           "with": {}
         },
+        "registrations_exhibitor_details_exhibitor_details_assign_idx": {
+          "name": "registrations_exhibitor_details_exhibitor_details_assign_idx",
+          "columns": [
+            {
+              "expression": "exhibitor_details_assigned_booth_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
         "registrations_qr_code_idx": {
           "name": "registrations_qr_code_idx",
           "columns": [
@@ -691,6 +706,19 @@
         }
       },
       "foreignKeys": {
+        "registrations_exhibitor_details_assigned_booth_id_booths_id_fk": {
+          "name": "registrations_exhibitor_details_assigned_booth_id_booths_id_fk",
+          "tableFrom": "registrations",
+          "tableTo": "booths",
+          "columnsFrom": [
+            "exhibitor_details_assigned_booth_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
         "registrations_qr_code_id_media_id_fk": {
           "name": "registrations_qr_code_id_media_id_fk",
           "tableFrom": "registrations",
@@ -710,6 +738,237 @@
           "tableTo": "media",
           "columnsFrom": [
             "payment_proof_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.booths": {
+      "name": "booths",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "booth_number": {
+          "name": "booth_number",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "enum_booths_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'available'"
+        },
+        "size": {
+          "name": "size",
+          "type": "enum_booths_size",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "price": {
+          "name": "price",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tier": {
+          "name": "tier",
+          "type": "enum_booths_tier",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'standard'"
+        },
+        "dimensions_width": {
+          "name": "dimensions_width",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 3
+        },
+        "dimensions_depth": {
+          "name": "dimensions_depth",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 3
+        },
+        "position_x": {
+          "name": "position_x",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "position_y": {
+          "name": "position_y",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "position_width": {
+          "name": "position_width",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 120
+        },
+        "position_height": {
+          "name": "position_height",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 80
+        },
+        "amenities_power": {
+          "name": "amenities_power",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": true
+        },
+        "amenities_wifi": {
+          "name": "amenities_wifi",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": true
+        },
+        "amenities_display": {
+          "name": "amenities_display",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "amenities_furniture": {
+          "name": "amenities_furniture",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "category": {
+          "name": "category",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "assigned_to_id": {
+          "name": "assigned_to_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "notes": {
+          "name": "notes",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "booths_booth_number_idx": {
+          "name": "booths_booth_number_idx",
+          "columns": [
+            {
+              "expression": "booth_number",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "booths_assigned_to_idx": {
+          "name": "booths_assigned_to_idx",
+          "columns": [
+            {
+              "expression": "assigned_to_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "booths_updated_at_idx": {
+          "name": "booths_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "booths_created_at_idx": {
+          "name": "booths_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "booths_assigned_to_id_registrations_id_fk": {
+          "name": "booths_assigned_to_id_registrations_id_fk",
+          "tableFrom": "booths",
+          "tableTo": "registrations",
+          "columnsFrom": [
+            "assigned_to_id"
           ],
           "columnsTo": [
             "id"
@@ -3643,6 +3902,12 @@
           "primaryKey": false,
           "notNull": false
         },
+        "booths_id": {
+          "name": "booths_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
         "tickets_id": {
           "name": "tickets_id",
           "type": "integer",
@@ -3779,6 +4044,21 @@
           "columns": [
             {
               "expression": "registrations_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_booths_id_idx": {
+          "name": "payload_locked_documents_rels_booths_id_idx",
+          "columns": [
+            {
+              "expression": "booths_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -3971,6 +4251,19 @@
           "tableTo": "registrations",
           "columnsFrom": [
             "registrations_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_booths_fk": {
+          "name": "payload_locked_documents_rels_booths_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "booths",
+          "columnsFrom": [
+            "booths_id"
           ],
           "columnsTo": [
             "id"
@@ -4472,6 +4765,34 @@
         "large"
       ]
     },
+    "public.enum_booths_status": {
+      "name": "enum_booths_status",
+      "schema": "public",
+      "values": [
+        "available",
+        "reserved",
+        "occupied",
+        "maintenance"
+      ]
+    },
+    "public.enum_booths_size": {
+      "name": "enum_booths_size",
+      "schema": "public",
+      "values": [
+        "small",
+        "medium",
+        "large"
+      ]
+    },
+    "public.enum_booths_tier": {
+      "name": "enum_booths_tier",
+      "schema": "public",
+      "values": [
+        "premium",
+        "standard",
+        "economy"
+      ]
+    },
     "public.enum_tickets_type": {
       "name": "enum_tickets_type",
       "schema": "public",
@@ -4771,6 +5092,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "485dcbd9-9479-409e-b7bb-d5da26543bde",
+  "id": "44753884-0669-4e32-b486-4ccda0edd2bb",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

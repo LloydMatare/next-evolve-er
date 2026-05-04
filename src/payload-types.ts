@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     registrations: Registration;
+    booths: Booth;
     tickets: Ticket;
     payments: Payment;
     speakers: Speaker;
@@ -89,6 +90,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     registrations: RegistrationsSelect<false> | RegistrationsSelect<true>;
+    booths: BoothsSelect<false> | BoothsSelect<true>;
     tickets: TicketsSelect<false> | TicketsSelect<true>;
     payments: PaymentsSelect<false> | PaymentsSelect<true>;
     speakers: SpeakersSelect<false> | SpeakersSelect<true>;
@@ -220,19 +222,81 @@ export interface Registration {
   };
   exhibitorDetails?: {
     companyName: string;
+    /**
+     * Direct URL to company logo image
+     */
+    companyLogo?: string | null;
     contactPerson: string;
     phone: string;
     website?: string | null;
     industry: string;
     productsServices: string;
     boothSize: 'small' | 'medium' | 'large';
-    boothNumber?: string | null;
+    /**
+     * Admin assigns a booth from the Booths collection
+     */
+    assignedBooth?: (number | null) | Booth;
     numberOfTeamMembers: number;
     teamMembers: string;
     specialRequirements?: string | null;
   };
   qrCode?: (number | null) | Media;
   paymentProof?: (number | null) | Media;
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "booths".
+ */
+export interface Booth {
+  id: number;
+  boothNumber: string;
+  status: 'available' | 'reserved' | 'occupied' | 'maintenance';
+  size: 'small' | 'medium' | 'large';
+  price: number;
+  tier: 'premium' | 'standard' | 'economy';
+  dimensions: {
+    width: number;
+    depth: number;
+  };
+  /**
+   * Position and size on the floor plan image
+   */
+  position: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+  amenities?: {
+    power?: boolean | null;
+    wifi?: boolean | null;
+    display?: boolean | null;
+    furniture?: boolean | null;
+  };
+  /**
+   * e.g., Technology, Healthcare, Finance
+   */
+  category?: string | null;
+  /**
+   * Name of the company occupying this booth
+   */
+  company?: string | null;
+  /**
+   * Upload the company logo
+   */
+  logo?: (number | null) | Media;
+  description?: string | null;
+  /**
+   * e.g., https://example.com
+   */
+  website?: string | null;
+  /**
+   * Link to the exhibitor registration
+   */
+  assignedTo?: (number | null) | Registration;
   notes?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -797,6 +861,10 @@ export interface PayloadLockedDocument {
         value: number | Registration;
       } | null)
     | ({
+        relationTo: 'booths';
+        value: number | Booth;
+      } | null)
+    | ({
         relationTo: 'tickets';
         value: number | Ticket;
       } | null)
@@ -955,19 +1023,62 @@ export interface RegistrationsSelect<T extends boolean = true> {
     | T
     | {
         companyName?: T;
+        companyLogo?: T;
         contactPerson?: T;
         phone?: T;
         website?: T;
         industry?: T;
         productsServices?: T;
         boothSize?: T;
-        boothNumber?: T;
+        assignedBooth?: T;
         numberOfTeamMembers?: T;
         teamMembers?: T;
         specialRequirements?: T;
       };
   qrCode?: T;
   paymentProof?: T;
+  notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "booths_select".
+ */
+export interface BoothsSelect<T extends boolean = true> {
+  boothNumber?: T;
+  status?: T;
+  size?: T;
+  price?: T;
+  tier?: T;
+  dimensions?:
+    | T
+    | {
+        width?: T;
+        depth?: T;
+      };
+  position?:
+    | T
+    | {
+        x?: T;
+        y?: T;
+        width?: T;
+        height?: T;
+      };
+  amenities?:
+    | T
+    | {
+        power?: T;
+        wifi?: T;
+        display?: T;
+        furniture?: T;
+      };
+  category?: T;
+  company?: T;
+  logo?: T;
+  description?: T;
+  website?: T;
+  assignedTo?: T;
   notes?: T;
   updatedAt?: T;
   createdAt?: T;
