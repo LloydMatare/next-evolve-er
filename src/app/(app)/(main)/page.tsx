@@ -195,7 +195,7 @@ export default function Home() {
   const [dragStartY, setDragStartY] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
   const [listPage, setListPage] = useState(1)
-  const boothsPerPage = 60 // 5 rows * 12 columns
+   const boothsPerPage = 32 // 4 cols * 8 rows for mobile
   const boothsPerListPage = 10
 
   useEffect(() => {
@@ -467,17 +467,17 @@ export default function Home() {
             description="Click on the red-marked booths to learn more about our exhibitors."
           />
 
-          <div className="mt-10 grid lg:grid-cols-3 gap-8">
+          <div className="mt-6 sm:mt-10 grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
             {/* Floor Plan - Left Side (2/3 width) */}
             <div className="lg:col-span-2">
-              <div className="relative bg-gradient-to-br from-slate-100 to-slate-200 rounded-xl shadow-lg p-6 min-h-[600px]">
+              <div className="relative bg-gradient-to-br from-slate-100 to-slate-200 rounded-xl shadow-lg p-4 sm:p-6 min-h-[400px] sm:min-h-[600px]">
                 {/* Floor Plan Image with Zoom */}
-                <div className="mb-6 flex justify-center">
-                  <div className="relative group">
+                <div className="mb-4 sm:mb-6 flex justify-center">
+                  <div className="relative group w-full">
                     <img
                       src="/floor_plan_page.png"
                       alt="Exhibition Floor Plan"
-                      className="w-full h-auto rounded-lg shadow-md border border-slate-300 max-h-[500px] cursor-pointer transition-transform duration-300 group-hover:scale-105"
+                      className="w-full h-auto rounded-lg shadow-md border border-slate-300 max-h-[250px] xs:max-h-[350px] sm:max-h-[500px] object-contain cursor-pointer transition-transform duration-300 group-hover:scale-105"
                       onClick={() => setZoomedImage('/floor_plan_page.png')}
                       onError={(e) => {
                         const img = e.currentTarget as HTMLImageElement
@@ -488,102 +488,92 @@ export default function Home() {
                 </div>
 
                 {/* Floor Plan Grid */}
-                <div className="grid grid-cols-8 gap-2">
-                  {/* Entrance */}
-                  <div className="col-span-8 text-center py-3">
-                    <div className="bg-blue-100 rounded-lg p-3 border-2 border-blue-300">
-                      <h3 className="text-base font-semibold text-blue-800">ENTRANCE</h3>
-                      <p className="text-xs text-blue-600">Main Exhibition Hall</p>
-                    </div>
-                  </div>
-
-                  {/* Booth Areas */}
-                  {currentBooths.map((booth, index) => {
-                    // Calculate grid position based on index
-                    const row = Math.floor(index / 8) + 1
-                    const col = (index % 8) + 1
-
-                    const isOccupied = booth.status === 'occupied'
-                    const isReserved = booth.status === 'reserved'
-                    const isAvailable = booth.status === 'available'
-
-                    return (
-                      <div
-                        key={booth.id}
-                        className={`rounded cursor-pointer flex flex-col items-center justify-center text-xs transition-all duration-200 hover:scale-105 hover:shadow-lg p-1 min-h-[60px] overflow-hidden ${
-                          isOccupied
-                            ? 'bg-red-500 hover:bg-red-600 border-2 border-red-700 text-white'
-                            : isReserved
-                              ? 'bg-amber-400 hover:bg-amber-500 border-2 border-amber-600 text-gray-900'
-                              : 'bg-emerald-400 hover:bg-emerald-500 border-2 border-emerald-600 text-gray-900'
-                        }`}
-                        style={{
-                          gridColumn: col,
-                          gridRow: row + 1,
-                        }}
-                        onClick={() => setSelectedBooth(booth)}
-                        title={`Booth ${booth.number}${booth.company ? ' - ' + booth.company : ''}`}
-                      >
-                        <div className="w-full h-full flex flex-col items-center justify-center p-1">
-                          {booth.logo ? (
-                            <>
-                              <img
-                                src={booth.logo}
-                                alt={booth.company}
-                                className="w-12 h-12 object-contain rounded bg-white/90 p-1 mb-1"
-                                onError={(e) => {
-                                  e.currentTarget.style.display = 'none'
-                                }}
-                              />
-                              <div className="text-[10px] font-bold leading-tight truncate w-full text-center">
-                                {booth.company || booth.number}
-                              </div>
-                            </>
-                          ) : (
-                            <div className="text-center">
-                              <div className="text-sm font-bold leading-tight">{booth.number}</div>
-                              {booth.company && (
-                                <div className="text-[10px] opacity-90 truncate max-w-full leading-tight">
-                                  {booth.company}
-                                </div>
-                              )}
-                              {!booth.company && (
-                                <div className="text-[10px] opacity-80 truncate max-w-full leading-tight">
-                                  {isAvailable ? 'Available' : isReserved ? 'Reserved' : 'Occupied'}
-                                </div>
-                              )}
-                            </div>
-                          )}
-                        </div>
+                <div className="overflow-x-auto lg:overflow-visible -mx-4 sm:mx-0">
+                  <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-1 sm:gap-2 px-4 sm:px-0 min-w-[280px] sm:min-w-[300px] md:min-w-[500px] lg:min-w-0">
+                    {/* Entrance */}
+                    <div className="col-span-3 sm:col-span-4 md:col-span-6 lg:col-span-8 text-center py-2 sm:py-3">
+                      <div className="bg-blue-100 rounded-lg p-2 sm:p-3 border-2 border-blue-300">
+                        <h3 className="text-xs sm:text-sm md:text-base font-semibold text-blue-800">ENTRANCE</h3>
+                        <p className="text-[9px] sm:text-[10px] md:text-xs text-blue-600">Main Exhibition Hall</p>
                       </div>
-                    )
-                  })}
+                    </div>
 
-                  {/* Empty spaces for layout */}
-                  {Array.from({ length: Math.max(0, 40 - currentBooths.length) }, (_, i) => (
-                    <div
-                      key={`empty-${i}`}
-                      className="bg-emerald-200 border-2 border-emerald-400 rounded opacity-70 min-h-[60px] flex items-center justify-center"
-                      style={{
-                        gridColumn: (i % 8) + 1,
-                        gridRow: Math.floor(i / 8) + Math.ceil(currentBooths.length / 8) + 1,
-                      }}
-                    ></div>
-                  ))}
+                    {/* Booth Areas */}
+                    {currentBooths.map((booth) => {
+                      const isOccupied = booth.status === 'occupied'
+                      const isReserved = booth.status === 'reserved'
+                      const isAvailable = booth.status === 'available'
+
+                      return (
+                        <div
+                          key={booth.id}
+                          className={`rounded cursor-pointer flex flex-col items-center justify-center text-[9px] sm:text-[10px] md:text-xs transition-all duration-200 hover:scale-105 hover:shadow-lg p-0.5 sm:p-1 min-h-[40px] sm:min-h-[45px] md:min-h-[60px] overflow-hidden ${
+                            isOccupied
+                              ? 'bg-red-500 hover:bg-red-600 border-2 border-red-700 text-white'
+                              : isReserved
+                                ? 'bg-amber-400 hover:bg-amber-500 border-2 border-amber-600 text-gray-900'
+                                : 'bg-emerald-400 hover:bg-emerald-500 border-2 border-emerald-600 text-gray-900'
+                          }`}
+                          onClick={() => setSelectedBooth(booth)}
+                          title={`Booth ${booth.number}${booth.company ? ' - ' + booth.company : ''}`}
+                        >
+                          <div className="w-full h-full flex flex-col items-center justify-center p-0 sm:p-1">
+                            {booth.logo ? (
+                              <>
+                                <img
+                                  src={booth.logo}
+                                  alt={booth.company}
+                                  className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 lg:w-12 lg:h-12 object-contain rounded bg-white/90 p-0 sm:p-1 mb-0 sm:mb-1"
+                                  onError={(e) => {
+                                    e.currentTarget.style.display = 'none'
+                                  }}
+                                />
+                                <div className="text-[7px] sm:text-[8px] md:text-[10px] font-bold leading-tight truncate w-full text-center">
+                                  {booth.company || booth.number}
+                                </div>
+                              </>
+                            ) : (
+                              <div className="text-center">
+                                <div className="text-[9px] sm:text-[10px] md:text-sm font-bold leading-tight">{booth.number}</div>
+                                {booth.company && (
+                                  <div className="text-[7px] sm:text-[8px] md:text-[10px] opacity-90 truncate max-w-full leading-tight">
+                                    {booth.company}
+                                  </div>
+                                )}
+                                {!booth.company && (
+                                  <div className="text-[7px] sm:text-[8px] md:text-[10px] opacity-80 truncate max-w-full leading-tight">
+                                    {isAvailable ? 'Open' : isReserved ? 'Hold' : 'Full'}
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )
+                    })}
+
+                    {/* Empty spaces for layout */}
+                    {Array.from({ length: Math.max(0, 40 - currentBooths.length) }, (_, i) => (
+                      <div
+                        key={`empty-${i}`}
+                        className="bg-emerald-200 border-2 border-emerald-400 rounded opacity-70 min-h-[40px] sm:min-h-[45px] md:min-h-[60px] flex items-center justify-center"
+                      ></div>
+                    ))}
+                  </div>
                 </div>
 
                 {/* Legend */}
-                <div className="mt-4 flex flex-wrap justify-center gap-4 text-xs">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-red-500 border border-red-700 rounded"></div>
+                <div className="mt-3 sm:mt-4 flex flex-wrap justify-center gap-3 sm:gap-4 text-[11px] sm:text-xs">
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-red-500 border border-red-700 rounded"></div>
                     <span>Occupied</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-amber-400 border border-amber-600 rounded"></div>
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-amber-400 border border-amber-600 rounded"></div>
                     <span>Reserved</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-emerald-400 border border-emerald-600 rounded"></div>
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-emerald-400 border border-emerald-600 rounded"></div>
                     <span>Available</span>
                   </div>
                 </div>
@@ -592,11 +582,11 @@ export default function Home() {
 
             {/* Booth List - Right Side (1/3 width) */}
             <div className="lg:col-span-1">
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Booth Directory</h3>
+              <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">Booth Directory</h3>
 
                 {/* Booth List */}
-                <div className="space-y-2 max-h-[400px] overflow-y-auto mb-4">
+                <div className="space-y-2 max-h-[300px] sm:max-h-[400px] overflow-y-auto mb-4">
                   {booths
                     .slice((listPage - 1) * boothsPerListPage, listPage * boothsPerListPage)
                     .map((booth) => {
@@ -678,12 +668,12 @@ export default function Home() {
                     <button
                       onClick={() => setListPage(Math.max(1, listPage - 1))}
                       disabled={listPage === 1}
-                      className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed rounded"
+                      className="px-2 sm:px-3 py-1.5 sm:py-1 text-xs sm:text-sm bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed rounded min-w-[60px] sm:min-w-0"
                     >
                       ← Prev
                     </button>
 
-                    <div className="flex gap-1">
+                    <div className="flex gap-0.5 sm:gap-1">
                       {Array.from(
                         { length: Math.ceil(booths.length / boothsPerListPage) },
                         (_, i) => i + 1,
@@ -691,7 +681,7 @@ export default function Home() {
                         <button
                           key={page}
                           onClick={() => setListPage(page)}
-                          className={`px-2 py-1 text-sm rounded ${
+                          className={`px-1.5 sm:px-2 py-1 text-xs sm:text-sm rounded min-w-[28px] sm:min-w-0 ${
                             listPage === page
                               ? 'bg-red-500 text-white'
                               : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
@@ -709,7 +699,7 @@ export default function Home() {
                         )
                       }
                       disabled={listPage === Math.ceil(booths.length / boothsPerListPage)}
-                      className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed rounded"
+                      className="px-2 sm:px-3 py-1.5 sm:py-1 text-xs sm:text-sm bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed rounded min-w-[60px] sm:min-w-0"
                     >
                       Next →
                     </button>
@@ -722,17 +712,17 @@ export default function Home() {
                     <button
                       onClick={() => handlePageChange(currentPage - 1)}
                       disabled={currentPage === 1}
-                      className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed rounded"
+                      className="px-2 sm:px-3 py-1.5 sm:py-1 text-xs sm:text-sm bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed rounded min-w-[60px] sm:min-w-0"
                     >
                       ← Prev
                     </button>
 
-                    <div className="flex gap-1">
+                    <div className="flex gap-0.5 sm:gap-1">
                       {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                         <button
                           key={page}
                           onClick={() => handlePageChange(page)}
-                          className={`px-2 py-1 text-sm rounded ${
+                          className={`px-1.5 sm:px-2 py-1 text-xs sm:text-sm rounded min-w-[28px] sm:min-w-0 ${
                             currentPage === page
                               ? 'bg-red-500 text-white'
                               : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
@@ -746,7 +736,7 @@ export default function Home() {
                     <button
                       onClick={() => handlePageChange(currentPage + 1)}
                       disabled={currentPage === totalPages}
-                      className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed rounded"
+                      className="px-2 sm:px-3 py-1.5 sm:py-1 text-xs sm:text-sm bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed rounded min-w-[60px] sm:min-w-0"
                     >
                       Next →
                     </button>
@@ -754,9 +744,9 @@ export default function Home() {
                 )}
 
                 {/* Register Button */}
-                <div className="mt-6 pt-4 border-t border-gray-200">
+                <div className="mt-4 sm:mt-6 pt-4 border-t border-gray-200">
                   <Link href="/register?type=exhibitor">
-                    <Button className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200">
+                    <Button className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-2.5 sm:py-3 px-4 rounded-lg transition-colors duration-200 text-sm sm:text-base">
                       Register for Booth
                     </Button>
                   </Link>
