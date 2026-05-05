@@ -238,9 +238,9 @@ export default function Home() {
               return {
                 id: booth.id,
                 number: booth.boothNumber,
-                company: booth.company || (isOccupied
-                  ? (exhibitor?.companyName || assigned?.companyName || 'Occupied')
-                  : ''),
+                company:
+                  booth.company ||
+                  (isOccupied ? exhibitor?.companyName || assigned?.companyName || 'Occupied' : ''),
                 logo: booth.logo?.url || exhibitor?.companyLogo || '',
                 description: booth.description || exhibitor?.productsServices || '',
                 website: booth.website || exhibitor?.website || '',
@@ -478,11 +478,10 @@ export default function Home() {
                       src="/floor_plan_page.png"
                       alt="Exhibition Floor Plan"
                       className="w-full h-auto rounded-lg shadow-md border border-slate-300 max-h-[500px] cursor-pointer transition-transform duration-300 group-hover:scale-105"
-                      onClick={() => setZoomedImage('/floor_plan_page.jpeg')}
+                      onClick={() => setZoomedImage('/floor_plan_page.png')}
                       onError={(e) => {
                         const img = e.currentTarget as HTMLImageElement
                         console.error('Failed to load floor plan image:', img.src)
-                        img.src = '/floor_plan_page.png' // Try PNG as fallback
                       }}
                     />
                   </div>
@@ -591,7 +590,7 @@ export default function Home() {
               </div>
             </div>
 
-             {/* Booth List - Right Side (1/3 width) */}
+            {/* Booth List - Right Side (1/3 width) */}
             <div className="lg:col-span-1">
               <div className="bg-white rounded-xl shadow-lg p-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Booth Directory</h3>
@@ -601,70 +600,76 @@ export default function Home() {
                   {booths
                     .slice((listPage - 1) * boothsPerListPage, listPage * boothsPerListPage)
                     .map((booth) => {
-                    const isOccupied = booth.status === 'occupied'
-                    const isReserved = booth.status === 'reserved'
-                    const isAvailable = booth.status === 'available'
+                      const isOccupied = booth.status === 'occupied'
+                      const isReserved = booth.status === 'reserved'
+                      const isAvailable = booth.status === 'available'
 
-                    return (
-                      <div
-                        key={booth.id}
-                        className={`p-3 rounded-lg border cursor-pointer transition-all duration-200 hover:shadow-md ${
-                          selectedBooth?.id === booth.id
-                            ? 'bg-red-50 border-red-200 ring-2 ring-red-200'
-                            : isOccupied
-                              ? 'bg-gray-50 border-gray-200 hover:bg-gray-100'
-                              : isReserved
-                                ? 'bg-amber-50 border-amber-200 hover:bg-amber-100'
-                                : 'bg-emerald-50 border-emerald-200 hover:bg-emerald-100'
-                        }`}
-                        onClick={() => setSelectedBooth(booth)}
-                      >
-                        <div className="flex items-center gap-3">
-                          {booth.logo ? (
-                            <img
-                              src={booth.logo}
-                              alt={booth.company}
-                              className="w-10 h-10 object-contain rounded bg-white p-1 border border-gray-200 flex-shrink-0"
-                              onError={(e) => {
-                                e.currentTarget.style.display = 'none'
-                              }}
-                            />
-                          ) : (
-                            <div
-                              className={`w-10 h-10 rounded flex items-center justify-center flex-shrink-0 ${
-                                isOccupied
-                                  ? 'bg-red-100'
-                                  : isReserved
-                                    ? 'bg-amber-100'
-                                    : 'bg-emerald-100'
-                              }`}
-                            >
-                              <span className="text-xs font-bold text-gray-600">
-                                {booth.number}
-                              </span>
-                            </div>
-                          )}
-                          <div className="flex-1 min-w-0">
-                            <div className="text-sm font-semibold text-gray-900">
-                              {booth.company || `Booth ${booth.number}`}
-                            </div>
-                            <div className="text-xs text-gray-600 truncate">
-                              {booth.company ? `Booth ${booth.number}` : (isAvailable ? 'Available' : isReserved ? 'Reserved' : 'Occupied')}
-                            </div>
-                          </div>
-                          <div
-                            className={`w-2 h-2 rounded-full flex-shrink-0 ${
-                              isOccupied
-                                ? 'bg-red-500'
+                      return (
+                        <div
+                          key={booth.id}
+                          className={`p-3 rounded-lg border cursor-pointer transition-all duration-200 hover:shadow-md ${
+                            selectedBooth?.id === booth.id
+                              ? 'bg-red-50 border-red-200 ring-2 ring-red-200'
+                              : isOccupied
+                                ? 'bg-gray-50 border-gray-200 hover:bg-gray-100'
                                 : isReserved
-                                  ? 'bg-amber-500'
-                                  : 'bg-emerald-500'
-                            }`}
-                          />
+                                  ? 'bg-amber-50 border-amber-200 hover:bg-amber-100'
+                                  : 'bg-emerald-50 border-emerald-200 hover:bg-emerald-100'
+                          }`}
+                          onClick={() => setSelectedBooth(booth)}
+                        >
+                          <div className="flex items-center gap-3">
+                            {booth.logo ? (
+                              <img
+                                src={booth.logo}
+                                alt={booth.company}
+                                className="w-10 h-10 object-contain rounded bg-white p-1 border border-gray-200 flex-shrink-0"
+                                onError={(e) => {
+                                  e.currentTarget.style.display = 'none'
+                                }}
+                              />
+                            ) : (
+                              <div
+                                className={`w-10 h-10 rounded flex items-center justify-center flex-shrink-0 ${
+                                  isOccupied
+                                    ? 'bg-red-100'
+                                    : isReserved
+                                      ? 'bg-amber-100'
+                                      : 'bg-emerald-100'
+                                }`}
+                              >
+                                <span className="text-xs font-bold text-gray-600">
+                                  {booth.number}
+                                </span>
+                              </div>
+                            )}
+                            <div className="flex-1 min-w-0">
+                              <div className="text-sm font-semibold text-gray-900">
+                                {booth.company || `Booth ${booth.number}`}
+                              </div>
+                              <div className="text-xs text-gray-600 truncate">
+                                {booth.company
+                                  ? `Booth ${booth.number}`
+                                  : isAvailable
+                                    ? 'Available'
+                                    : isReserved
+                                      ? 'Reserved'
+                                      : 'Occupied'}
+                              </div>
+                            </div>
+                            <div
+                              className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                                isOccupied
+                                  ? 'bg-red-500'
+                                  : isReserved
+                                    ? 'bg-amber-500'
+                                    : 'bg-emerald-500'
+                              }`}
+                            />
+                          </div>
                         </div>
-                      </div>
-                    )
-                  })}
+                      )
+                    })}
                 </div>
 
                 {/* List Pagination */}
@@ -679,7 +684,10 @@ export default function Home() {
                     </button>
 
                     <div className="flex gap-1">
-                      {Array.from({ length: Math.ceil(booths.length / boothsPerListPage) }, (_, i) => i + 1).map((page) => (
+                      {Array.from(
+                        { length: Math.ceil(booths.length / boothsPerListPage) },
+                        (_, i) => i + 1,
+                      ).map((page) => (
                         <button
                           key={page}
                           onClick={() => setListPage(page)}
@@ -695,7 +703,11 @@ export default function Home() {
                     </div>
 
                     <button
-                      onClick={() => setListPage(Math.min(Math.ceil(booths.length / boothsPerListPage), listPage + 1))}
+                      onClick={() =>
+                        setListPage(
+                          Math.min(Math.ceil(booths.length / boothsPerListPage), listPage + 1),
+                        )
+                      }
                       disabled={listPage === Math.ceil(booths.length / boothsPerListPage)}
                       className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed rounded"
                     >
@@ -1007,8 +1019,14 @@ export default function Home() {
       </Dialog>
 
       {selectedBooth && (
-        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center" onClick={() => setSelectedBooth(null)}>
-          <div className="bg-white rounded-2xl p-6 max-w-2xl max-h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center"
+          onClick={() => setSelectedBooth(null)}
+        >
+          <div
+            className="bg-white rounded-2xl p-6 max-w-2xl max-h-[80vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-bold text-gray-900">
                 Booth {selectedBooth?.number}
@@ -1016,13 +1034,20 @@ export default function Home() {
                   <span className="text-gray-600"> - {selectedBooth.company}</span>
                 )}
               </h2>
-              <button onClick={() => setSelectedBooth(null)} className="text-gray-500 hover:text-gray-700">
+              <button
+                onClick={() => setSelectedBooth(null)}
+                className="text-gray-500 hover:text-gray-700"
+              >
                 ✕
               </button>
             </div>
             {selectedBooth?.logo && (
               <div className="flex justify-center mb-4">
-                <img src={selectedBooth.logo} alt={selectedBooth.company} className="max-h-32 object-contain rounded-xl bg-gray-50 p-4 border" />
+                <img
+                  src={selectedBooth.logo}
+                  alt={selectedBooth.company}
+                  className="max-h-32 object-contain rounded-xl bg-gray-50 p-4 border"
+                />
               </div>
             )}
             {selectedBooth?.description && (
@@ -1041,110 +1066,20 @@ export default function Home() {
           setPanY(0)
         }}
       >
-        <DialogContent className="max-w-[90vw] max-h-[90vh] p-4">
+        <DialogContent className="!max-w-[90vw] !max-h-[90vh] overflow-y-auto p-6">
           <DialogHeader>
-            <DialogTitle className="text-lg font-semibold text-white">
-              Exhibition Floor Plan - Zoom View
-            </DialogTitle>
+            <DialogTitle>Floor Plan</DialogTitle>
           </DialogHeader>
-          <div className="relative mt-4">
-            <button
-              onClick={() => {
-                setZoomedImage(null)
-                setZoomLevel(1)
-                setPanX(0)
-                setPanY(0)
-              }}
-              className="absolute top-2 right-2 text-white hover:text-gray-200 bg-black/50 rounded-full p-2"
-            >
-              <span className="sr-only">Close</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-            <div className="flex justify-center items-start">
-              <div className="relative inline-block">
-                {/* Zoom controls */}
-                <div className="absolute top-2 left-2 flex space-x-2 bg-black/50 rounded-full p-1">
-                  <button
-                    onClick={() => setZoomLevel((prev) => Math.max(0.5, prev - 0.25))}
-                    className="text-white hover:text-gray-200 px-2 py-1 rounded"
-                  >
-                    -
-                  </button>
-                  <button
-                    onClick={() => setZoomLevel((prev) => Math.min(3, prev + 0.25))}
-                    className="text-white hover:text-gray-200 px-2 py-1 rounded"
-                  >
-                    +
-                  </button>
-                  <button
-                    onClick={() => {
-                      setZoomLevel(1)
-                      setPanX(0)
-                      setPanY(0)
-                    }}
-                    className="text-white hover:text-gray-200 px-2 py-1 rounded"
-                  >
-                    1:1
-                  </button>
-                </div>
-                <div
-                  className="relative"
-                  style={{
-                    transform: `scale(${zoomLevel}) translate(${panX}px, ${panY}px)`,
-                    transformOrigin: 'top left',
-                    width: '100%',
-                    height: '100%',
-                    userSelect: 'none',
-                  }}
-                >
-                  <img
-                    src={zoomedImage}
-                    alt="Exhibition Floor Plan (Zoomed)"
-                    className="max-w-[90vw] max-h-[80vh] rounded-lg shadow-xl border border-slate-300 cursor-grab"
-                    onMouseDown={(e) => {
-                      if (zoomLevel > 1) {
-                        setIsDragging(true)
-                        setDragStartX(e.clientX - panX)
-                        setDragStartY(e.clientY - panY)
-                      }
-                    }}
-                    onMouseUp={() => setIsDragging(false)}
-                    onMouseLeave={() => setIsDragging(false)}
-                    onMouseMove={(e) => {
-                      if (isDragging) {
-                        setPanX(e.clientX - dragStartX)
-                        setPanY(e.clientY - dragStartY)
-                      }
-                    }}
-                    onWheel={(e) => {
-                      e.preventDefault()
-                      const delta = e.deltaY < 0 ? 0.1 : -0.1
-                      setZoomLevel((prev) => {
-                        const newZoom = Math.max(0.5, Math.min(3, prev + delta))
-                        // Adjust pan to zoom towards mouse position
-                        const zoomFactor = newZoom / prev
-                        setPanX((prev) => (e.clientX - panX) * (1 - zoomFactor) + panX)
-                        setPanY((prev) => (e.clientY - panY) * (1 - zoomFactor) + panY)
-                        return newZoom
-                      })
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
+          <div className="mt-4 overflow-auto" style={{ maxHeight: '70vh' }}>
+            {zoomedImage && (
+              <img
+                src={zoomedImage}
+                alt="Floor Plan"
+                className="w-full h-auto"
+                onLoad={() => console.log('Image loaded in dialog')}
+                onError={(e) => console.error('Image error in dialog:', e)}
+              />
+            )}
           </div>
         </DialogContent>
       </Dialog>
