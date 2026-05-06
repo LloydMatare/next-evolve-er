@@ -13,6 +13,7 @@ const navLinks = [
   { name: 'Program', href: '/program' },
   { name: 'Gallery', href: '/gallery' },
   { name: 'Blogs', href: '/blogs' },
+  { name: 'Shop', href: 'https://compulink.odoo.com/shop' },
   { name: 'Previous Summit', href: '/previous-summit' },
   { name: 'Student Summit', href: '/student-summit' },
   { name: 'Contact Us', href: '/contact' },
