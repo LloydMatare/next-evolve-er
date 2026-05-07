@@ -79,6 +79,8 @@ export const Registrations: CollectionConfig = {
         { label: 'Credit/Debit Card', value: 'card' },
         { label: 'Mobile Money', value: 'mobile' },
         { label: 'Bank Transfer', value: 'bank' },
+        { label: 'Paynow', value: 'paynow' },
+        { label: 'Full Board', value: 'full-board' },
         { label: 'Pending', value: 'pending' },
       ],
       defaultValue: 'pending',

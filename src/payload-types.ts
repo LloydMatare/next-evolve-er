@@ -199,7 +199,7 @@ export interface Registration {
   status?: ('pending' | 'approved' | 'rejected' | 'paid' | 'cancelled') | null;
   orderId?: string | null;
   amount: number;
-  paymentMethod?: ('card' | 'mobile' | 'bank' | 'pending') | null;
+  paymentMethod?: ('card' | 'mobile' | 'bank' | 'paynow' | 'full-board' | 'pending') | null;
   attendeeDetails?: {
     fullName: string;
     phone: string;
