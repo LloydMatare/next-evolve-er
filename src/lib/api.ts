@@ -99,9 +99,6 @@ export async function createPayment(data: any): Promise<any> {
 export async function updateRegistrationStatus(id: string, status: string, paymentMethod?: string): Promise<any> {
   try {
     const updateData: any = { status }
-    if (paymentMethod) {
-      updateData.paymentMethod = paymentMethod
-    }
 
     const response = await fetch(`${API_URL}/registrations/${id}`, {
       method: 'PATCH',
