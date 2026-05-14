@@ -196,10 +196,10 @@ export interface Registration {
   id: number;
   email: string;
   type: 'attendee' | 'sponsor' | 'exhibitor';
-  status?: ('pending' | 'approved' | 'rejected' | 'paid' | 'cancelled') | null;
+  status?: ('pending' | 'payment-pending' | 'approved' | 'rejected' | 'paid' | 'cancelled') | null;
   orderId?: string | null;
   amount: number;
-  paymentMethod?: ('card' | 'mobile' | 'bank' | 'paynow' | 'full-board' | 'pending') | null;
+  paymentMethod?: ('card' | 'mobile' | 'bank' | 'paynow' | 'full-board' | 'pay-later' | 'pending') | null;
   attendeeDetails?: {
     fullName: string;
     phone: string;
@@ -242,6 +242,8 @@ export interface Registration {
   };
   qrCode?: (number | null) | Media;
   paymentProof?: (number | null) | Media;
+  paymentDueDate?: string | null;
+  reminderSent?: boolean | null;
   notes?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -347,7 +349,7 @@ export interface Payment {
   order_id: string;
   amount: number;
   currency: string;
-  paymentMethod: 'paynow' | 'card' | 'mobile' | 'bank';
+  paymentMethod: 'paynow' | 'card' | 'mobile' | 'bank' | 'pay-later';
   status: 'initiated' | 'pending' | 'paid' | 'failed' | 'cancelled';
   pollUrl?: string | null;
   instructions?:
@@ -1037,6 +1039,8 @@ export interface RegistrationsSelect<T extends boolean = true> {
       };
   qrCode?: T;
   paymentProof?: T;
+  paymentDueDate?: T;
+  reminderSent?: T;
   notes?: T;
   updatedAt?: T;
   createdAt?: T;

@@ -60,8 +60,16 @@ export async function GET(request: NextRequest) {
     const page = parseInt(url.searchParams.get('page') || '1')
     const limit = parseInt(url.searchParams.get('limit') || '10')
 
+    const orderId = url.searchParams.get('orderId')
+
+    const where: any = {}
+    if (orderId) {
+      where.orderId = { equals: orderId }
+    }
+
     const registrations = await payload.find({
       collection: 'registrations',
+      where: Object.keys(where).length > 0 ? where : undefined,
       limit,
       page,
       sort: '-createdAt',

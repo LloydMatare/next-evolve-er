@@ -48,6 +48,7 @@ export const Payments: CollectionConfig = {
         { label: 'Credit/Debit Card', value: 'card' },
         { label: 'Mobile Money', value: 'mobile' },
         { label: 'Bank Transfer', value: 'bank' },
+        { label: 'Pay Later', value: 'pay-later' },
       ],
     },
     {

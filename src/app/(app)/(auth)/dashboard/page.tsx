@@ -24,6 +24,9 @@ import {
   Bell,
   Copy,
   Check,
+  Upload,
+  CreditCard,
+  AlertTriangle,
 } from 'lucide-react'
 import Link from 'next/link'
 import React, { useState, useEffect, useCallback } from 'react'
@@ -46,6 +49,8 @@ export default function DashboardPage() {
   const [orderData, setOrderData] = useState<OrderDataType | null>(null)
   const [copied, setCopied] = useState(false)
   const [paymentStatus, setPaymentStatus] = useState('pending')
+  const [uploading, setUploading] = useState(false)
+  const [popUploaded, setPopUploaded] = useState(false)
 
   const checkPaymentStatus = useCallback(async (orderId: string) => {
     try {
@@ -63,16 +68,51 @@ export default function DashboardPage() {
   }, [])
 
    useEffect(() => {
-     const data = sessionStorage.getItem('pendingOrder')
-     if (data) {
-       const order = JSON.parse(data)
-       setOrderData(order)
+     const loadOrder = async () => {
+       const data = sessionStorage.getItem('pendingOrder')
+       if (data) {
+         const order = JSON.parse(data)
+         setOrderData(order)
 
-       // If payment was through Paynow and still pending, check status
-       if (order.paymentMethod === 'paynow' && order.status === 'pending') {
-         checkPaymentStatus(order.orderId)
+         if (order.paymentMethod === 'paynow' && order.status === 'pending') {
+           checkPaymentStatus(order.orderId)
+         }
+       } else {
+         // Try loading from URL params (direct dashboard link)
+         const params = new URLSearchParams(window.location.search)
+         const orderId = params.get('orderId')
+         if (orderId) {
+           try {
+             const res = await fetch(`/api/payments/status/${orderId}`)
+             const paymentData = await res.json()
+             if (paymentData.orderId) {
+               const res2 = await fetch(`/api/registrations?orderId=${orderId}`)
+               const regData = await res2.json()
+               if (regData.success && regData.docs?.length > 0) {
+                 const reg = regData.docs[0]
+                 const enriched = {
+                   ...reg,
+                   ...(reg.attendeeDetails || {}),
+                   ...(reg.sponsorDetails || {}),
+                   ...(reg.exhibitorDetails || {}),
+                   orderId: reg.orderId,
+                   amount: reg.amount,
+                   type: reg.type,
+                   status: reg.status,
+                   paymentMethod: reg.paymentMethod,
+                   email: reg.email,
+                 }
+                 setOrderData(enriched)
+                 sessionStorage.setItem('pendingOrder', JSON.stringify(enriched))
+               }
+             }
+           } catch (e) {
+             console.error('Failed to load order from URL:', e)
+           }
+         }
        }
      }
+     loadOrder()
    }, [checkPaymentStatus])
 
   const copyToClipboard = (text: string) => {
@@ -117,6 +157,18 @@ export default function DashboardPage() {
          </motion.div>
        )
      }
+     if (orderData?.status === 'payment-pending') {
+       return (
+         <motion.div
+           initial={{ scale: 0.95 }}
+           animate={{ scale: 1 }}
+           className="inline-flex items-center gap-2 bg-gradient-to-r from-violet-500 to-purple-400 text-white px-6 py-3 rounded-full font-semibold shadow-lg shadow-violet-500/25"
+         >
+           <Clock className="w-5 h-5" />
+           Payment Pending
+         </motion.div>
+       )
+     }
      return (
        <motion.div
          initial={{ scale: 0.95 }}
@@ -142,8 +194,71 @@ export default function DashboardPage() {
      }
    }
 
+  const handlePopUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file || !orderData?.orderId) return
+
+    setUploading(true)
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+      formData.append('orderId', orderData.orderId as string)
+
+      const res = await fetch('/api/upload-pop', {
+        method: 'POST',
+        body: formData,
+      })
+
+      const data = await res.json()
+
+      if (data.success) {
+        setPopUploaded(true)
+        setOrderData((prev) => (prev ? { ...prev, status: 'pending' } : prev))
+        toast.success('Payment proof uploaded! Your registration is now pending review.')
+      } else {
+        toast.error(data.error || 'Upload failed')
+      }
+    } catch (error) {
+      console.error('Upload error:', error)
+      toast.error('Failed to upload payment proof')
+    } finally {
+      setUploading(false)
+    }
+  }
+
+  const handlePayNow = async () => {
+    if (!orderData?.orderId || !orderData?.amount) {
+      toast.error('Missing order information')
+      return
+    }
+
+    try {
+      const response = await fetch('/api/payments/initiate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          registrationId: orderData.id,
+          amount: orderData.amount,
+          email: orderData.email,
+          orderId: orderData.orderId,
+          type: orderData.type,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        window.location.href = data.redirectUrl
+      } else {
+        toast.error(data.error || 'Payment initiation failed')
+      }
+    } catch (error) {
+      console.error('Pay Now error:', error)
+      toast.error('Failed to initiate payment')
+    }
+  }
+
   const downloadQRCode = () => {
-    // In production, this would generate and download the actual QR code
     alert('QR Code download functionality will be available after approval')
   }
 
@@ -219,6 +334,63 @@ export default function DashboardPage() {
 
               <div>{getStatusBadge()}</div>
             </div>
+
+            {orderData.status === 'payment-pending' && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                className="mt-6 bg-gradient-to-r from-violet-50 to-purple-50 rounded-2xl p-6 border border-violet-200"
+              >
+                <div className="flex items-start gap-3">
+                  <Clock className="w-5 h-5 text-violet-500 flex-shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <h4 className="font-bold text-gray-900 mb-2">Payment Required</h4>
+                    <p className="text-violet-900 mb-4">
+                      Your registration is confirmed but payment is pending. Please complete your
+                      payment within 3 days to secure your spot.
+                    </p>
+                    {orderData.paymentDueDate && (
+                      <div className="flex items-center gap-2 text-sm font-semibold text-violet-700 mb-4">
+                        <AlertTriangle className="w-4 h-4" />
+                        Due: {new Date(orderData.paymentDueDate as string).toLocaleDateString('en-US', {
+                          weekday: 'long',
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        })}
+                      </div>
+                    )}
+                    <div className="flex flex-wrap gap-3">
+                      <Button
+                        onClick={handlePayNow}
+                        className="bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all"
+                      >
+                        <CreditCard className="w-4 h-4 mr-2" />
+                        Pay Now with Paynow
+                      </Button>
+                      <label className="cursor-pointer">
+                        <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-cyan-400 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all">
+                          <Upload className="w-4 h-4" />
+                          {uploading ? 'Uploading...' : popUploaded ? 'Uploaded ✓' : 'Upload POP'}
+                        </div>
+                        <input
+                          type="file"
+                          accept="image/*,.pdf"
+                          onChange={handlePopUpload}
+                          className="hidden"
+                          disabled={uploading || popUploaded}
+                        />
+                      </label>
+                    </div>
+                    {popUploaded && (
+                      <p className="text-sm text-emerald-600 mt-2 font-medium">
+                        POP uploaded successfully! Your registration is being reviewed.
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            )}
 
             {orderData.status === 'pending' && (
               <motion.div

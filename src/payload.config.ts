@@ -1,6 +1,6 @@
 // storage-adapter-import-placeholder
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
-import { postgresAdapter } from '@payloadcms/db-postgres' // CHANGED
+import { postgresAdapter } from '@payloadcms/db-postgres'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'

@@ -12,6 +12,7 @@ import {
   Zap,
   ArrowLeft,
   BadgeCheck,
+  Clock,
 } from 'lucide-react'
 import React, { useState, useEffect } from 'react'
 import { toast } from 'sonner'
@@ -135,25 +136,85 @@ export default function CheckoutPage() {
         } else {
           toast.error(data.error || 'Payment initiation failed')
         }
+      } else if (selectedPaymentMethod === 'pay-later') {
+        const dueDate = new Date()
+        dueDate.setDate(dueDate.getDate() + 3)
+
+        const paymentData = {
+          registration: registrationData.id,
+          order_id: registrationData.orderId,
+          amount: amount,
+          currency: 'USD',
+          paymentMethod: 'pay-later',
+          status: 'pending',
+        }
+
+        await createPayment(paymentData)
+
+        const response = await fetch(`/api/registrations/${registrationData.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            status: 'payment-pending',
+            paymentMethod: 'pay-later',
+            paymentDueDate: dueDate.toISOString(),
+          }),
+        })
+
+        if (!response.ok) {
+          throw new Error('Failed to update registration')
+        }
+
+        const orderData = {
+          ...registrationData,
+          paymentMethod: 'pay-later',
+          amount: amount,
+          status: 'payment-pending',
+          paymentDueDate: dueDate.toISOString(),
+          orderId: registrationData.orderId || 'ORD-' + Date.now(),
+          createdAt: new Date().toISOString(),
+        }
+
+        sessionStorage.setItem('pendingOrder', JSON.stringify(orderData))
+        sessionStorage.removeItem('registrationData')
+
+        // Send confirmation email
+        try {
+          await fetch('/api/email/send-confirmation', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: registrationData.email,
+              name: registrationData.fullName || registrationData.contactPerson || 'Valued Client',
+              orderId: registrationData.orderId,
+              amount,
+              dueDate: dueDate.toISOString(),
+            }),
+          })
+        } catch (e) {
+          console.error('Failed to send confirmation email:', e)
+        }
+
+        toast.success('Registration confirmed! Check your email for dashboard access.')
+
+        setTimeout(() => {
+          window.location.href = '/dashboard'
+        }, 1500)
       } else {
         // Handle other payment methods (card, mobile, bank, full board)
         const paymentData = {
           registration: registrationData.id,
-          order_id: registrationData.orderId, // CRITICAL FIX: Add this line!
+          order_id: registrationData.orderId,
           amount: amount,
           currency: 'USD',
           paymentMethod: selectedPaymentMethod,
           status: 'pending',
         }
 
-        console.log('Creating payment with data:', paymentData) // Add for debugging
-
         const paymentResponse = await createPayment(paymentData)
 
-        // Update registration status and payment method
         await updateRegistrationStatus(registrationData.id, 'pending', selectedPaymentMethod)
 
-        // Store in sessionStorage for dashboard
         const orderData = {
           ...registrationData,
           paymentId: paymentResponse.doc.id,
@@ -170,7 +231,6 @@ export default function CheckoutPage() {
 
         toast.success('Payment initiated! Your registration is pending approval.')
 
-        // Redirect to dashboard
         setTimeout(() => {
           window.location.href = '/dashboard'
         }, 1500)
@@ -230,6 +290,14 @@ export default function CheckoutPage() {
           },
         ]
       : []),
+    {
+      id: 'pay-later',
+      name: 'Pay Later',
+      icon: Clock,
+      description: 'Register now and pay within 3 days. Upload POP or pay via Paynow from your dashboard.',
+      color: 'from-purple-500 to-violet-600',
+      badge: 'Flexible',
+    },
   ]
 
   if (!registrationData) {
@@ -564,6 +632,35 @@ export default function CheckoutPage() {
                         </div>
                       )}
 
+                      {selectedPaymentMethod === 'pay-later' && (
+                        <div className="space-y-4">
+                          <p className="text-gray-700">
+                            Register now and pay within 3 days. You can pay via Paynow or upload
+                            proof of payment from your dashboard.
+                          </p>
+                          <div className="bg-gradient-to-r from-purple-50 to-violet-50 rounded-xl p-5 border border-purple-200">
+                            <ul className="space-y-3 text-sm text-gray-700">
+                              <li className="flex items-center gap-3">
+                                <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                                <span>Payment due within 3 days</span>
+                              </li>
+                              <li className="flex items-center gap-3">
+                                <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                                <span>Pay via Paynow from your dashboard</span>
+                              </li>
+                              <li className="flex items-center gap-3">
+                                <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                                <span>Upload proof of payment (POP)</span>
+                              </li>
+                              <li className="flex items-center gap-3">
+                                <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                                <span>Receive confirmation email with dashboard link</span>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      )}
+
                       {selectedPaymentMethod === 'full-board' && (
                         <div className="space-y-4">
                           <p className="text-gray-700">
@@ -625,7 +722,9 @@ export default function CheckoutPage() {
                           <>
                             {selectedPaymentMethod === 'paynow'
                               ? 'Pay with Paynow'
-                              : `Pay $${getPayableAmount()}`}
+                              : selectedPaymentMethod === 'pay-later'
+                                ? 'Register & Pay Later'
+                                : `Pay $${getPayableAmount()}`}
                             <Lock className="w-5 h-5 ml-2" />
                           </>
                         )}

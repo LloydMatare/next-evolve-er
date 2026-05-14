@@ -44,6 +44,7 @@ export const Registrations: CollectionConfig = {
       defaultValue: 'pending',
       options: [
         { label: 'Pending', value: 'pending' },
+        { label: 'Payment Pending', value: 'payment-pending' },
         { label: 'Approved', value: 'approved' },
         { label: 'Rejected', value: 'rejected' },
         { label: 'Paid', value: 'paid' },
@@ -81,6 +82,7 @@ export const Registrations: CollectionConfig = {
         { label: 'Bank Transfer', value: 'bank' },
         { label: 'Paynow', value: 'paynow' },
         { label: 'Full Board', value: 'full-board' },
+        { label: 'Pay Later', value: 'pay-later' },
         { label: 'Pending', value: 'pending' },
       ],
       defaultValue: 'pending',
@@ -316,6 +318,26 @@ export const Registrations: CollectionConfig = {
       type: 'upload',
       label: 'Payment Proof',
       relationTo: 'media',
+    },
+    {
+      name: 'paymentDueDate',
+      type: 'date',
+      label: 'Payment Due Date',
+      admin: {
+        position: 'sidebar',
+        date: {
+          pickerAppearance: 'dayAndTime',
+        },
+      },
+    },
+    {
+      name: 'reminderSent',
+      type: 'checkbox',
+      label: 'Reminder Sent',
+      defaultValue: false,
+      admin: {
+        position: 'sidebar',
+      },
     },
     {
       name: 'notes',
