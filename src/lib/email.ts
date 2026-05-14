@@ -1,6 +1,15 @@
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY || '')
+let resendInstance: Resend | null = null
+
+function getResend() {
+  if (!resendInstance) {
+    const apiKey = process.env.RESEND_API_KEY
+    if (!apiKey) return null
+    resendInstance = new Resend(apiKey)
+  }
+  return resendInstance
+}
 
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'noreply@evolveictsummit.com'
 const FROM_NAME = process.env.RESEND_FROM_NAME || 'Evolve ICT Summit'
@@ -14,6 +23,11 @@ export async function sendEmail({
   subject: string
   html: string
 }) {
+  const resend = getResend()
+  if (!resend) {
+    console.warn('RESEND_API_KEY not set. Email not sent.')
+    return false
+  }
   try {
     await resend.emails.send({
       from: `${FROM_NAME} <${FROM_EMAIL}>`,

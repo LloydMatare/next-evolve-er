@@ -8,7 +8,6 @@ export async function POST() {
     const payload = await getPayload({ config: configPromise })
 
     const now = new Date()
-    const threeDaysAgo = new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000)
 
     const registrations = await payload.find({
       collection: 'registrations',
