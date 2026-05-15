@@ -6,6 +6,13 @@ import React, { useEffect } from 'react'
 
 export default function DashboardPage() {
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const orderIdFromUrl = params.get('orderId')
+    if (orderIdFromUrl) {
+      window.location.href = `/dashboard/${orderIdFromUrl}`
+      return
+    }
+
     const data = sessionStorage.getItem('pendingOrder')
     if (data) {
       try {
