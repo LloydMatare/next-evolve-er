@@ -61,7 +61,7 @@ export default function PaymentSuccessContent() {
           localStorage.removeItem('lastOrderId')
         }
         setTimeout(() => {
-          window.location.href = '/dashboard'
+          window.location.href = `/dashboard/${orderId}`
         }, 2000)
       } else {
         setStatus('pending')
@@ -109,7 +109,7 @@ export default function PaymentSuccessContent() {
               Your payment is being processed. We will notify you once confirmed.
             </p>
             <Button
-              onClick={() => (window.location.href = '/dashboard')}
+              onClick={() => (window.location.href = `/dashboard/${orderId}`)}
               className="bg-gradient-to-r from-[#ffcc00] to-amber-500 text-white"
             >
               Go to Dashboard

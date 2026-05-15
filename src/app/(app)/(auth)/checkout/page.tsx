@@ -198,7 +198,7 @@ export default function CheckoutPage() {
         toast.success('Registration confirmed! Check your email for dashboard access.')
 
         setTimeout(() => {
-          window.location.href = '/dashboard'
+          window.location.href = `/dashboard/${orderData.orderId}`
         }, 1500)
       } else {
         // Handle other payment methods (card, mobile, bank, full board)
@@ -232,7 +232,7 @@ export default function CheckoutPage() {
         toast.success('Payment initiated! Your registration is pending approval.')
 
         setTimeout(() => {
-          window.location.href = '/dashboard'
+          window.location.href = `/dashboard/${orderData.orderId}`
         }, 1500)
       }
     } catch (error) {
