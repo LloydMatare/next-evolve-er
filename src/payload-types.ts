@@ -79,6 +79,7 @@ export interface Config {
     blogs: Blog;
     'previous-summits': PreviousSummit;
     gallery: Gallery;
+    sponsors: Sponsor;
     'school-summit': SchoolSummit;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -99,6 +100,7 @@ export interface Config {
     blogs: BlogsSelect<false> | BlogsSelect<true>;
     'previous-summits': PreviousSummitsSelect<false> | PreviousSummitsSelect<true>;
     gallery: GallerySelect<false> | GallerySelect<true>;
+    sponsors: SponsorsSelect<false> | SponsorsSelect<true>;
     'school-summit': SchoolSummitSelect<false> | SchoolSummitSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -787,6 +789,19 @@ export interface Gallery {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sponsors".
+ */
+export interface Sponsor {
+  id: number;
+  name: string;
+  logo: number | Media;
+  website?: string | null;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "school-summit".
  */
 export interface SchoolSummit {
@@ -897,6 +912,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'gallery';
         value: number | Gallery;
+      } | null)
+    | ({
+        relationTo: 'sponsors';
+        value: number | Sponsor;
       } | null)
     | ({
         relationTo: 'school-summit';
@@ -1335,6 +1354,18 @@ export interface GallerySelect<T extends boolean = true> {
   likes?: T;
   featured?: T;
   status?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sponsors_select".
+ */
+export interface SponsorsSelect<T extends boolean = true> {
+  name?: T;
+  logo?: T;
+  website?: T;
   order?: T;
   updatedAt?: T;
   createdAt?: T;

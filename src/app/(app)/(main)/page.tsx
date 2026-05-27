@@ -1,12 +1,17 @@
 //@ts-nocheck
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { CountdownTimer } from '@/components/countdown-timer'
 import { FadeIn } from '@/components/fade-in'
 import HeroSection from '@/components/hero-section'
 import { SectionHeading } from '@/components/section-heading'
 import { Button } from '@/components/ui/button'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from '@/components/ui/carousel'
 import Image from 'next/image'
 import {
   Dialog,
@@ -34,6 +39,7 @@ import {
   Zap,
 } from 'lucide-react'
 import Link from 'next/link'
+import Autoplay from 'embla-carousel-autoplay'
 
 const experiences = [
   {
@@ -163,6 +169,21 @@ export default function Home() {
   const [loadingSpeakers, setLoadingSpeakers] = useState(true)
   const [selectedSpeaker, setSelectedSpeaker] = useState<SpeakerType | null>(null)
 
+  type SponsorType = {
+    id: string
+    name: string
+    logo: string
+    website?: string
+  }
+
+  const [sponsors, setSponsors] = useState<SponsorType[]>([])
+  const [loadingSponsors, setLoadingSponsors] = useState(true)
+
+  const autoplayPlugin = useMemo(
+    () => Autoplay({ delay: 3000, stopOnInteraction: true }),
+    []
+  )
+
   type BoothType = {
     id: string
     number: string
@@ -201,7 +222,7 @@ export default function Home() {
   useEffect(() => {
     const fetchFeaturedSpeakers = async () => {
       try {
-        const response = await fetch('/api/speakers?limit=4&sort=-order')
+        const response = await fetch('/api/speakers?limit=20&sort=order')
         if (response.ok) {
           const data = await response.json()
           const speakers = (data.docs || []).map((s: any) => ({
@@ -218,6 +239,26 @@ export default function Home() {
         console.error('Error fetching speakers:', error)
       } finally {
         setLoadingSpeakers(false)
+      }
+    }
+
+    const fetchSponsors = async () => {
+      try {
+        const response = await fetch('/api/sponsors?limit=20&sort=order')
+        if (response.ok) {
+          const data = await response.json()
+          const sponsorData = (data.docs || []).map((s: any) => ({
+            id: s.id,
+            name: s.name,
+            logo: s.logo?.url || '',
+            website: s.website,
+          }))
+          setSponsors(sponsorData)
+        }
+      } catch (error) {
+        console.error('Error fetching sponsors:', error)
+      } finally {
+        setLoadingSponsors(false)
       }
     }
 
@@ -267,6 +308,7 @@ export default function Home() {
     }
 
     fetchFeaturedSpeakers()
+    fetchSponsors()
     fetchBooths()
   }, [])
 
@@ -765,31 +807,20 @@ export default function Home() {
             description="Meet the experts shaping Africa's digital future."
           />
 
-          <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {!loadingSpeakers && featuredSpeakers.length === 0
-              ? speakers.map((speaker, index) => (
-                  <FadeIn key={speaker.name} delay={index * 100}>
-                    <div className="group relative overflow-hidden rounded-[1.8rem]">
-                      <div className="aspect-[3/4] w-full overflow-hidden bg-gradient-to-br from-slate-200 to-slate-300">
-                        <div className="absolute inset-0 flex items-center justify-center bg-slate-800/10">
-                          <div className="text-center">
-                            <Users className="mx-auto h-12 w-12 text-slate-400" />
-                            <p className="mt-2 text-sm text-slate-500">Speaker Photo</p>
-                          </div>
-                        </div>
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                      </div>
-                      <div className="absolute bottom-0 left-0 right-0 p-5">
-                        <h4 className="text-lg font-semibold text-white">{speaker.name}</h4>
-                        <p className="text-sm text-white/80">{speaker.role}</p>
-                      </div>
-                    </div>
-                  </FadeIn>
-                ))
-              : speakersToShow.map((speaker, index) => (
-                  <FadeIn key={speaker.name} delay={index * 100}>
+          <div className="mt-10">
+            <Carousel
+              plugins={[autoplayPlugin]}
+              opts={{ loop: speakersToShow.length > 4, align: 'start' }}
+              className="w-full"
+            >
+              <CarouselContent>
+                {speakersToShow.map((speaker) => (
+                  <CarouselItem
+                    key={speaker.name}
+                    className="basis-full md:basis-1/2 lg:basis-1/4 pl-4"
+                  >
                     <div
-                      className="group relative overflow-hidden rounded-[1.8rem] cursor-pointer hover:ring-2 hover:ring-[#ffcc00] transition-all"
+                      className="group relative overflow-hidden rounded-[1.8rem] cursor-pointer hover:ring-2 hover:ring-[#ffcc00] transition-all h-full"
                       onClick={() => setSelectedSpeaker(speaker)}
                     >
                       {speaker.image ? (
@@ -799,12 +830,8 @@ export default function Home() {
                           className="aspect-[3/4] w-full object-cover"
                         />
                       ) : (
-                        <div className="aspect-[3/4] w-full overflow-hidden bg-gradient-to-br from-slate-200 to-slate-300">
-                          <div className="absolute inset-0 flex items-center justify-center bg-slate-800/10">
-                            <div className="text-center">
-                              <Users className="mx-auto h-12 w-12 text-slate-400" />
-                            </div>
-                          </div>
+                        <div className="aspect-[3/4] w-full overflow-hidden bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center">
+                          <Users className="h-12 w-12 text-slate-400" />
                         </div>
                       )}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
@@ -813,8 +840,10 @@ export default function Home() {
                         <p className="text-sm text-white/80">{speaker.role}</p>
                       </div>
                     </div>
-                  </FadeIn>
+                  </CarouselItem>
                 ))}
+              </CarouselContent>
+            </Carousel>
           </div>
 
           <div className="mt-10 flex justify-center">
@@ -883,6 +912,61 @@ export default function Home() {
                 <FAQItem key={faq.question} faq={faq} index={index} />
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section-padding px-4 sm:px-6 lg:px-8">
+        <div className="container-custom">
+          <SectionHeading
+            eyebrow="Our Partners"
+            title="Trusted by industry leaders."
+            description="We are proud to be supported by these amazing organizations."
+          />
+
+          <div className="mt-10">
+            <Carousel
+              plugins={[autoplayPlugin]}
+              opts={{ loop: sponsors.length > 5, align: 'start' }}
+              className="w-full"
+            >
+              <CarouselContent>
+                {loadingSponsors
+                  ? Array.from({ length: 6 }).map((_, i) => (
+                      <CarouselItem
+                        key={`skeleton-${i}`}
+                        className="basis-1/2 md:basis-1/3 lg:basis-1/6 pl-4"
+                      >
+                        <div className="flex h-24 items-center justify-center rounded-xl bg-slate-100 animate-pulse" />
+                      </CarouselItem>
+                    ))
+                  : sponsors.map((sponsor) => (
+                      <CarouselItem
+                        key={sponsor.id}
+                        className="basis-1/2 md:basis-1/3 lg:basis-1/6 pl-4"
+                      >
+                        <a
+                          href={sponsor.website || '#'}
+                          target={sponsor.website ? '_blank' : undefined}
+                          rel={sponsor.website ? 'noopener noreferrer' : undefined}
+                          className="flex h-24 items-center justify-center rounded-xl bg-white border border-slate-200 p-4 hover:shadow-md transition-shadow"
+                        >
+                          {sponsor.logo ? (
+                            <img
+                              src={sponsor.logo}
+                              alt={sponsor.name}
+                              className="max-h-full max-w-full object-contain grayscale hover:grayscale-0 transition-all duration-300"
+                            />
+                          ) : (
+                            <span className="text-sm font-medium text-slate-500 text-center">
+                              {sponsor.name}
+                            </span>
+                          )}
+                        </a>
+                      </CarouselItem>
+                    ))}
+              </CarouselContent>
+            </Carousel>
           </div>
         </div>
       </section>

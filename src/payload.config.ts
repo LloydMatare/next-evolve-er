@@ -20,6 +20,7 @@ import { SpeakerApplications } from './collections/SpeakerApplications'
 import { Blogs } from './collections/Blogs'
 import { PreviousSummits } from './collections/PreviousSummits'
 import { Gallery } from './collections/Gallery'
+import { Sponsors } from './collections/Sponsors'
 import { SchoolSummit } from './collections/SchoolSummit'
 
 const filename = fileURLToPath(import.meta.url)
@@ -45,6 +46,7 @@ export default buildConfig({
     Blogs,
     PreviousSummits,
     Gallery,
+    Sponsors,
     SchoolSummit,
   ],
   editor: lexicalEditor(),
