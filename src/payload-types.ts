@@ -242,6 +242,7 @@ export interface Registration {
     teamMembers: string;
     specialRequirements?: string | null;
   };
+  attendeePhoto?: (number | null) | Media;
   qrCode?: (number | null) | Media;
   paymentProof?: (number | null) | Media;
   paymentDueDate?: string | null;
@@ -1056,6 +1057,7 @@ export interface RegistrationsSelect<T extends boolean = true> {
         teamMembers?: T;
         specialRequirements?: T;
       };
+  attendeePhoto?: T;
   qrCode?: T;
   paymentProof?: T;
   paymentDueDate?: T;

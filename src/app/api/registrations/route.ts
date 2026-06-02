@@ -61,10 +61,14 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(url.searchParams.get('limit') || '10')
 
     const orderId = url.searchParams.get('orderId')
+    const typeFilter = url.searchParams.get('type')
 
     const where: any = {}
     if (orderId) {
       where.orderId = { equals: orderId }
+    }
+    if (typeFilter) {
+      where.type = { equals: typeFilter }
     }
 
     const registrations = await payload.find({
@@ -73,6 +77,7 @@ export async function GET(request: NextRequest) {
       limit,
       page,
       sort: '-createdAt',
+      depth: 1,
     })
 
     return NextResponse.json({

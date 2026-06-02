@@ -68,6 +68,7 @@
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.24.12",
     "graphql": "^16.8.1",
+    "html-to-image": "^1.11.13",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.548.0",
     "next": "15.4.10",

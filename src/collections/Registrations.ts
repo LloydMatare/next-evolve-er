@@ -305,6 +305,16 @@ export const Registrations: CollectionConfig = {
       ],
     },
     {
+      name: 'attendeePhoto',
+      type: 'upload',
+      label: 'Attendee Photo',
+      relationTo: 'media',
+      admin: {
+        condition: (data) => data.type === 'attendee',
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'qrCode',
       type: 'upload',
       label: 'QR Code',
