@@ -5,7 +5,7 @@ import { PageHero } from '@/components/page-hero'
 import { SectionHeading } from '@/components/section-heading'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Button } from '@/components/ui/button'
-import { Briefcase, HelpCircle, Mail, Search, Shield, Star, Users } from 'lucide-react'
+import { Briefcase, HelpCircle, Mail, Search, Shield, Star, UserCheck, Users } from 'lucide-react'
 import Link from 'next/link'
 import React, { useMemo, useState } from 'react'
 
@@ -15,7 +15,7 @@ type FaqItem = {
 }
 
 type FaqCategory = {
-  id: 'general' | 'exhibitors' | 'partners' | 'sponsors'
+  id: 'general' | 'exhibitors' | 'partners' | 'sponsors' | 'delegates'
   title: string
   Icon: React.ComponentType<{ className?: string }>
   questions: FaqItem[]
@@ -28,20 +28,83 @@ const faqCategories: FaqCategory[] = [
     Icon: HelpCircle,
     questions: [
       {
-        q: 'When will tickets be available for purchase?',
-        a: 'Early bird tickets will be available starting March 1, 2026. Sign up for our newsletter to get notified about ticket releases and exclusive discounts.',
+        q: 'What is Evolve ICT Summit?',
+        a: "Evolve ICT Summit is Zimbabwe\u2019s leading digital transformation platform bringing together government, business leaders, innovators, investors, academia, and technology providers to explore the future of Africa\u2019s digital economy.",
       },
       {
-        q: 'Is the venue accessible for people with disabilities?',
-        a: 'Yes, the Harare International Conference Centre is fully accessible with wheelchair ramps, accessible restrooms, and dedicated seating areas.',
+        q: 'What is the theme for 2026?',
+        a: 'Empowering Africa\u2019s Digital Leap. The summit focuses on accelerating digital transformation, innovation, collaboration, and economic growth across Africa.',
       },
       {
-        q: 'Will there be virtual attendance options?',
-        a: 'Yes. We offer hybrid attendance options, including virtual passes for those who cannot attend in person.',
+        q: 'What topics will be covered?',
+        a: 'Topics include: Artificial Intelligence (AI), Cybersecurity, Fintech, Digital Infrastructure, Smart Cities, Cloud Computing, Enterprise Technology, Innovation & Startups, Digital Government, Telecommunications, Data & Analytics, and Emerging Technologies.',
       },
       {
-        q: 'What is the refund policy?',
-        a: "Full refunds are available up to 30 days before the event. After that, tickets can be transferred to another person or credited toward next year's summit.",
+        q: 'Who are the speakers?',
+        a: 'The summit features leaders from Government, Telecommunications, Financial Services, Artificial Intelligence, Cybersecurity, and Technology & Innovation. Speaker announcements are released progressively through official Evolve ICT Summit channels.',
+      },
+      {
+        q: 'Are media representatives allowed to attend?',
+        a: 'Yes. Accredited media representatives are welcome. Media accreditation requests should be submitted in advance.',
+      },
+      {
+        q: 'Will networking opportunities be available?',
+        a: 'Yes. Networking is a core component of Evolve ICT Summit and includes: business networking sessions, exhibition interactions, executive engagements, and informal networking opportunities throughout the event.',
+      },
+      {
+        q: 'How can my organisation become a partner or sponsor?',
+        a: 'Organisations interested in partnership or sponsorship opportunities can contact: Email: info@evolveictsummit.com, Phone: +263 (242) 494 407, WhatsApp: +263 77 701 2981.',
+      },
+      {
+        q: 'How can I stay updated?',
+        a: 'Follow Evolve ICT Summit on LinkedIn, Facebook, X (Twitter), and Instagram. Or visit www.evolveictsummit.com or WhatsApp: +263 77 701 2981.',
+      },
+      {
+        q: 'How can I contact the organisers?',
+        a: 'For all enquiries: Email: info@evolveictsummit.com, Phone: +263 (242) 494 407, WhatsApp: +263 77 701 2981, Web: www.evolveictsummit.com.',
+      },
+    ],
+  },
+  {
+    id: 'delegates',
+    title: 'Delegates',
+    Icon: UserCheck,
+    questions: [
+      {
+        q: 'What does my delegate pass include?',
+        a: 'Your delegate registration includes: access to all keynote sessions, panel discussions and presentations, the Innovation & Exhibition Arena, networking opportunities, tea breaks and refreshments, delegate conference materials (where applicable), and access to selected post-event content and resources.',
+      },
+      {
+        q: 'How much is delegate registration?',
+        a: 'Delegate registration is USD $250 per delegate.',
+      },
+      {
+        q: 'How do I register?',
+        a: 'Delegates can register online via the Evolve ICT Summit website (www.evolveictsummit.com), through official registration links shared by Evolve ICT Summit, or via the event secretariat \u2013 Mrs Mary Saruchera on +263 735 444 997.',
+      },
+      {
+        q: 'Who should attend?',
+        a: 'Evolve ICT Summit is designed for: CEOs and Managing Directors, CIOs, CTOs, CISOs and ICT Professionals, Government Officials and Policymakers, Entrepreneurs and SMEs, Corporate Executives, Financial Institutions, Startups and Innovators, Students and Young Professionals, Development Organisations, and Technology Vendors and Service Providers.',
+      },
+      {
+        q: 'Will certificates be issued?',
+        a: 'Yes. Certificates of participation will be issued to registered delegates following the summit.',
+      },
+      {
+        q: 'Is parking available?',
+        a: 'Yes, parking is available at the Harare International Convention Centre, subject to venue capacity.',
+      },
+      {
+        q: 'Can I transfer my registration to another person?',
+        a: 'Yes. Registration transfers must be communicated to the organisers at least 48 hours before the event.',
+      },
+      {
+        q: 'What should I bring?',
+        a: 'Delegates are encouraged to bring: National ID or Passport, business cards, a notebook or digital device for note-taking, company promotional material (optional), and fully charged mobile devices.',
+      },
+      {
+        q: 'What is the dress code?',
+        a: 'Business, Business Casual, or Corporate Attire.',
       },
     ],
   },
@@ -51,16 +114,36 @@ const faqCategories: FaqCategory[] = [
     Icon: Briefcase,
     questions: [
       {
-        q: 'How do I reserve an exhibition booth?',
-        a: 'Exhibitor booths are reserved through our registration flow under the exhibitor option. Booths are allocated on a first-come, first-served basis.',
+        q: 'What does an exhibition package include?',
+        a: 'Standard exhibition packages include: exhibition booth space, exhibitor passes, company listing in event communications, access to delegates and networking sessions, and branding opportunities according to package level. Please refer to your sponsorship or exhibition agreement for package-specific benefits.',
       },
       {
-        q: 'What is included with an exhibitor booth?',
-        a: 'Booth packages include a 3x3m space, one table, two chairs, and access to power and Wi-Fi. Additional amenities can be requested.',
+        q: 'What time can exhibitors set up?',
+        a: 'Exhibitor setup will take place prior to the summit. Detailed setup schedules and venue access information will be communicated directly to confirmed exhibitors.',
       },
       {
-        q: 'Can I customize my booth space?',
-        a: 'Yes, exhibitors can customize their booth space with banners and displays. Please inform us of any special requirements in advance.',
+        q: 'What should exhibitors bring?',
+        a: 'Recommended items include: pull-up banners, branded tablecloths, product displays, promotional materials, business cards, demo equipment, extension leads and power accessories, and company representatives for booth staffing.',
+      },
+      {
+        q: 'Will internet access be available?',
+        a: 'Internet connectivity will be available within the venue. Exhibitors with specialised connectivity requirements should communicate these in advance.',
+      },
+      {
+        q: 'Are power points available?',
+        a: 'Yes. Power requirements should be communicated before the event to ensure adequate allocation.',
+      },
+      {
+        q: 'Can exhibitors sell products on-site?',
+        a: 'Yes. Exhibitors may showcase and sell products and services, provided they comply with venue regulations and applicable laws.',
+      },
+      {
+        q: 'Can exhibitors conduct demonstrations?',
+        a: 'Absolutely. Interactive demonstrations and product showcases are encouraged.',
+      },
+      {
+        q: 'How many people can man an exhibition stand?',
+        a: 'This depends on the package selected. Additional exhibitor passes may be arranged upon request.',
       },
     ],
   },
@@ -94,7 +177,7 @@ const faqCategories: FaqCategory[] = [
       },
       {
         q: 'Can I customize a sponsorship package?',
-        a: 'Yes. We can tailor packages to your goals—reach out to the team and we’ll shape a plan that matches your audience and activation needs.',
+        a: 'Yes. We can tailor packages to your goals\u2014reach out to the team and we\u2019ll shape a plan that matches your audience and activation needs.',
       },
     ],
   },
