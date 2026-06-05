@@ -1,7 +1,7 @@
 'use client'
 
 import { FadeIn } from '@/components/fade-in'
-import { PageHero } from '@/components/page-hero'
+
 import { SectionHeading } from '@/components/section-heading'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -23,6 +23,7 @@ import {
   MapPin,
   Ticket,
   ArrowRight,
+  ArrowLeft,
   Zap,
   Star,
   Gift,
@@ -30,7 +31,7 @@ import {
   TrendingUp,
 } from 'lucide-react'
 import React, { useState, useEffect } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation'
 import {
   Select,
   SelectContent,
@@ -137,6 +138,7 @@ const fullBoardSchema = z.object({
 type FullBoardFormData = z.infer<typeof fullBoardSchema>
 
 export default function RegisterPage() {
+  const router = useRouter()
   const [activeTab, setActiveTab] = useState<'attendee' | 'sponsor' | 'exhibitor' | 'full-board'>('attendee')
   const [selectedSponsorTier, setSelectedSponsorTier] = useState<
     'platinum' | 'gold' | 'silver' | 'bronze'
@@ -162,20 +164,21 @@ export default function RegisterPage() {
 
    return (
      <div className="min-h-screen">
-      <PageHero
-        eyebrow="Register"
-        title="Secure your spot for"
-        accent="Evolve 2026"
-        description="Choose the registration path that fits you — attendee, sponsor, exhibitor, or full boarding — and move smoothly into checkout."
-        primaryCta={{ href: '/program', label: 'Explore Program' }}
-        secondaryCta={{ href: '/partnerships', label: 'Partnerships' }}
-        image="/bg-1.jpg"
-        imageAlt="Event crowd and stage lights"
-        compact
-      />
+      {/* Back Button & Top Spacing */}
+      <div className="pt-24 sm:pt-32">
+        <div className="container-custom px-4 sm:px-6 lg:px-8">
+          <button
+            onClick={() => router.back()}
+            className="group mb-6 flex items-center gap-2 text-sm font-medium text-slate-600 transition-colors hover:text-slate-900"
+          >
+            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+            Back
+          </button>
+        </div>
+      </div>
 
       {/* Registration Navigation */}
-      <section className="relative -mt-10 px-4 pb-24 sm:px-6 lg:px-8">
+      <section className="relative px-4 pb-24 sm:px-6 lg:px-8">
         <div className="container-custom">
            <Tabs
              value={activeTab}
