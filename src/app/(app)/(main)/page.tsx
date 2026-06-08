@@ -76,37 +76,49 @@ const journey = [
 ]
 
 const stats = [
-  { value: '100+', label: 'Delegates expected' },
-  { value: '10+', label: 'Expert speakers' },
-  { value: '30+', label: 'Featured exhibitors' },
-  { value: '10+', label: 'Global partners' },
+  { value: '500+', label: 'Delegates expected' },
+  { value: '20+', label: 'Expert speakers' },
+  { value: '40+', label: 'Featured exhibitors' },
+  { value: '15+', label: 'Global partners' },
 ]
 
 const scheduleEvents = [
   {
-    time: '09:00 AM',
-    title: 'Opening Keynote',
-    speaker: 'Dr. T.A. Mavetera',
+    time: '09:10 AM',
+    title: 'Keynote: Building a Resilient Digital Zimbabwe',
+    speaker: 'Simon Nyamuda',
+    location: 'Main Hall',
+  },
+  {
+    time: '10:05 AM',
+    title: 'Guest of Honour Address',
+    speaker: 'Hon. Minister Tatenda Mavetera',
+    location: 'Main Hall',
+  },
+  {
+    time: '11:30 AM',
+    title: 'Fintech, Financial Inclusion & the Digital Wallet Revolution',
+    speaker: 'Bongani Zamchiya',
     location: 'Main Hall',
   },
 ]
 
 const speakers = [
-  { name: 'Dr. Sarah Chen', role: 'CEO, TechVentures Africa', image: '/placeholder-speaker-1.jpg' },
-  { name: 'Marcus Johnson', role: 'Founder, AI Solutions', image: '/placeholder-speaker-2.jpg' },
+  { name: 'Simon Nyamuda', role: 'Managing Director, Compulink', image: '/placeholder-speaker-1.jpg' },
+  { name: 'Hon. Minister Tatenda Mavetera', role: 'Minister of ICT, Government of Zimbabwe', image: '/placeholder-speaker-2.jpg' },
   {
-    name: 'Amara Okonkwo',
-    role: 'Director, Digital Innovation',
+    name: 'Maria Chinomwe',
+    role: 'AI Technology Services Executive, Econet Wireless',
     image: '/placeholder-speaker-3.jpg',
   },
-  { name: 'David Mwangi', role: 'CTO, Kenya Tech Hub', image: '/placeholder-speaker-4.jpg' },
+  { name: 'Eng. Raphael Mushanawani', role: 'Group CEO, NetOne Cellular', image: '/placeholder-speaker-4.jpg' },
 ]
 
 const testimonials = [
   {
     quote: 'This summit transformed how we approach digital transformation in our organization.',
     name: 'Dr W Rukanda',
-    company: 'Monipac',
+    company: 'MorniPac Consultants',
   },
 ]
 

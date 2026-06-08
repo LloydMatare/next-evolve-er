@@ -23,6 +23,8 @@ import {
   Filter,
   Search,
   Loader2,
+  Sparkles,
+  Award,
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 
@@ -53,7 +55,7 @@ const eventDays = [
     id: 1,
     date: 'June 11, 2026',
     day: 'Day 1',
-    theme: 'Digital Transformation & Innovation',
+    theme: 'Securing Africa\'s Digital Infrastructure: Trust, Resilience & Connectivity',
     color: 'from-blue-600 to-purple-600',
     value: 'day-1',
   },
@@ -61,7 +63,7 @@ const eventDays = [
     id: 2,
     date: 'June 12, 2026',
     day: 'Day 2',
-    theme: 'Future Tech & Sustainability',
+    theme: 'Driving Africa\'s Digital Economy: Innovation, Fintech & Entrepreneurship',
     color: 'from-amber-600 to-orange-600',
     value: 'day-2',
   },
@@ -83,12 +85,12 @@ const sessionTypes = [
   { id: 'keynote', name: 'Keynotes', icon: <Mic className="h-4 w-4" /> },
   { id: 'panel', name: 'Panels', icon: <Users className="h-4 w-4" /> },
   { id: 'workshop', name: 'Workshops', icon: <Briefcase className="h-4 w-4" /> },
-  { id: 'talk', name: 'Talks', icon: <Video className="h-4 w-4" /> },
+  { id: 'talk', name: 'Presentations', icon: <Video className="h-4 w-4" /> },
   { id: 'networking', name: 'Networking', icon: <Network className="h-4 w-4" /> },
   { id: 'break', name: 'Breaks', icon: <Coffee className="h-4 w-4" /> },
   { id: 'registration', name: 'Registration', icon: <Users className="h-4 w-4" /> },
-  { id: 'opening', name: 'Opening', icon: <Mic className="h-4 w-4" /> },
-  { id: 'closing', name: 'Closing', icon: <Mic className="h-4 w-4" /> },
+  { id: 'opening', name: 'Opening', icon: <Sparkles className="h-4 w-4" /> },
+  { id: 'closing', name: 'Closing', icon: <Award className="h-4 w-4" /> },
   { id: 'lunch', name: 'Lunch', icon: <Utensils className="h-4 w-4" /> },
 ]
 
@@ -157,15 +159,12 @@ export default function ProgramPage() {
 
   const getVenueDisplayName = (venue: string): string => {
     const venues: Record<string, string> = {
+      'main-hall': 'Main Hall',
       'main-auditorium': 'Main Auditorium',
-      'room-a': 'Conference Room A',
-      'room-b': 'Conference Room B',
-      'room-c': 'Conference Room C',
       'exhibition-hall': 'Exhibition Hall',
       'dining-hall': 'Dining Hall',
       'networking-lounge': 'Networking Lounge',
-      'grand-ballroom': 'Grand Ballroom',
-      'main-lobby': 'Main Lobby',
+      'main-lobby': 'Main Lobby / Exhibition Hall',
     }
     return venues[venue] || venue
   }
@@ -175,7 +174,7 @@ export default function ProgramPage() {
       keynote: 'Keynote',
       panel: 'Panel Discussion',
       workshop: 'Workshop',
-      talk: 'Expert Talk',
+      talk: 'Presentation',
       networking: 'Networking',
       registration: 'Registration',
       opening: 'Opening',
@@ -194,8 +193,8 @@ export default function ProgramPage() {
       talk: <Video className="h-5 w-5" />,
       networking: <Network className="h-5 w-5" />,
       registration: <Users className="h-5 w-5" />,
-      opening: <Mic className="h-5 w-5" />,
-      closing: <Mic className="h-5 w-5" />,
+      opening: <Sparkles className="h-5 w-5" />,
+      closing: <Award className="h-5 w-5" />,
       lunch: <Utensils className="h-5 w-5" />,
       break: <Coffee className="h-5 w-5" />,
     }
@@ -207,11 +206,11 @@ export default function ProgramPage() {
       keynote: 'bg-amber-100 text-amber-800 border-amber-200',
       panel: 'bg-purple-100 text-purple-800 border-purple-200',
       workshop: 'bg-indigo-100 text-indigo-800 border-indigo-200',
-      talk: 'bg-blue-100 text-blue-800 border-blue-200',
+      talk: 'bg-indigo-100 text-indigo-800 border-indigo-200',
       networking: 'bg-green-100 text-green-800 border-green-200',
       registration: 'bg-gray-100 text-gray-800 border-gray-200',
-      opening: 'bg-red-100 text-red-800 border-red-200',
-      closing: 'bg-gray-100 text-gray-800 border-gray-200',
+      opening: 'bg-amber-100 text-amber-800 border-amber-200',
+      closing: 'bg-rose-100 text-rose-800 border-rose-200',
       lunch: 'bg-yellow-100 text-yellow-800 border-yellow-200',
       break: 'bg-cyan-100 text-cyan-800 border-cyan-200',
     }
@@ -612,6 +611,10 @@ export default function ProgramPage() {
                           {type.id === 'talk' && 'Expert presentations'}
                           {type.id === 'networking' && 'Social events'}
                           {type.id === 'break' && 'Refreshment breaks'}
+                          {type.id === 'registration' && 'Check-in & welcome'}
+                          {type.id === 'opening' && 'Ceremony & welcome'}
+                          {type.id === 'closing' && 'Wrap-up & remarks'}
+                          {type.id === 'lunch' && 'Meal & networking'}
                         </p>
                       </div>
                     </div>
