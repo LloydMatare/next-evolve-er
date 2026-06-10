@@ -100,7 +100,7 @@ export async function updateRegistrationStatus(id: string, status: string, payme
   try {
     const updateData: any = { status }
 
-    const response = await fetch(`${API_URL}/registrations/${id}`, {
+    const response = await fetch(`${API_URL}/custom/registrations/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -122,7 +122,7 @@ export async function updateRegistrationStatus(id: string, status: string, payme
 
 export async function getRegistration(id: string): Promise<any> {
   try {
-    const response = await fetch(`${API_URL}/registrations/${id}`)
+    const response = await fetch(`${API_URL}/custom/registrations/${id}`)
 
     if (!response.ok) {
       const error = await response.text()

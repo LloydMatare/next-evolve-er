@@ -151,7 +151,7 @@ export default function CheckoutPage() {
 
         await createPayment(paymentData)
 
-        const response = await fetch(`/api/registrations/${registrationData.id}`, {
+        const response = await fetch(`/api/custom/registrations/${registrationData.id}`, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
