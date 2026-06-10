@@ -164,9 +164,8 @@ export default async function AboutPage() {
         imageAlt="Summit audience and stage lighting"
         stats={[
           { value: '2 Days', label: 'of programming' },
-          { value: '30+', label: 'countries represented' },
-          { value: '50+', label: 'speakers and facilitators' },
-          { value: '100+', label: 'exhibitors and partners' },
+          { value: '20+', label: 'speakers and facilitators' },
+          { value: '30+', label: 'exhibitors and partners' },
         ]}
       />
 

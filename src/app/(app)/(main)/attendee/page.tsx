@@ -200,6 +200,8 @@ export default function AttendeePage() {
   const [uploading, setUploading] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [selectedAttendee, setSelectedAttendee] = useState<Attendee | null>(null)
+  const [page, setPage] = useState(1)
+  const perPage = 12
 
   const {
     register,
@@ -243,6 +245,10 @@ export default function AttendeePage() {
   useEffect(() => {
     fetchAttendees()
   }, [])
+
+  useEffect(() => {
+    setPage(1)
+  }, [searchQuery])
 
   const handlePhotoSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -333,6 +339,12 @@ export default function AttendeePage() {
     )
   })
 
+  const totalPages = Math.ceil(filteredAttendees.length / perPage)
+  const paginatedAttendees = filteredAttendees.slice(
+    (page - 1) * perPage,
+    page * perPage
+  )
+
   return (
     <div className="min-h-screen">
       <PageHero
@@ -346,32 +358,6 @@ export default function AttendeePage() {
         imageAlt="Event crowd"
         compact
       />
-
-      {/* Stats */}
-      <section className="relative -mt-10 px-4 pb-12 sm:px-6 lg:px-8">
-        <FadeIn>
-          <div className="container-custom event-panel-dark rounded-[2rem] p-6 md:p-8">
-            <div className="grid gap-6 md:grid-cols-3">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-white">{attendees.length}</div>
-                <div className="text-sm text-slate-400 mt-1">Confirmed Attendees</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-white">
-                  {new Set(attendees.map((a) => a.country)).size}
-                </div>
-                <div className="text-sm text-slate-400 mt-1">Countries Represented</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-white">
-                  {new Set(attendees.map((a) => a.organization)).size}
-                </div>
-                <div className="text-sm text-slate-400 mt-1">Organizations</div>
-              </div>
-            </div>
-          </div>
-        </FadeIn>
-      </section>
 
       {/* Attendee Directory */}
       <section className="section-padding px-4 pb-12 sm:px-6 lg:px-8">
@@ -617,56 +603,96 @@ export default function AttendeePage() {
               )}
             </div>
           ) : (
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {filteredAttendees.map((attendee, index) => (
-                <FadeIn key={attendee.id} delay={index * 50}>
-                  <button
-                    onClick={() => setSelectedAttendee(attendee)}
-                    className="w-full text-left event-surface event-card-hover rounded-[1.8rem] p-6 cursor-pointer transition-all hover:ring-2 hover:ring-[var(--brand-gold)]/30"
-                  >
-                    <div className="flex items-start justify-between mb-4">
-                      {attendee.photoUrl ? (
-                        <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow">
-                          <img
-                            src={attendee.photoUrl}
-                            alt={attendee.fullName}
-                            className="w-full h-full object-cover"
-                          />
+            <>
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {paginatedAttendees.map((attendee, index) => (
+                  <FadeIn key={attendee.id} delay={index * 50}>
+                    <button
+                      onClick={() => setSelectedAttendee(attendee)}
+                      className="w-full text-left event-surface event-card-hover rounded-[1.8rem] p-6 cursor-pointer transition-all hover:ring-2 hover:ring-[var(--brand-gold)]/30"
+                    >
+                      <div className="flex items-start justify-between mb-4">
+                        {attendee.photoUrl ? (
+                          <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow">
+                            <img
+                              src={attendee.photoUrl}
+                              alt={attendee.fullName}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        ) : (
+                          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-[var(--brand-blue)] to-[var(--brand-cyan)] text-white font-bold text-lg">
+                            {attendee.fullName.charAt(0).toUpperCase()}
+                          </div>
+                        )}
+                        <div className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-700">
+                          Confirmed
                         </div>
-                      ) : (
-                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-[var(--brand-blue)] to-[var(--brand-cyan)] text-white font-bold text-lg">
-                          {attendee.fullName.charAt(0).toUpperCase()}
-                        </div>
-                      )}
-                      <div className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-700">
-                        Confirmed
                       </div>
-                    </div>
-                    <h3 className="text-lg font-semibold text-slate-950">{attendee.fullName}</h3>
-                    <div className="mt-3 space-y-2 text-sm text-slate-500">
-                      {attendee.organization && (
-                        <div className="flex items-center gap-2">
-                          <Building2 className="h-3.5 w-3.5 shrink-0" />
-                          <span>{attendee.organization}</span>
-                        </div>
-                      )}
-                      {attendee.position && (
-                        <div className="flex items-center gap-2">
-                          <Users className="h-3.5 w-3.5 shrink-0" />
-                          <span>{attendee.position}</span>
-                        </div>
-                      )}
-                      {attendee.country && (
-                        <div className="flex items-center gap-2">
-                          <Globe className="h-3.5 w-3.5 shrink-0" />
-                          <span>{attendee.country}</span>
-                        </div>
-                      )}
-                    </div>
-                  </button>
-                </FadeIn>
-              ))}
-            </div>
+                      <h3 className="text-lg font-semibold text-slate-950">{attendee.fullName}</h3>
+                      <div className="mt-3 space-y-2 text-sm text-slate-500">
+                        {attendee.organization && (
+                          <div className="flex items-center gap-2">
+                            <Building2 className="h-3.5 w-3.5 shrink-0" />
+                            <span>{attendee.organization}</span>
+                          </div>
+                        )}
+                        {attendee.position && (
+                          <div className="flex items-center gap-2">
+                            <Users className="h-3.5 w-3.5 shrink-0" />
+                            <span>{attendee.position}</span>
+                          </div>
+                        )}
+                        {attendee.country && (
+                          <div className="flex items-center gap-2">
+                            <Globe className="h-3.5 w-3.5 shrink-0" />
+                            <span>{attendee.country}</span>
+                          </div>
+                        )}
+                      </div>
+                    </button>
+                  </FadeIn>
+                ))}
+              </div>
+
+              {totalPages > 1 && (
+                <div className="mt-10 flex items-center justify-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={page === 1}
+                    onClick={() => setPage(page - 1)}
+                    className="rounded-xl border-slate-300"
+                  >
+                    Previous
+                  </Button>
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                    <Button
+                      key={p}
+                      variant={p === page ? 'default' : 'outline'}
+                      size="sm"
+                      onClick={() => setPage(p)}
+                      className={`rounded-xl min-w-[2.5rem] ${
+                        p === page
+                          ? 'bg-[var(--brand-gold)] text-slate-950 hover:bg-[#ffe36b]'
+                          : 'border-slate-300'
+                      }`}
+                    >
+                      {p}
+                    </Button>
+                  ))}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={page === totalPages}
+                    onClick={() => setPage(page + 1)}
+                    className="rounded-xl border-slate-300"
+                  >
+                    Next
+                  </Button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </section>
